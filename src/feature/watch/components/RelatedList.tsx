@@ -3,7 +3,6 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Api02 } from "@/common/apiKey";
 import { RelatedItemType, RelatedResponseType } from "@/common/types";
 import Loading from "@/components/Loading";
 import { useApi } from "@/hooks/useAPI";
@@ -31,7 +30,7 @@ const RelatedList = () => {
     const playListSearchParams = { ...params };
     const { categoryId } = useYouTubeStore();
     const [url, setUrl] = useState(
-        `https://www.googleapis.com/youtube/v3/search?key=${Api02}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`
+        `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`
     );
     const [nextPageToken, setNextPageToken] = useState("");
     const prefixId = useId();

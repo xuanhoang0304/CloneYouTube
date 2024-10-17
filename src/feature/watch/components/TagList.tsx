@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Api02 } from "@/common/apiKey";
 import { YoutubeResponseType } from "@/common/types";
 import { useApi } from "@/hooks/useAPI";
 
@@ -20,20 +19,20 @@ type TagListProps = {
 const TagList = ({ onSetUrl, categoryId }: TagListProps) => {
     const videoId = useSearchParams().get("v");
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=snippet&id=${videoId}`,
+        url: `https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&id=${videoId}`,
     });
 
     const tag = [
         {
             id: 1,
             name: "Tất cả",
-            url: `https://www.googleapis.com/youtube/v3/search?key=${Api02}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`,
+            url: `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`,
             isActive: true,
         },
         {
             id: 2,
             name: `Của ${data?.items[0]?.snippet?.channelTitle}`,
-            url: `https://www.googleapis.com/youtube/v3/search?key=${Api02}&part=snippet&channelId=${data?.items[0]?.snippet?.channelId}&type=video&maxResults=${options.maxResults}&order=date`,
+            url: `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${data?.items[0]?.snippet?.channelId}&type=video&maxResults=${options.maxResults}&order=date`,
             isActive: false,
         },
     ];

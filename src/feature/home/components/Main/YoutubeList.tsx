@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Api02 } from "@/common/apiKey";
 import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
 import Loading from "@/components/Loading";
 import { useApi } from "@/hooks/useAPI";
@@ -34,15 +33,15 @@ const YoutubeList = () => {
         }
     };
     const { data, isLoading } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=${options.part}&chart=${options.chart}&regionCode=${options.regionCode}&maxResults=${options.maxResults}&videoCategoryId=${categoryId}`,
+        url: `https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=${options.part}&chart=${options.chart}&regionCode=${options.regionCode}&maxResults=${options.maxResults}&videoCategoryId=${categoryId}`,
     });
 
     const { data: newData, isLoading: loading } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=${
-            options.part
-        }&chart=${options.chart}&regionCode=${options.regionCode}&maxResults=${
-            options.maxResults
-        }&videoCategoryId=${categoryId}${
+        url: `https://www.googleapis.com/youtube/v3/videos?key=${
+            process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
+        }&part=${options.part}&chart=${options.chart}&regionCode=${
+            options.regionCode
+        }&maxResults=${options.maxResults}&videoCategoryId=${categoryId}${
             nextPageToken ? `&pageToken=${nextPageToken}` : ""
         }`,
     });

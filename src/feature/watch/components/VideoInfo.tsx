@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { Api02 } from "@/common/apiKey";
 import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
 import { useApi } from "@/hooks/useAPI";
 import calcSubscriber from "@/utils/calcSubscriber";
 
 const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${Api02}&part=snippet,statistics&id=${channelId}`,
+        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${channelId}`,
     });
     const [list, setList] = useState<YoutubeItemType[]>([]);
 

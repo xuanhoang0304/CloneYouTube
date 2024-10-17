@@ -1,18 +1,21 @@
 "use client";
 
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Api02 } from '@/common/apiKey';
-import { TopCommentType } from '@/common/types';
-import Loading from '@/components/Loading';
-import { useApi } from '@/hooks/useAPI';
+import { TopCommentType } from "@/common/types";
+import Loading from "@/components/Loading";
+import { useApi } from "@/hooks/useAPI";
 
-import CommentHeading from './CommentHeading';
-import CommentItem from './CommentItem';
+import CommentHeading from "./CommentHeading";
+import CommentItem from "./CommentItem";
 
-const CommentList = ({ totalComment }: { totalComment: string  | undefined}) => {
+const CommentList = ({
+    totalComment,
+}: {
+    totalComment: string | undefined;
+}) => {
     const videoId = useSearchParams().get("v");
     const [nextPageToken, setNextPageToken] = useState("");
     const [hasMore, setHasMore] = useState(true);
@@ -29,14 +32,16 @@ const CommentList = ({ totalComment }: { totalComment: string  | undefined}) => 
     };
     const { data } = useApi<{ items: TopCommentType[]; nextPageToken: string }>(
         {
-            url: `https://www.googleapis.com/youtube/v3/commentThreads?key=${Api02}&part=snippet,replies&videoId=${videoId}&maxResults=50`,
+            url: `https://www.googleapis.com/youtube/v3/commentThreads?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,replies&videoId=${videoId}&maxResults=50`,
         }
     );
     const { data: newData, isLoading } = useApi<{
         items: TopCommentType[];
         nextPageToken: string;
     }>({
-        url: `https://www.googleapis.com/youtube/v3/commentThreads?key=${Api02}&part=snippet,replies&videoId=${videoId}&maxResults=50${
+        url: `https://www.googleapis.com/youtube/v3/commentThreads?key=${
+            process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
+        }&part=snippet,replies&videoId=${videoId}&maxResults=50${
             nextPageToken ? `&pageToken=${nextPageToken}` : ""
         }`,
     });

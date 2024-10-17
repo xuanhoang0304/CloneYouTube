@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 
-import { Api02 } from "@/common/apiKey";
 import { channelDetailResponse } from "@/common/types";
 import { useApi } from "@/hooks/useAPI";
 import calcSubscriber from "@/utils/calcSubscriber";
@@ -12,7 +11,7 @@ import HomePlayList from "./components/HomePlayList";
 // https://www.googleapis.com/youtube/v3/playlists
 const ChanelDetail = ({ channelUrl }: { channelUrl: string }) => {
     const { data: channelDetail } = useApi<channelDetailResponse>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${Api02}&part=snippet,statistics,brandingSettings&forHandle=${channelUrl}`,
+        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&forHandle=${channelUrl}`,
     });
     let channelId: string = "";
     if (channelDetail) {

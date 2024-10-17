@@ -2,7 +2,6 @@
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 
-import { Api02 } from "@/common/apiKey";
 import { YoutubeResponseType } from "@/common/types";
 import { useApi } from "@/hooks/useAPI";
 
@@ -20,7 +19,7 @@ const VideoDetail = () => {
     const id = useSearchParams().get("v");
     let videoDetail;
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=snippet,statistics&id=${id}`,
+        url: `https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${id}`,
     });
     if (data) videoDetail = data?.items[0];
     return (

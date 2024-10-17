@@ -3,7 +3,6 @@ import { EllipsisVertical } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Api02 } from "@/common/apiKey";
 import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
 import { useApi } from "@/hooks/useAPI";
 import { calcDayCreate } from "@/utils/calcDayCreate";
@@ -12,7 +11,7 @@ import { parseDuration } from "@/utils/ParseDuration";
 
 const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${Api02}&part=snippet,statistics&id=${item.snippet.channelId}`,
+        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${item.snippet.channelId}`,
     });
     return (
         <li className="rounded-t-xl pb-3 cursor-pointer">

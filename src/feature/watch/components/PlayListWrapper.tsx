@@ -1,6 +1,5 @@
 "use client";
 
-import { Api02 } from "@/common/apiKey";
 import { SearchPlayListResponse } from "@/common/types";
 import Loading from "@/components/Loading";
 import { useApi } from "@/hooks/useAPI";
@@ -13,7 +12,7 @@ const PlayListWrapper = ({
     playList: { list: string; listTitle: string; v: string; index: string };
 }) => {
     const { data: playListItems, isLoading } = useApi<SearchPlayListResponse>({
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?key=${Api02}&part=snippet,id,contentDetails&playlistId=${playList.list}&maxResults=50`,
+        url: `https://www.googleapis.com/youtube/v3/playlistItems?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,id,contentDetails&playlistId=${playList.list}&maxResults=50`,
     });
     return (
         <>

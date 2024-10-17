@@ -1,5 +1,3 @@
-import { Api02 } from "@/common/apiKey";
-
 const options = {
     part: "snippet,contentDetails,statistics",
     maxResults: 30,
@@ -14,11 +12,11 @@ export async function getListVideo(
     videoCategoryId: string = "24"
 ) {
     const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=${
-            options.part
-        }&chart=${options.chart}&regionCode=${options.regionCode}&maxResults=${
-            options.maxResults
-        }&videoCategoryId=${videoCategoryId}${
+        `https://www.googleapis.com/youtube/v3/videos?key=${
+            process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
+        }&part=${options.part}&chart=${options.chart}&regionCode=${
+            options.regionCode
+        }&maxResults=${options.maxResults}&videoCategoryId=${videoCategoryId}${
             pageToken ? `&pageToken=${pageToken}` : ""
         }`
     );
