@@ -1,30 +1,15 @@
 "use client";
-import dynamic from 'next/dynamic';
-import { useSearchParams } from 'next/navigation';
+import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 
-import { Api02 } from '@/common/apiKey';
-import { YoutubeResponseType } from '@/common/types';
-import { useApi } from '@/hooks/useAPI';
+import { Api02 } from "@/common/apiKey";
+import { YoutubeResponseType } from "@/common/types";
+import { useApi } from "@/hooks/useAPI";
 
-import CommentContainer from './Comment';
-import VideoInfo from './VideoInfo';
-import VideoPlayer from './VideoPlayer';
+import CommentContainer from "./Comment";
+import VideoInfo from "./VideoInfo";
+import VideoPlayer from "./VideoPlayer";
 
-// export async function generateMetadata({
-//     searchParams,
-// }: {
-//     searchParams: { v: string };
-// }) {
-//     let videoDetail;
-//     const id = searchParams.v;
-//     const data = await getVideoById(id);
-//     if (data) {
-//         videoDetail = data[0];
-//     }
-//     return {
-//         title: videoDetail?.snippet?.title || "Simple Title",
-//     };
-// }
 const VideoDesc = dynamic(
     () => import("@/feature/watch/components/VideoDesc"),
     {
@@ -34,7 +19,7 @@ const VideoDesc = dynamic(
 const VideoDetail = () => {
     const id = useSearchParams().get("v");
     let videoDetail;
-    const { data }= useApi<YoutubeResponseType>({
+    const { data } = useApi<YoutubeResponseType>({
         url: `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=snippet,statistics&id=${id}`,
     });
     if (data) videoDetail = data?.items[0];
