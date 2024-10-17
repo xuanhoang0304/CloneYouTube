@@ -1,4 +1,4 @@
-import { Api03 } from "@/common/apiKey";
+import { Api02 } from "@/common/apiKey";
 
 const options = {
     part: "snippet,contentDetails,statistics",
@@ -14,7 +14,7 @@ export async function getListVideo(
     videoCategoryId: string = "24"
 ) {
     const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?key=${Api03}&part=${
+        `https://www.googleapis.com/youtube/v3/videos?key=${Api02}&part=${
             options.part
         }&chart=${options.chart}&regionCode=${options.regionCode}&maxResults=${
             options.maxResults

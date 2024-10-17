@@ -1,18 +1,18 @@
 "use client";
-import { EllipsisVertical } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { EllipsisVertical } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Api03 } from '@/common/apiKey';
-import { YoutubeItemType, YoutubeResponseType } from '@/common/types';
-import { useApi } from '@/hooks/useAPI';
-import { calcDayCreate } from '@/utils/calcDayCreate';
-import calcView from '@/utils/calcView';
-import { parseDuration } from '@/utils/ParseDuration';
+import { Api02 } from "@/common/apiKey";
+import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
+import { useApi } from "@/hooks/useAPI";
+import { calcDayCreate } from "@/utils/calcDayCreate";
+import calcView from "@/utils/calcView";
+import { parseDuration } from "@/utils/ParseDuration";
 
 const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${Api03}&part=snippet,statistics&id=${item.snippet.channelId}`,
+        url: `https://www.googleapis.com/youtube/v3/channels?key=${Api02}&part=snippet,statistics&id=${item.snippet.channelId}`,
     });
     return (
         <li className="rounded-t-xl pb-3 cursor-pointer">

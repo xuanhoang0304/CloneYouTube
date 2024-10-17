@@ -5,7 +5,7 @@ export type YoutubeItemType = {
     snippet: {
         customUrl: string;
         publishedAt: string;
-        channelId: string;
+        channelId: string | undefined;
         title: string;
         description: string;
         thumbnails: {
@@ -58,7 +58,8 @@ export type YoutubeItemType = {
         viewCount: string;
         likeCount: string;
         favoriteCount: string;
-        commentCount: string;
+        commentCount: string | undefined;
+        subscriberCount: string;
     };
 };
 export type YoutubeResponseType = {

@@ -1,17 +1,17 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useId, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from "next/navigation";
+import { useEffect, useId, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Api03 } from '@/common/apiKey';
-import { RelatedItemType, RelatedResponseType } from '@/common/types';
-import Loading from '@/components/Loading';
-import { useApi } from '@/hooks/useAPI';
-import { useYouTubeStore } from '@/store/store';
+import { Api02 } from "@/common/apiKey";
+import { RelatedItemType, RelatedResponseType } from "@/common/types";
+import Loading from "@/components/Loading";
+import { useApi } from "@/hooks/useAPI";
+import { useYouTubeStore } from "@/store/store";
 
-import PlayListWrapper from './PlayListWrapper';
-import RelatedItem from './RelatedItem';
-import TagList from './TagList';
+import PlayListWrapper from "./PlayListWrapper";
+import RelatedItem from "./RelatedItem";
+import TagList from "./TagList";
 
 const options = {
     part: "snippet,contentDetails,statistics",
@@ -31,7 +31,7 @@ const RelatedList = () => {
     const playListSearchParams = { ...params };
     const { categoryId } = useYouTubeStore();
     const [url, setUrl] = useState(
-        `https://www.googleapis.com/youtube/v3/search?key=${Api03}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`
+        `https://www.googleapis.com/youtube/v3/search?key=${Api02}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`
     );
     const [nextPageToken, setNextPageToken] = useState("");
     const prefixId = useId();
@@ -76,7 +76,14 @@ const RelatedList = () => {
             {isLoading && <Loading></Loading>}
             {params.list && (
                 <PlayListWrapper
-                    playList={playListSearchParams as { list: string; listTitle: string; v: string; index: string }}
+                    playList={
+                        playListSearchParams as {
+                            list: string;
+                            listTitle: string;
+                            v: string;
+                            index: string;
+                        }
+                    }
                 ></PlayListWrapper>
             )}
             <TagList onSetUrl={handleSetUrl} categoryId={categoryId}></TagList>

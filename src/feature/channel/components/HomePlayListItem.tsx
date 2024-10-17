@@ -10,7 +10,7 @@ import { Navigation } from "swiper/modules";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Api03 } from "@/common/apiKey";
+import { Api02 } from "@/common/apiKey";
 import {
     HomePlayListItemType,
     SearchPlayListItemType,
@@ -30,7 +30,7 @@ const HomePlayListItem = ({
     title: string;
 }) => {
     const { data: playListItems } = useApi<SearchPlayListResponse>({
-        url: `${url}?key=${Api03}&part=snippet,id,contentDetails&playlistId=${item.id}&maxResults=50`,
+        url: `${url}?key=${Api02}&part=snippet,id,contentDetails&playlistId=${item.id}&maxResults=50`,
     });
     const fristVideoId = playListItems?.items[0]?.snippet?.resourceId?.videoId;
     const position = playListItems?.items[0]?.snippet?.position;

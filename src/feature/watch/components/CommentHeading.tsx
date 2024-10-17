@@ -2,7 +2,7 @@ import { SlidersHorizontal } from 'lucide-react';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip';
 
-const CommentHeading = ({totalComment} : {totalComment : string}) => {
+const CommentHeading = ({totalComment} : {totalComment : string | undefined}) => {
     return (
         <div className="flex items-center gap-x-6">
             <p className="text-xl font-bold">{totalComment} bình luận</p>

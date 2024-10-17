@@ -24,7 +24,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={roboto.className}>
+        <html lang="en" className={roboto.className} suppressHydrationWarning={true}>
             <body className="overflow-x-hidden" >
                 <Header></Header>
                 <main className="flex gap-x-8 h-[calc(100%-56px)]">

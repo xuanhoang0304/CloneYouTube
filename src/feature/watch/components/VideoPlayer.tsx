@@ -1,10 +1,10 @@
 "use client";
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 
 const VideoPlayer = () => {
     const id = useSearchParams().get("v");
-    
+
     return (
         <iframe
             width="420"
