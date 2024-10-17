@@ -378,3 +378,19 @@ export type HomePlayListItemType = {
     };
 };
 export type HomePlayListResponse = { items: HomePlayListItemType[] };
+export type SearchVideoItemType = {
+    id: {
+        videoId: string;
+    };
+    snippet: {
+        thumbnails: {
+            high: {
+                url: string;
+            };
+        };
+        title: string;
+        channelTitle: string;
+        publishedAt: string;
+        description: string;
+    };
+};

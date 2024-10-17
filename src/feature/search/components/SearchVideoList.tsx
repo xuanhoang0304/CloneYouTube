@@ -1,8 +1,9 @@
 "use client";
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+import { SearchVideoItemType } from '@/common/types';
 import Loading from '@/components/Loading';
 import getVideoSearch from '@/utils/getVideoSearch';
 
@@ -12,8 +13,8 @@ const SearchVideoList = () => {
     const query = useSearchParams().get("q") ?? "";
     const [isLoading, setIsLoading] = useState(false);
     const [nextPageToken, setNextPageToken] = useState("");
-    const uniqueId = useId();
-    const [list, setList] = useState<any>([]);
+
+    const [list, setList] = useState<SearchVideoItemType[]>([]);
     const [hasMore, setHasMore] = useState(true);
     const fetchData = async () => {
         try {
@@ -59,7 +60,7 @@ const SearchVideoList = () => {
             }
         >
             <ul className="flex flex-col gap-4">
-                {list.map((item: any) => (
+                {list.map((item: SearchVideoItemType) => (
                     <SearchVideoItem key={item.id.videoId} item={item} />
                 ))}
             </ul>

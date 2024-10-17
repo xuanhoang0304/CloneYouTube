@@ -1,12 +1,13 @@
-import { EllipsisVertical } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { EllipsisVertical } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { calcDayCreate } from "@/utils/calcDayCreate";
+import { SearchVideoItemType } from '@/common/types';
+import { calcDayCreate } from '@/utils/calcDayCreate';
 
 type SearchVideoItemProps = {
-    item: any;
-};
+    item : SearchVideoItemType
+}
 const SearchVideoItem = ({ item }: SearchVideoItemProps) => {
     return (
         <li>
