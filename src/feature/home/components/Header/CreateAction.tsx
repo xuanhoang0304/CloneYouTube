@@ -1,10 +1,10 @@
 "use client";
 
-import { NotebookPen, Plus, Radio, Youtube } from "lucide-react";
-import { useState } from "react";
+import { NotebookPen, Plus, Radio, Youtube } from 'lucide-react';
+import { useState } from 'react';
 
-import useClickOutside from "@/hooks/useClickOutSide";
-import { cn } from "@/lib/utils";
+import useClickOutside from '@/hooks/useClickOutSide';
+import { cn } from '@/lib/utils';
 
 const ProfileAction = [
     {
@@ -38,7 +38,7 @@ export const CreateAction = () => {
             {isShow && (
                 <ul
                     className={cn(
-                        "absolute bottom-[-150px]  rounded-lg left-0 w-[180px] bg-primary-bgcl hidden py-2 ",
+                        "absolute z-50 bottom-[-150px]  rounded-lg left-0 w-[180px] bg-primary-bgcl hidden py-2 ",
                         isShow && "block"
                     )}
                 >

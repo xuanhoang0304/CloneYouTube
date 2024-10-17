@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
 body {
     font-family: Roboto, sans-serif;
     background-color: #0f0f0f;
@@ -10,30 +13,30 @@ body {
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #717171; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #717171;
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #aaa;
-     
-  }
+}
 input,
 button {
     border: none;
     outline: none;
     background: transparent;
+    cursor: pointer;
 }
 
 @layer utilities {
@@ -51,6 +54,14 @@ button {
     }
     .flex-center {
         @apply flex justify-center items-center;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 }
 
@@ -117,4 +128,36 @@ button {
     body {
         @apply bg-background text-foreground;
     }
+}
+.Category-swiper .swiper-button-next {
+    right: 222px;
+}
+.Category-swiper .swiper-button-prev {
+    left: 0px;
+}
+.Category-swiper .swiper-button-prev,
+.Category-swiper .swiper-button-next {
+    background-color: transparent;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+.Category-swiper:hover .swiper-button-prev,
+.Category-swiper:hover .swiper-button-next {
+    background-color: #fff;
+}
+.Category-swiper .swiper-button-next::after,
+.Category-swiper .swiper-button-prev::after {
+    font-size: 20px;
+    font-weight: 700;
+    color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+.Category-swiper:hover .swiper-button-next::after,
+.Category-swiper:hover .swiper-button-prev::after {
+    color: red;
 }

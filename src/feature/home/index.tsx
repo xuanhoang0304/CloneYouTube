@@ -1,9 +1,9 @@
-import Header from "./components/Header/Header";
+import YoutubeList from './components/Main/YoutubeList';
 
 export default function HomePage() {
     return (
-        <>
-            <Header></Header>
-        </>
+        <section className="w-full pt-[126px] pl-[269px] ">
+            <YoutubeList></YoutubeList>
+        </section>
     );
 }

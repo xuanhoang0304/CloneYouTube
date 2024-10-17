@@ -3,12 +3,15 @@ import './globals.css';
 
 import { Roboto } from 'next/font/google';
 
+import SideBar from '@/components/SideBar/SideBar';
+import Header from '@/feature/home/components/Header/Header';
+
 const roboto = Roboto({
-  weight: ['400', '700' , '500'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-})
+    weight: ["400", "700", "500"],
+    style: ["normal", "italic"],
+    subsets: ["latin"],
+    display: "swap",
+});
 
 export const metadata: Metadata = {
     title: "YouTube",
@@ -22,7 +25,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={roboto.className}>
-            <body>{children}</body>
+            <body className="overflow-x-hidden" >
+                <Header></Header>
+                <main className="flex gap-x-8 h-[calc(100%-56px)]">
+                    <SideBar></SideBar>
+                    {children}
+                </main>
+            </body>
         </html>
     );
 }

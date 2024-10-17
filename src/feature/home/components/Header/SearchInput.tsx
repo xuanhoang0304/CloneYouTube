@@ -1,18 +1,98 @@
 "use client";
-import { Keyboard, Search, X } from 'lucide-react';
-import { useState } from 'react';
+import { Keyboard, Search, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { cn } from '@/utils/cn';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import useClickOutside from "@/hooks/useClickOutSide";
+import useDebounce from "@/hooks/useDebounce";
+import { cn } from "@/utils/cn";
+import getVideoSearch from "@/utils/getVideoSearch";
+import { slugify } from "@/utils/slugify";
 
 const SearchInput = () => {
+    const SearchIputRef = useRef<HTMLInputElement>(null);
+    const [listKeyword, setListKeyword] = useState<
+        { id: { videoId: string }; snippet: { title: string } }[]
+    >([]);
+    const [isSearchFocus, setIsSearchFocus] = useState(false);
     const [searchText, setSearchText] = useState("");
+    const [isShow, setIsShow] = useState(false);
+    const handleClose = () => {
+        setIsShow(false);
+    };
+    const ref = useClickOutside<HTMLOListElement>(handleClose);
+    const debouncedSearch = useDebounce(searchText, 500);
+
     const handleChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
+        setIsShow(true);
+        setIsSearchFocus(true);
     };
+    const setList = async () => {
+        const data = await getVideoSearch(debouncedSearch);
+        setListKeyword(data?.items);
+    };
+    const router = useRouter();
+    const handleSearch = (key: string) => {
+        router.push(`/search?q=${slugify(key)}`);
+        setIsShow(false);
+        setIsSearchFocus(false);
+    };
+
+    const handleFocus = () => {
+        setIsSearchFocus(true);
+        setIsShow(true);
+    };
+    useEffect(() => {
+        if (SearchIputRef.current) {
+            SearchIputRef.current.addEventListener("focus", handleFocus);
+        }
+        if (debouncedSearch) {
+            setList();
+        }
+        return () => {
+            SearchIputRef.current?.removeEventListener("focus", handleFocus);
+        };
+    }, [debouncedSearch, isSearchFocus]);
     return (
-        <div className="max-w-[600px] flex-1 text-[#888] flex items-center pl-[16px] rounded-full border border-[#303030]">
+        <div className="max-w-[600px] flex-1 bg-[#121212] text-[#888] flex items-center pl-[16px] rounded-full border border-[#303030] relative">
+            {searchText && isShow && isSearchFocus && (
+                <ul
+                    ref={ref}
+                    className="w-full absolute z-30 top-[45px] py-3 rounded-lg left-0 right-0 bg-primary-bgcl"
+                >
+                    {listKeyword.length > 0 &&
+                        listKeyword
+                            .slice(0, 10)
+                            .map(
+                                (item: {
+                                    id: { videoId: string };
+                                    snippet: { title: string };
+                                }) => (
+                                    <li
+                                        onClick={() =>
+                                            handleSearch(item?.snippet.title)
+                                        }
+                                        key={item?.id.videoId}
+                                        className="py-2 px-4 flex items-center gap-x-3 hover:bg-[#717171]"
+                                    >
+                                        <Search className="w-5 shrink-0"></Search>
+                                        <p className="text-white line-clamp-1">
+                                            {item?.snippet.title.toLowerCase()}
+                                        </p>
+                                    </li>
+                                )
+                            )}
+                </ul>
+            )}
             <input
+                ref={SearchIputRef}
                 placeholder="Tìm kiếm"
                 className="w-full text-[#fff] placeholder:text-[#888]"
                 value={searchText}

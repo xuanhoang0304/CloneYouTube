@@ -1,8 +1,9 @@
 import HomePage from "@/feature/home";
 
-export default function Home() {
+export default async function Home() {
     return (
-        // <Test></Test>
-        <HomePage></HomePage>
+        <>
+            <HomePage></HomePage>
+        </>
     );
 }
