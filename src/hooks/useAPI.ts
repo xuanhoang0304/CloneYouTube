@@ -21,6 +21,7 @@ export type ApiConfig = {
 const defaultConfig: SWRConfiguration = {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
+    shouldRetryOnError: false,
     revalidateOnMount: true,
     refreshInterval: 0,
     dedupingInterval: 1 * 24 * 60 * 60 * 1000, // 1 day

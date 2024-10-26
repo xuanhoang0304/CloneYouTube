@@ -4,7 +4,9 @@ export async function getAccessToken() {
     try {
         const user = await currentUser();
         const userId = user?.id;
-
+        if (!userId) {
+            return;
+        }
         const clerk = clerkClient();
         const response = await clerk.users.getUserOauthAccessToken(
             userId || "",

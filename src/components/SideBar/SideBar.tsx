@@ -112,9 +112,16 @@ const SideBar = async () => {
             </Link>
             <SideBarTabList list={TabList.slice(4, 10)}></SideBarTabList>
             <SideBarLine></SideBarLine>
-            <h2 className="font-medium my-3 leading-[22px]">Kênh đăng ký </h2>
-            <SubscriptionsList token={token}></SubscriptionsList>
-            <SideBarLine></SideBarLine>
+            {token && (
+                <>
+                    <h2 className="font-medium my-3 leading-[22px]">
+                        Kênh đăng ký{" "}
+                    </h2>
+                    <SubscriptionsList token={token}></SubscriptionsList>
+                    <SideBarLine></SideBarLine>
+                </>
+            )}
+            
             <h2 className="font-medium my-3 leading-[22px]">Khám phá </h2>
             <SideBarTabList list={TabList.slice(10)}></SideBarTabList>
         </section>
