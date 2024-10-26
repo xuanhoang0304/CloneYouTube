@@ -1,12 +1,11 @@
-"use client";
 import {
     ArrowDownToLine, ChevronRight, Clapperboard, Clock4, Flame, Gamepad2, History, House, ListVideo,
     Music, Newspaper, SquarePlay, ThumbsUp, TvMinimalPlay, Youtube
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import SubscriptionsList from '@/components/SideBar/SubscriptionsList';
+import { getAccessToken } from '@/utils/getAccessToken';
 
 import SideBarLine from './SideBarLine';
 import SideBarTabList from './SideBarTabList';
@@ -97,9 +96,9 @@ const TabList = [
         href: "/news",
     },
 ];
-const SideBar = () => {
-    const pathname = usePathname();
-    if (pathname === "/watch") return null;
+
+const SideBar = async () => {
+    const token = await getAccessToken();
     return (
         <section className=" w-[240px] h-[calc(100vh-60px)]  py-3 mb-10 px-4 overflow-hidden hover:overflow-auto  fixed z-40 top-[56px] left-0 ">
             <SideBarTabList list={TabList.slice(0, 4)}></SideBarTabList>
@@ -114,7 +113,7 @@ const SideBar = () => {
             <SideBarTabList list={TabList.slice(4, 10)}></SideBarTabList>
             <SideBarLine></SideBarLine>
             <h2 className="font-medium my-3 leading-[22px]">Kênh đăng ký </h2>
-            <SubscriptionsList></SubscriptionsList>
+            <SubscriptionsList token={token}></SubscriptionsList>
             <SideBarLine></SideBarLine>
             <h2 className="font-medium my-3 leading-[22px]">Khám phá </h2>
             <SideBarTabList list={TabList.slice(10)}></SideBarTabList>

@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
-import { useApi } from "@/hooks/useAPI";
-import calcSubscriber from "@/utils/calcSubscriber";
+import { YoutubeItemType, YoutubeResponseType } from '@/common/types';
+import { useApi } from '@/hooks/useAPI';
+import calcSubscriber from '@/utils/calcSubscriber';
 
 const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
     const { data } = useApi<YoutubeResponseType>({
@@ -24,7 +24,7 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
         <>
             {list?.map((item: YoutubeItemType) => (
                 <div key={item.id} className="w-full flex  gap-x-3 mt-3">
-                    <Link href={`channel/${item?.snippet?.customUrl}`}>
+                    <Link href={`channel/${item?.id}`}>
                         <figure className="size-10 rounded-full shrink-0">
                             <Image
                                 src={item?.snippet?.thumbnails?.high?.url}

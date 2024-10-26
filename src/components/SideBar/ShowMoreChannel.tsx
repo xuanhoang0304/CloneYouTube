@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 type ShowMoreChannelProps = {
     itemCount: number;
     onShowMore: () => void;
-    channelLength: number;
+    channelLength: number | undefined;
 };
 const ShowMoreChannel = ({
     itemCount,
@@ -24,7 +24,7 @@ const ShowMoreChannel = ({
                 )}
             ></ChevronDown>
             <p className="text-xs leading-5">
-                {itemCount < channelLength ? "Xem thêm" : "Ẩn bớt"}
+                {channelLength && itemCount < channelLength ? "Xem thêm" : "Ẩn bớt"}
             </p>
         </button>
     );

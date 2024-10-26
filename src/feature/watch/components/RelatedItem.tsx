@@ -31,7 +31,7 @@ const RelatedItem = ({ item }: Props) => {
                     className="img-cover rounded-lg"
                 ></Image>
             </figure>
-            <div className=" max-w-[257px] pr-6">
+            <div className=" max-w-[257px] pr-6 overflow-hidden">
                 <h2 className="line-clamp-2 font-medium leading-[22px] cursor-pointer">
                     {item.snippet.title}
                 </h2>

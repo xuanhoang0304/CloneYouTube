@@ -1,13 +1,13 @@
 "use client";
-import { EllipsisVertical } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { EllipsisVertical } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
-import { useApi } from "@/hooks/useAPI";
-import { calcDayCreate } from "@/utils/calcDayCreate";
-import calcView from "@/utils/calcView";
-import { parseDuration } from "@/utils/ParseDuration";
+import { YoutubeItemType, YoutubeResponseType } from '@/common/types';
+import { useApi } from '@/hooks/useAPI';
+import { calcDayCreate } from '@/utils/calcDayCreate';
+import calcView from '@/utils/calcView';
+import { parseDuration } from '@/utils/ParseDuration';
 
 const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
     const { data } = useApi<YoutubeResponseType>({
@@ -32,7 +32,7 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
 
             <div className="mt-3 flex gap-x-3 relative pr-6">
                 <Link
-                    href={`/channel/${data?.items[0]?.snippet?.customUrl}`}
+                    href={`/channel/${data?.items[0]?.id}`}
                     className="flex gap-x-4 size-9 shrink-0"
                 >
                     <figure className="size-full rounded-full ">

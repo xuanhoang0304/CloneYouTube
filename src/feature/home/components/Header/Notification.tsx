@@ -1,3 +1,4 @@
+"use client"
 import { Bell, Settings } from 'lucide-react';
 import { useState } from 'react';
 

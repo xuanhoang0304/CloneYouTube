@@ -1,19 +1,14 @@
 "use client";
-import { Keyboard, Search, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Keyboard, Search, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
-import useClickOutside from "@/hooks/useClickOutSide";
-import useDebounce from "@/hooks/useDebounce";
-import { cn } from "@/utils/cn";
-import getVideoSearch from "@/utils/getVideoSearch";
-import { slugify } from "@/utils/slugify";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useApi } from '@/hooks/useAPI';
+import useClickOutside from '@/hooks/useClickOutSide';
+import useDebounce from '@/hooks/useDebounce';
+import { cn } from '@/utils/cn';
+import { slugify } from '@/utils/slugify';
 
 const SearchInput = () => {
     const SearchIputRef = useRef<HTMLInputElement>(null);
@@ -27,17 +22,16 @@ const SearchInput = () => {
         setIsShow(false);
     };
     const ref = useClickOutside<HTMLOListElement>(handleClose);
-    const debouncedSearch = useDebounce(searchText, 500);
+    const debouncedSearch = useDebounce(searchText, 250);
 
     const handleChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
-        setIsShow(true);
         setIsSearchFocus(true);
     };
-    const setList = async () => {
-        const data = await getVideoSearch(debouncedSearch);
-        setListKeyword(data?.items);
-    };
+
+    const { data: searchKey } = useApi<{ items: [] }>({
+        url: `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${debouncedSearch}&maxResults=50&type=video`,
+    });
     const router = useRouter();
     const handleSearch = (key: string) => {
         router.push(`/search?q=${slugify(key)}`);
@@ -49,48 +43,62 @@ const SearchInput = () => {
         setIsSearchFocus(true);
         setIsShow(true);
     };
+    const handleKeyUp = (e: KeyboardEvent): void => {
+        if (e.key === "Enter") {
+            router.push(`/search?q=${slugify(searchText)}`);
+            setIsShow(false);
+            setIsSearchFocus(false);
+        }
+    };
     useEffect(() => {
         if (SearchIputRef.current) {
             SearchIputRef.current.addEventListener("focus", handleFocus);
         }
-        if (debouncedSearch) {
-            setList();
+        if (searchKey) {
+            setListKeyword(searchKey?.items);
         }
+        window.addEventListener("keyup", handleKeyUp);
         return () => {
             SearchIputRef.current?.removeEventListener("focus", handleFocus);
+            window.removeEventListener("keyup", handleKeyUp);
         };
-    }, [debouncedSearch, isSearchFocus]);
+    }, [debouncedSearch, isSearchFocus, searchKey]);
     return (
         <div className="max-w-[600px] flex-1 bg-[#121212] text-[#888] flex items-center pl-[16px] rounded-full border border-[#303030] relative">
-            {searchText && isShow && isSearchFocus && (
-                <ul
-                    ref={ref}
-                    className="w-full absolute z-30 top-[45px] py-3 rounded-lg left-0 right-0 bg-primary-bgcl"
-                >
-                    {listKeyword.length > 0 &&
-                        listKeyword
-                            .slice(0, 10)
-                            .map(
-                                (item: {
-                                    id: { videoId: string };
-                                    snippet: { title: string };
-                                }) => (
-                                    <li
-                                        onClick={() =>
-                                            handleSearch(item?.snippet.title)
-                                        }
-                                        key={item?.id.videoId}
-                                        className="py-2 px-4 flex items-center gap-x-3 hover:bg-[#717171]"
-                                    >
-                                        <Search className="w-5 shrink-0"></Search>
-                                        <p className="text-white line-clamp-1">
-                                            {item?.snippet.title.toLowerCase()}
-                                        </p>
-                                    </li>
-                                )
-                            )}
-                </ul>
-            )}
+            {searchText &&
+                isShow &&
+                isSearchFocus &&
+                listKeyword?.length > 0 && (
+                    <ul
+                        ref={ref}
+                        className="w-full absolute z-30 top-[45px] py-3 rounded-lg left-0 right-0 bg-primary-bgcl"
+                    >
+                        {listKeyword?.length > 0 &&
+                            listKeyword
+                                ?.slice(0, 10)
+                                ?.map(
+                                    (item: {
+                                        id: { videoId: string };
+                                        snippet: { title: string };
+                                    }) => (
+                                        <li
+                                            onClick={() =>
+                                                handleSearch(
+                                                    item?.snippet.title
+                                                )
+                                            }
+                                            key={item?.id.videoId}
+                                            className="py-2 px-4 flex items-center gap-x-3 hover:bg-[#717171]"
+                                        >
+                                            <Search className="w-5 shrink-0"></Search>
+                                            <p className="text-white line-clamp-1">
+                                                {item?.snippet.title.toLowerCase()}
+                                            </p>
+                                        </li>
+                                    )
+                                )}
+                    </ul>
+                )}
             <input
                 ref={SearchIputRef}
                 placeholder="Tìm kiếm"
@@ -113,7 +121,10 @@ const SearchInput = () => {
 
             <TooltipProvider>
                 <Tooltip>
-                    <TooltipTrigger className="flex items-center justify-center w-[60px] h-[40px] shrink-0 bg-primary-bgcl rounded-r-full">
+                    <TooltipTrigger
+                        onClick={() => handleSearch(searchText)}
+                        className="flex items-center justify-center w-[60px] h-[40px] shrink-0 bg-primary-bgcl rounded-r-full"
+                    >
                         <Search className="text-white w-5" />
                     </TooltipTrigger>
                     <TooltipContent className="bg-[#717171] relative !top-2">

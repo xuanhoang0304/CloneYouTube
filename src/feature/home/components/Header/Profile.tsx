@@ -3,9 +3,6 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-import { CreateAction } from "./CreateAction";
-import Notification from "./Notification";
-
 type ProfileProps = {
     avt: string;
     username: string;
@@ -13,9 +10,6 @@ type ProfileProps = {
 const Profile = ({ avt, username }: ProfileProps) => {
     return (
         <div className="flex items-center gap-x-4">
-            <CreateAction></CreateAction>
-            <Notification></Notification>
-
             <figure
                 className={cn(
                     "size-8 rounded-full cursor-pointer",

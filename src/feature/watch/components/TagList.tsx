@@ -1,10 +1,10 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import { YoutubeResponseType } from "@/common/types";
-import { useApi } from "@/hooks/useAPI";
+import { YoutubeResponseType } from '@/common/types';
+import { useApi } from '@/hooks/useAPI';
 
 const options = {
     part: "snippet,contentDetails,statistics",

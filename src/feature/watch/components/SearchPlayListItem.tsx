@@ -46,7 +46,7 @@ const SearchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
 
                 <div>
                     <p className="text-white line-clamp-2 text-sm font-medium">
-                        {data.snippet.title}
+                        {(data.snippet.title)}
                     </p>
                     <p className="text-xs text-[#ccc] mt-1">
                         {data.snippet.channelTitle}

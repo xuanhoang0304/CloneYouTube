@@ -395,3 +395,18 @@ export type SearchVideoItemType = {
         description: string;
     };
 };
+export type SubscriptionsItemType = {
+    id: string;
+    snippet: {
+        title: string;
+        thumbnails: {
+            medium: {
+                url: string;
+            };
+        };
+        resourceId: {
+            channelId: string;
+        };
+    };
+};
+

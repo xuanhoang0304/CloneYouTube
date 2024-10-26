@@ -1,27 +1,30 @@
-const SubscriptionsItem = () => {
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { SubscriptionsItemType } from '@/common/types';
+
+const SubscriptionsItem = ({ item }: { item: SubscriptionsItemType }) => {
     return (
-        // <li className="flex items-center w-[198px] gap-x-4 transition-colors relative p-2 hover:bg-[#717171] rounded-lg cursor-pointer">
-        //     <figure className="size-6 shrink-0 rounded-full">
-        //         <Image
-        //             src={item.src}
-        //             alt="channel Avt"
-        //             width={24}
-        //             height={24}
-        //             className="img-cover rounded-full"
-        //         ></Image>
-        //     </figure>
-        //     <h2 className="line-clamp-1 max-w-[150px] text-xs  leading-5">
-        //         {item.channelName}
-        //     </h2>
-        //     {item.status === "active" ? (
-        //         <div className="w-4 flex-center absolute right-4">
-        //             <span className="size-1 bg-[#3ea6ff] rounded-full "></span>
-        //         </div>
-        //     ) : item.status === "streaming" ? (
-        //         <Radio className="text-red-700 w-4 absolute right-4"></Radio>
-        //     ) : null}
-        // </li>
-        <li>SubscriptionsItem</li>
+        <li className="flex items-center w-[198px] gap-x-4 transition-colors relative p-2 hover:bg-[#717171] rounded-lg cursor-pointer">
+           <Link href={`/channel/${item.snippet.resourceId.channelId}`} className="flex items-center gap-x-4 w-full">
+                <figure className="size-6 shrink-0 rounded-full">
+                    <Image
+                        src={item.snippet.thumbnails.medium.url || "/images/default-avatar.png"}
+                        alt="channel Avt"
+                        width={24}  
+                        height={24}
+                        className="img-cover rounded-full"
+                    ></Image>
+                </figure>
+                <h2 className="line-clamp-1 max-w-[90%] text-xs  leading-5">
+                    {item.snippet.title || "Simple Title"}
+                </h2>
+    
+                <div className="w-4 flex-center absolute right-4">
+                    <span className="size-1 bg-[#3ea6ff] rounded-full "></span>
+                </div>
+           </Link>
+        </li>
     );
 };
 

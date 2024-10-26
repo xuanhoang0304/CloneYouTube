@@ -1,16 +1,16 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useId, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useId, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { RelatedItemType, RelatedResponseType } from "@/common/types";
-import Loading from "@/components/Loading";
-import { useApi } from "@/hooks/useAPI";
-import { useYouTubeStore } from "@/store/store";
+import { RelatedItemType, RelatedResponseType } from '@/common/types';
+import Loading from '@/components/Loading';
+import { useApi } from '@/hooks/useAPI';
+import { useYouTubeStore } from '@/store/store';
 
-import PlayListWrapper from "./PlayListWrapper";
-import RelatedItem from "./RelatedItem";
-import TagList from "./TagList";
+import PlayListWrapper from './PlayListWrapper';
+import RelatedItem from './RelatedItem';
+import TagList from './TagList';
 
 const options = {
     part: "snippet,contentDetails,statistics",
