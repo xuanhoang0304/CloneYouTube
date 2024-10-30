@@ -23,6 +23,7 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
                         width={500}
                         height={202}
                         className=" h-auto w-full object-cover max-w-[400px] max-h-[200px] rounded-xl aspect-[400/200] bg-gray-200"
+                        unoptimized
                     ></Image>
                     <p className="text-xs leading-4 font-medium absolute bottom-2 right-2 bg-black/70 px-2 rounded">
                         {parseDuration(item.contentDetails.duration)}
