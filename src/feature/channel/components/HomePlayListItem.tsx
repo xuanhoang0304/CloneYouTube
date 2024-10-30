@@ -1,23 +1,21 @@
 // Import Swiper styles
 "use client";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-import { Play } from "lucide-react";
-import Link from "next/link";
-import { Navigation } from "swiper/modules";
+import { Play } from 'lucide-react';
+import Link from 'next/link';
+import { Navigation } from 'swiper/modules';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import {
-    HomePlayListItemType,
-    SearchPlayListItemType,
-    SearchPlayListResponse,
-} from "@/common/types";
-import { useApi } from "@/hooks/useAPI";
+    HomePlayListItemType, SearchPlayListItemType, SearchPlayListResponse
+} from '@/common/types';
+import { useApi } from '@/hooks/useAPI';
 
-import HomePlayListVideo from "./HomePlayListVideo";
+import HomePlayListVideo from './HomePlayListVideo';
 
 const url = "https://www.googleapis.com/youtube/v3/playlistItems";
 
@@ -36,7 +34,7 @@ const HomePlayListItem = ({
     return (
         <li className="border-b border-[#333] pb-4">
             <div className="flex items-center gap-x-3">
-                <p className="text-xl font-bold">{item?.snippet?.title}</p>
+                <p className="text-xl font-bold max-w-[80%]">{item?.snippet?.title}</p>
                 <Link
                     href={`/watch?v=${fristVideoId}&list=${item.id}&listTitle=${title}&index=${position}`}
                     className="flex gap-x-2 items-center px-4 py-2 rounded-full bg-transparent hover:bg-[#515255] transition-colors"

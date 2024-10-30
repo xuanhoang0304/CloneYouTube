@@ -1,13 +1,13 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import { SearchVideoItemType } from '@/common/types';
-import Loading from '@/components/Loading';
-import getVideoSearch from '@/utils/getVideoSearch';
+import getVideoSearch from "@/apis/getVideoSearch";
+import { SearchVideoItemType } from "@/common/types";
+import Loading from "@/components/Loading";
 
-import SearchVideoItem from './SearchVideoItem';
+import SearchVideoItem from "./SearchVideoItem";
 
 const SearchVideoList = () => {
     const query = useSearchParams().get("q") ?? "";

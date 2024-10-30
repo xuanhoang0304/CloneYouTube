@@ -1,10 +1,10 @@
 "use client";
 
-import { NotebookPen, Plus, Radio, Youtube } from 'lucide-react';
-import { useState } from 'react';
+import { NotebookPen, Plus, Radio, Youtube } from "lucide-react";
+import { useState } from "react";
 
-import useClickOutside from '@/hooks/useClickOutSide';
-import { cn } from '@/lib/utils';
+import useClickOutside from "@/hooks/useClickOutSide";
+import { cn } from "@/utils/cn";
 
 const ProfileAction = [
     {

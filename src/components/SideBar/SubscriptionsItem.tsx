@@ -16,7 +16,7 @@ const SubscriptionsItem = ({ item }: { item: SubscriptionsItemType }) => {
                         className="img-cover rounded-full"
                     ></Image>
                 </figure>
-                <h2 className="line-clamp-1 max-w-[90%] text-xs  leading-5">
+                <h2 className="line-clamp-1 max-w-[60%] text-xs  leading-5">
                     {item.snippet.title || "Simple Title"}
                 </h2>
     

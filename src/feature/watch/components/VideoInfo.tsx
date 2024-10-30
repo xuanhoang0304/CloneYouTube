@@ -1,29 +1,73 @@
 "use client";
 
+import { BellRing, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { YoutubeItemType, YoutubeResponseType } from '@/common/types';
+import { SubscriptionsItemType, YoutubeItemType, YoutubeResponseType } from '@/common/types';
 import { useApi } from '@/hooks/useAPI';
+import { useYouTubeStore } from '@/store/store';
 import calcSubscriber from '@/utils/calcSubscriber';
+import handleSubcriceChannel from '@/utils/handleSubcriceChannel';
+import handleUnSubcriceChannel from '@/utils/handleUnSubcriceChannel';
 
 const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
     const { data } = useApi<YoutubeResponseType>({
         url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${channelId}`,
     });
     const [list, setList] = useState<YoutubeItemType[]>([]);
-
+    const { token } = useYouTubeStore();
+    const subscriptionsUrl = `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
+    const { data: subscriptions, mutate: mutateSubscriptions } = useApi<{
+        items: SubscriptionsItemType[];
+    }>({
+        url: subscriptionsUrl,
+    });
+    const checkSubscribed = useMemo(() => {
+        return subscriptions?.items?.some(
+            (item) => item?.snippet?.resourceId?.channelId === channelId
+        );
+    }, [subscriptions, channelId]);
+    const [isSubscribed, setIsSubscribed] = useState(checkSubscribed);
+    const subscriptionId = subscriptions?.items?.find(
+        (item) => item?.snippet?.resourceId?.channelId === channelId
+    )?.id;
+    const handleSubscribed = useCallback(async () => {
+        if (checkSubscribed) {
+            const response = await handleUnSubcriceChannel(
+                subscriptionId,
+                token
+            );
+            if (response) {
+                setIsSubscribed(false);
+                mutateSubscriptions(); // Revalidate subscriptions data
+            }
+        } else {
+            const data = await handleSubcriceChannel(channelId, token);
+            if (data) {
+                setIsSubscribed(true);
+                mutateSubscriptions(); // Revalidate subscriptions data
+            }
+        }
+    }, [
+        checkSubscribed,
+        channelId,
+        token,
+        subscriptionId,
+        mutateSubscriptions,
+    ]);
     useEffect(() => {
+        setIsSubscribed(checkSubscribed);
         if (data) {
             setList(data?.items);
         }
-    }, [data]);
+    }, [checkSubscribed, data]);
     if (list?.length <= 0) return null;
     return (
         <>
             {list?.map((item: YoutubeItemType) => (
-                <div key={item.id} className="w-full flex  gap-x-3 mt-3">
+                <div key={item.id} className="flex  gap-x-3 mt-3">
                     <Link href={`channel/${item?.id}`}>
                         <figure className="size-10 rounded-full shrink-0">
                             <Image
@@ -45,12 +89,26 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
                             {calcSubscriber(item?.statistics?.subscriberCount)}
                         </p>
                     </div>
-                    <button className="cursor-pointer text-sm max-h-9 leading-9 font-medium px-4  rounded-full bg-[#515255] hover:bg-[#717171] transition-colors">
+                    <button className="cursor-pointer text-sm leading-9 font-medium px-4  rounded-full bg-[#515255] hover:bg-[#717171] transition-colors">
                         Tham gia
                     </button>
-                    <button className="cursor-pointer text-sm max-h-9 leading-9 font-medium px-4 text-black  rounded-full bg-[#fff] hover:bg-white/90 transition-colors">
-                        Đăng ký
-                    </button>
+                    {isSubscribed ? (
+                        <button
+                            onClick={handleSubscribed}
+                            className="text-white bg-[#272727] hover:bg-[#373737] transition-colors  px-4  rounded-full  flex items-center gap-x-2"
+                        >
+                            <BellRing className="w-5" />
+                            <p className="text-sm leading-9">Đã đăng ký</p>
+                            <ChevronDown className="w-5" />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleSubscribed}
+                            className="text-black bg-white px-4 py-2 rounded-full hover:bg-gray-200 transition-colors"
+                        >
+                            Đăng ký
+                        </button>
+                    )}
                 </div>
             ))}
         </>

@@ -1,7 +1,7 @@
 import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";
 
-import { getVideoCategories } from "@/utils/getVideoCategories";
+import { getVideoCategories } from "@/apis/getVideoCategories";
 import { currentUser } from "@clerk/nextjs/server";
 
 import CategoryList from "../Main/CategoryList";

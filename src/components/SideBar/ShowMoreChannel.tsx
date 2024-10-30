@@ -1,6 +1,6 @@
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from "lucide-react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/utils/cn";
 
 type ShowMoreChannelProps = {
     itemCount: number;
@@ -24,7 +24,9 @@ const ShowMoreChannel = ({
                 )}
             ></ChevronDown>
             <p className="text-xs leading-5">
-                {channelLength && itemCount < channelLength ? "Xem thêm" : "Ẩn bớt"}
+                {channelLength && itemCount < channelLength
+                    ? "Xem thêm"
+                    : "Ẩn bớt"}
             </p>
         </button>
     );

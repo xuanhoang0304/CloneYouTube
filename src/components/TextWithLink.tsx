@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 interface TextWithLinksProps {
     text: string;
@@ -46,11 +46,11 @@ const TextWithLinks: React.FC<TextWithLinksProps> = ({ text }) => {
                 {...(!showMore && { href: "#desc" })}
                 onClick={() => setShowMore(!showMore)}
                 className={cn(
-                    "absolute cursor-pointer",
-                    showMore && "bottom-0 left-0"
+                    ' cursor-pointer hover:underline transition-all duration-300',
+                    showMore && 'bottom-0 left-0 absolute'
                 )}
             >
-                {!showMore ? "...thêm" : "Ẩn bớt"}
+                {!showMore ? "Xem thêm" : "Ẩn bớt"}
             </a>
         </div>
     );

@@ -1,11 +1,11 @@
 "use client";
-import { Play } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { Play } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
-import { SearchPlayListItemType } from '@/common/types';
-import { cn } from '@/lib/utils';
+import { SearchPlayListItemType } from "@/common/types";
+import { cn } from "@/utils/cn";
 
 const SearchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
     const searchParams = useSearchParams();
@@ -46,7 +46,7 @@ const SearchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
 
                 <div>
                     <p className="text-white line-clamp-2 text-sm font-medium">
-                        {(data.snippet.title)}
+                        {data.snippet.title}
                     </p>
                     <p className="text-xs text-[#ccc] mt-1">
                         {data.snippet.channelTitle}

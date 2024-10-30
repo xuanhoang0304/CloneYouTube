@@ -4,8 +4,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { getAccessToken } from '@/apis/getAccessToken';
 import SubscriptionsList from '@/components/SideBar/SubscriptionsList';
-import { getAccessToken } from '@/utils/getAccessToken';
 
 import SideBarLine from './SideBarLine';
 import SideBarTabList from './SideBarTabList';
@@ -121,7 +121,7 @@ const SideBar = async () => {
                     <SideBarLine></SideBarLine>
                 </>
             )}
-            
+
             <h2 className="font-medium my-3 leading-[22px]">Khám phá </h2>
             <SideBarTabList list={TabList.slice(10)}></SideBarTabList>
         </section>

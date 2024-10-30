@@ -1,20 +1,79 @@
 "use client";
 
+import { BellRing, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 
-import { channelDetailResponse } from '@/common/types';
+import { channelDetailResponse, SubscriptionsItemType } from '@/common/types';
 import { useApi } from '@/hooks/useAPI';
 import calcSubscriber from '@/utils/calcSubscriber';
+import handleSubcriceChannel from '@/utils/handleSubcriceChannel';
+import handleUnSubcriceChannel from '@/utils/handleUnSubcriceChannel';
 
 import HomePlayList from './components/HomePlayList';
 
-// https://www.googleapis.com/youtube/v3/playlists
-const ChannelDetail = ({ channelUrl }: { channelUrl: string }) => {
+const ChannelDetail = ({
+    token,
+    channelUrlId,
+}: {
+    token: string | undefined;
+    channelUrlId: string;
+}) => {
+    const [checkSubscribed, setCheckSubscribed] = useState<boolean | undefined>(
+        false
+    );
     const { data: channelDetail } = useApi<channelDetailResponse>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&id=${channelUrl}`,
+        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&id=${channelUrlId}`,
     });
+    const subscriptionsUrl = `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
+    const { data: subscriptions, mutate: mutateSubscriptions } = useApi<{
+        items: SubscriptionsItemType[];
+    }>({
+        url: subscriptionsUrl,
+    });
+    const isSubscribed = useMemo(() => {
+        return subscriptions?.items?.some(
+            (item) => item?.snippet?.resourceId?.channelId === channelUrlId
+        );
+    }, [subscriptions, channelUrlId]);
+    const subscriptionId = subscriptions?.items?.find(
+        (item) => item?.snippet?.resourceId?.channelId === channelUrlId
+    )?.id;
+    const handleSubscribed = useCallback(async () => {
+        if (checkSubscribed) {
+            const response = await handleUnSubcriceChannel(
+                subscriptionId,
+                token
+            );
+            if (response) {
+                setCheckSubscribed(false);
+                mutateSubscriptions(); // Revalidate subscriptions data
+            }
+        } else {
+            const data = await handleSubcriceChannel(channelUrlId, token);
+            if (data) {
+                setCheckSubscribed(true);
+                mutateSubscriptions(); // Revalidate subscriptions data
+            }
+        }
+    }, [
+        checkSubscribed,
+        channelUrlId,
+        token,
+        subscriptionId,
+        mutateSubscriptions,
+    ]);
+
+    useLayoutEffect(() => {
+        setCheckSubscribed(isSubscribed);
+    }, [checkSubscribed, isSubscribed]);
+
     let channelId: string = "";
     if (channelDetail) {
+        if (!channelDetail.items) {
+            notFound();
+        }
         channelId = channelDetail?.items?.[0]?.id;
     }
 
@@ -58,11 +117,10 @@ const ChannelDetail = ({ channelUrl }: { channelUrl: string }) => {
                                 channelDetail?.items[0]?.statistics
                                     ?.subscriberCount || "0"
                             )}
-                            người đăng ký
                         </span>
                         <span>
-                            {channelDetail?.items[0]?.statistics?.videoCount}
-                            video
+                            {channelDetail?.items[0]?.statistics?.videoCount +
+                                " video"}
                         </span>
                     </p>
 
@@ -71,10 +129,27 @@ const ChannelDetail = ({ channelUrl }: { channelUrl: string }) => {
                             0,
                             90
                         )}
-                        <button className="text-white bg-black/50 left-[-24px] pl-6 relative z-1">
+                        <button className="text-white  bg-black/50 left-[-24px] pl-6 relative z-1">
                             ...xem thêm
                         </button>
                     </p>
+                    {checkSubscribed ? (
+                        <button
+                            onClick={handleSubscribed}
+                            className="text-white bg-[#272727] hover:bg-[#373737] transition-colors  px-4 py-2 rounded-full mt-3 flex items-center gap-x-2"
+                        >
+                            <BellRing className="w-5" />
+                            <p>Đã đăng ký</p>
+                            <ChevronDown className="w-5" />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleSubscribed}
+                            className="text-black bg-white px-4 py-2 rounded-full mt-3 hover:bg-gray-200 transition-colors"
+                        >
+                            Đăng ký
+                        </button>
+                    )}
                 </div>
             </div>
             {/* home */}
