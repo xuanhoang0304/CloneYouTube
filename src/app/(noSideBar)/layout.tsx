@@ -5,6 +5,7 @@ import { Roboto } from 'next/font/google';
 import { Suspense } from 'react';
 
 import Loading from '@/components/Loading';
+import { Toaster } from '@/components/ui/toaster';
 import Header from '@/feature/home/components/Header/Header';
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -33,6 +34,7 @@ export default function NoSideBarLayout({
                 suppressHydrationWarning={true}
             >
                 <body className="overflow-x-hidden">
+                    <Toaster />
                     <Suspense fallback={<Loading />}>
                         <Header></Header>
                     </Suspense>

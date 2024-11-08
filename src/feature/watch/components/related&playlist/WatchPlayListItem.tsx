@@ -1,13 +1,13 @@
 "use client";
-import { Play } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { Play } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-import { SearchPlayListItemType } from "@/common/types";
-import { cn } from "@/utils/cn";
+import { SearchPlayListItemType } from '@/common/types';
+import { cn } from '@/utils/cn';
 
-const SearchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
+const WatchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
     const searchParams = useSearchParams();
 
     // Convert searchParams to an object
@@ -21,7 +21,7 @@ const SearchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
             className={cn(
                 "flex gap-x-4 p-1 bg-black hover:bg-gray-600 transition-colors",
                 params.index == data.snippet.position &&
-                    "bg-[#ffffff1a] text-black"
+                    "bg-[#ffffff3a] text-black"
             )}
         >
             <Link
@@ -57,4 +57,4 @@ const SearchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
     );
 };
 
-export default SearchPlayListItem;
+export default WatchPlayListItem;

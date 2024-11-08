@@ -1,7 +1,7 @@
 import { getAccessToken } from '@/apis/getAccessToken';
 import getVideoById from '@/apis/getVideoById';
-import RelatedList from '@/feature/watch/components/RelatedList';
-import VideoDetail from '@/feature/watch/components/VideoDetail';
+import RelatedList from '@/feature/watch/components/related&playlist/RelatedList';
+import VideoDetail from '@/feature/watch/components/videoPlayer/VideoDetail';
 
 export async function generateMetadata({
     searchParams,

@@ -1,10 +1,10 @@
 "use client";
 
-import { SearchPlayListResponse } from "@/common/types";
-import Loading from "@/components/Loading";
-import { useApi } from "@/hooks/useAPI";
+import { SearchPlayListResponse } from '@/common/types';
+import Loading from '@/components/Loading';
+import { useApi } from '@/hooks/useAPI';
 
-import SearchPlayList from "./SearchPlayList";
+import WatchPlayList from './WatchPlayList';
 
 const PlayListWrapper = ({
     playList,
@@ -31,7 +31,7 @@ const PlayListWrapper = ({
                     </h4>
                 </div>
                 {playListItems && (
-                    <SearchPlayList list={playListItems.items}></SearchPlayList>
+                    <WatchPlayList list={playListItems.items}></WatchPlayList>
                 )}
             </div>
         </>

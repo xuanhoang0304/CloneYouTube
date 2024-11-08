@@ -2,7 +2,7 @@ import CommentList from './CommentList';
 
 const CommentContainer = ({ totalComment }: { totalComment: string | undefined }) => {
     return (
-        <div className="mt-4 pt-4 border-t border-gray-300">
+        <div className="mt-4">
             <CommentList totalComment={totalComment}></CommentList>
         </div>
     );

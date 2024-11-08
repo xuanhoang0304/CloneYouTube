@@ -15,12 +15,6 @@ export async function getAccessToken() {
 
         const token = response.data[0].token;
         return token;
-        // const res = await fetch(
-        //     `${url}?access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50&pageToken=${pageToken}`
-        // );
-
-        // const data = await res.json();
-        // return data;
     } catch (error) {
         console.error("Error in getAccessToken:", error);
         throw error;

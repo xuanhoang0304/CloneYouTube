@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-type ClickOutsideHandler = (event: MouseEvent | null) => void;
+type ClickOutsideHandler = (event?: MouseEvent | null) => void;
 
 function useClickOutside<T extends HTMLElement>(handler: ClickOutsideHandler) {
     const ref = useRef<T | null>(null);

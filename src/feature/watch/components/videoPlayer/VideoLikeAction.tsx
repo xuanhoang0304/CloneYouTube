@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useApi } from '@/hooks/useAPI';
 import { cn } from '@/utils/cn';
 
-import handleLikeVideo from '../apis/handleLikeVideo';
+import handleLikeVideo from '../../apis/handleLikeVideo';
 
 const VideoLikeAction = ({
     videoId,
@@ -13,7 +13,9 @@ const VideoLikeAction = ({
     videoId: string | undefined;
     token: string | undefined;
 }) => {
-    const { data } = useApi<{ items: { rating: string }[] }>({
+    const { data, mutate: mutateRating } = useApi<{
+        items: { rating: string }[];
+    }>({
         url: `https://www.googleapis.com/youtube/v3/videos/getRating?access_token=${token}&id=${videoId}`,
     });
     const statusLike = data?.items?.[0]?.rating;
@@ -26,6 +28,7 @@ const VideoLikeAction = ({
             handleLikeVideo(videoId, "like", token);
             setIsLike("like");
         }
+        mutateRating();
     };
     const handleUnlike = () => {
         if (isLike === "dislike") {
@@ -35,6 +38,7 @@ const VideoLikeAction = ({
             handleLikeVideo(videoId, "dislike", token);
             setIsLike("dislike");
         }
+        mutateRating();
     };
     useEffect(() => {
         setIsLike(statusLike);

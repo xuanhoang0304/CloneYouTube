@@ -1,6 +1,6 @@
 "use client";
 import { Keyboard, Search, X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -11,18 +11,19 @@ import { cn } from '@/utils/cn';
 import { slugify } from '@/utils/slugify';
 
 const SearchInput = () => {
+    const q = useSearchParams().get("q")?.replaceAll("-", " ");
     const SearchIputRef = useRef<HTMLInputElement>(null);
     const [listKeyword, setListKeyword] = useState<
         { id: { videoId: string }; snippet: { title: string } }[]
     >([]);
     const [isSearchFocus, setIsSearchFocus] = useState(false);
-    const [searchText, setSearchText] = useState("");
+    const [searchText, setSearchText] = useState(q || "");
     const [isShow, setIsShow] = useState(false);
     const handleClose = () => {
         setIsShow(false);
     };
     const ref = useClickOutside<HTMLOListElement>(handleClose);
-    const debouncedSearch = useDebounce(searchText, 250);
+    const debouncedSearch = useDebounce(searchText, 1500);
 
     const handleChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
@@ -34,6 +35,7 @@ const SearchInput = () => {
     });
     const router = useRouter();
     const handleSearch = (key: string) => {
+        if (key === '') return;
         router.push(`/search?q=${slugify(key)}`);
         setIsShow(false);
         setIsSearchFocus(false);
@@ -44,7 +46,9 @@ const SearchInput = () => {
         setIsShow(true);
     };
     const handleKeyUp = (e: KeyboardEvent): void => {
-        if (e.key === "Enter") {
+        e.preventDefault();
+        if (searchText === '') return;
+        if (e.key === 'Enter' && searchText !== '') {
             router.push(`/search?q=${slugify(searchText)}`);
             setIsShow(false);
             setIsSearchFocus(false);
@@ -62,7 +66,7 @@ const SearchInput = () => {
             SearchIputRef.current?.removeEventListener("focus", handleFocus);
             window.removeEventListener("keyup", handleKeyUp);
         };
-    }, [debouncedSearch, isSearchFocus, searchKey]);
+    }, [debouncedSearch, isSearchFocus, searchKey ]);
     return (
         <div className="max-w-[600px] flex-1 bg-[#121212] text-[#888] flex items-center pl-[16px] rounded-full border border-[#303030] relative">
             {searchText &&

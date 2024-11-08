@@ -7,13 +7,13 @@ import { YoutubeResponseType } from '@/common/types';
 import { useApi } from '@/hooks/useAPI';
 import { useYouTubeStore } from '@/store/store';
 
-import CommentContainer from './Comment';
+import CommentContainer from '../comment/Comment';
 import VideoInfo from './VideoInfo';
 import VideoLikeAction from './VideoLikeAction';
 import VideoPlayer from './VideoPlayer';
 
 const VideoDesc = dynamic(
-    () => import("@/feature/watch/components/VideoDesc"),
+    () => import("@/feature/watch/components/videoPlayer/VideoDesc"),
     {
         ssr: false,
     }
@@ -26,7 +26,7 @@ const VideoDetail = ({ token }: { token: string | undefined }) => {
     }, [token, setToken]);
 
     const id = useSearchParams().get("v");
-    let videoDetail ;
+    let videoDetail;
     const { data } = useApi<YoutubeResponseType>({
         url: `https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${id}`,
     });
@@ -35,29 +35,29 @@ const VideoDetail = ({ token }: { token: string | undefined }) => {
         notFound();
     }
     return (
-        <>
-            <div className="w-full max-h-[500px] rounded-2xl">
-                <VideoPlayer></VideoPlayer>
-                <h1 className="text-[20px] mt-4 line-clamp-2 font-bold leading-7">
-                    {videoDetail?.snippet?.title}
-                </h1>
-                <div className="flex items-center justify-between">
-                    <VideoInfo
-                        channelId={videoDetail?.snippet?.channelId}
-                    ></VideoInfo>
+        <div className="w-full max-h-[500px] rounded-2xl relative z-10">
+            <VideoPlayer></VideoPlayer>
+            <h1 className="text-[20px] mt-4 line-clamp-2 font-bold leading-7">
+                {videoDetail?.snippet?.title}
+            </h1>
+            <div className="flex items-center justify-between mt-3">
+                <VideoInfo
+                    channelId={videoDetail?.snippet?.channelId}
+                ></VideoInfo>
 
-                    <VideoLikeAction token={token} videoId={videoDetail?.id} ></VideoLikeAction>
-                </div>
-                {videoDetail?.snippet?.description && (
-                    <VideoDesc
-                        desc={videoDetail?.snippet?.description}
-                    ></VideoDesc>
-                )}
-                <CommentContainer
-                    totalComment={videoDetail?.statistics?.commentCount}
-                ></CommentContainer>
+                <VideoLikeAction
+                    token={token}
+                    videoId={videoDetail?.id}
+                ></VideoLikeAction>
             </div>
-        </>
+            {videoDetail?.snippet?.description && (
+                <VideoDesc desc={videoDetail?.snippet?.description}></VideoDesc>
+            )}
+
+            <CommentContainer
+                totalComment={videoDetail?.statistics?.commentCount}
+            ></CommentContainer>
+        </div>
     );
 };
 

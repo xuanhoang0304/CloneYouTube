@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { YoutubeItemType, YoutubeResponseType } from "@/common/types";
-import Loading from "@/components/Loading";
-import { useApi } from "@/hooks/useAPI";
-import { useYouTubeStore } from "@/store/store";
+import { YoutubeItemType, YoutubeResponseType } from '@/common/types';
+import Loading from '@/components/Loading';
+import { useApi } from '@/hooks/useAPI';
+import { useYouTubeStore } from '@/store/store';
 
-import YoutubeItem from "./YoutubeItem";
+import YoutubeItem from './YoutubeItem';
 
 const options = {
     part: "snippet,contentDetails,statistics",

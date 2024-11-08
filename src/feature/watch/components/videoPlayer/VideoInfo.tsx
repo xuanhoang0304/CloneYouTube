@@ -67,7 +67,7 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
     return (
         <>
             {list?.map((item: YoutubeItemType) => (
-                <div key={item.id} className="flex  gap-x-3 mt-3">
+                <div key={item.id} className="flex  gap-x-3 ">
                     <Link href={`channel/${item?.id}`}>
                         <figure className="size-10 rounded-full shrink-0">
                             <Image

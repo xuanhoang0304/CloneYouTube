@@ -63,6 +63,9 @@ button {
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
+    .overflow-unset {
+        overflow: unset;
+    }
 }
 
 @layer base {

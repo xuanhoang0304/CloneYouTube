@@ -225,27 +225,28 @@ export type ChannelType = {
 export type TopCommentType = {
     id: string;
     snippet: {
-        channelId: string;
+        channelId?: string;
         topLevelComment: CommentType;
 
         totalReplyCount: number;
     };
-    replies: {
+    replies?: {
         comments: CommentType[];
     };
 };
 export type CommentType = {
-    id: string;
+    id?: string;
     snippet: {
-        channelId: string;
+        channelId?: string;
         textOriginal: string;
         authorDisplayName: string;
         authorProfileImageUrl: string;
-        authorChannelId: {
+        authorChannelId?: {
             value: string;
         };
         likeCount: number;
         publishedAt: string;
+        updatedAt?: string;
     };
 };
 export type RelatedItemType = {
@@ -380,6 +381,7 @@ export type HomePlayListItemType = {
 };
 export type HomePlayListResponse = { items: HomePlayListItemType[] };
 export type SearchVideoItemType = {
+    etag: string;
     id: {
         videoId: string;
     };

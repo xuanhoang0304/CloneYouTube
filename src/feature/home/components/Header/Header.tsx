@@ -1,14 +1,14 @@
-import { Menu } from "lucide-react";
-import dynamic from "next/dynamic";
+import { Menu } from 'lucide-react';
+import dynamic from 'next/dynamic';
 
-import { getVideoCategories } from "@/apis/getVideoCategories";
-import { currentUser } from "@clerk/nextjs/server";
+import { getVideoCategories } from '@/apis/getVideoCategories';
+import { currentUser } from '@clerk/nextjs/server';
 
-import CategoryList from "../Main/CategoryList";
-import LoginContainer from "./LoginContainer";
-import Logo from "./Logo";
-import SearchInput from "./SearchInput";
-import Voice from "./Voice";
+import CategoryList from '../Main/CategoryList';
+import LoginContainer from './LoginContainer';
+import Logo from './Logo';
+import SearchInput from './SearchInput';
+import Voice from './Voice';
 
 const DynamicLoginProfile = dynamic(() => import("./LoginProifle"), {
     ssr: false,
@@ -38,6 +38,7 @@ const channelError = [
     "44",
 ];
 const Header = async () => {
+   
     const user = await currentUser();
     const category = await getVideoCategories();
     const data = category?.items

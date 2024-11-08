@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 
 import Loading from '@/components/Loading';
 import SideBar from '@/components/SideBar/SideBar';
+import { Toaster } from '@/components/ui/toaster';
 import Header from '@/feature/home/components/Header/Header';
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -34,6 +35,7 @@ export default function RootLayout({
                 suppressHydrationWarning={true}
             >
                 <body className="overflow-x-hidden">
+                    <Toaster />
                     <Suspense fallback={<Loading />}>
                         <Header></Header>
                     </Suspense>
