@@ -1,11 +1,11 @@
 import CommentList from './CommentList';
 
-const CommentContainer = ({ totalComment }: { totalComment: string | undefined }) => {
-    return (
-        <div className="mt-4">
-            <CommentList totalComment={totalComment}></CommentList>
-        </div>
-    );
+const CommentContainer = ({
+    totalComment,
+}: {
+    totalComment: string | undefined;
+}) => {
+    return <CommentList totalComment={totalComment}></CommentList>;
 };
 
 export default CommentContainer;

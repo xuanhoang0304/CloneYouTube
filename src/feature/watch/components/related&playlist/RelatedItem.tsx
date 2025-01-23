@@ -22,18 +22,19 @@ const RelatedItem = ({ item }: Props) => {
             <figure className="w-[168px] h-[94px] rounded-lg shrink-0">
                 <Image
                     src={
-                        item.snippet.thumbnails.high.url != "" ? item.snippet.thumbnails.high.url :
-                        "https://c8.alamy.com/comp/2X4W7KT/grunge-red-not-available-word-hexagon-rubber-seal-stamp-on-white-background-2X4W7KT.jpg"
+                        item.snippet.thumbnails.high.url != ""
+                            ? item.snippet.thumbnails.high.url
+                            : "https://c8.alamy.com/comp/2X4W7KT/grunge-red-not-available-word-hexagon-rubber-seal-stamp-on-white-background-2X4W7KT.jpg"
                     }
                     alt=""
-                    width={168}
-                    height={100}
+                    width={0}
+                    height={0}
                     className="img-cover rounded-lg"
                 ></Image>
             </figure>
-            <div className=" max-w-[257px] pr-6 overflow-hidden">
+            <div className=" lg:max-w-[257px] flex-1 mr-8 overflow-hidden">
                 <h2 className="line-clamp-2 font-medium leading-[22px] cursor-pointer">
-                    {item.snippet.title}
+                    {item.snippet.title.replaceAll("&quot;",`"`)}
                 </h2>
                 <p className="text-sm leading-[18px] text-[#aaa]">
                     {item.snippet.channelTitle}

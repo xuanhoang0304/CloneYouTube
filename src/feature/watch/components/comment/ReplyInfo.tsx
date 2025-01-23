@@ -7,22 +7,22 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@radix
 const ReplyInfo = ({ reply }: { reply: CommentType }) => {
     return (
         <div className="flex-1">
-            <div className="flex items-center gap-x-2">
-                <h3 className="text-[13px] font-semibold  leading-[18px] text-[#f1f1f1]">
+            <div className="flex flex-col md:flex-row gap-y-2 md:items-center gap-x-2">
+                <h3 className="text-[13px] font-semibold  leading-[18px] ">
                     {reply.snippet.authorDisplayName}
                 </h3>
                 <p className="text-xs text-[#aaa]">
                     {calcDayCreate(reply.snippet.publishedAt)}
                 </p>
             </div>
-            <p className="text-sm leading-[22px] max-w-[90%]  mt-1 text-[#f1f1f1]">
+            <p className="text-sm leading-[22px] max-w-[90%]  mt-1 ">
                 {reply.snippet.textOriginal}
             </p>
             <div className="flex items-center gap-x-1">
                 <div className="flex items-center gap-x-1">
                     <TooltipProvider>
                         <Tooltip>
-                            <TooltipTrigger className="text-white size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
+                            <TooltipTrigger className=" size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
                                 <ThumbsUp className="size-5" />
                             </TooltipTrigger>
                             <TooltipContent className="bg-[#717171] relative !bottom-[-70px] rounded z-10">
@@ -39,7 +39,7 @@ const ReplyInfo = ({ reply }: { reply: CommentType }) => {
                 <div className="flex items-center gap-x-1">
                     <TooltipProvider>
                         <Tooltip>
-                            <TooltipTrigger className="text-white size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
+                            <TooltipTrigger className=" size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
                                 <ThumbsDown className="size-5" />
                             </TooltipTrigger>
                             <TooltipContent className="bg-[#717171] relative !bottom-[-70px] rounded z-10">

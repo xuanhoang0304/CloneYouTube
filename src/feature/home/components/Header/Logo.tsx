@@ -7,7 +7,7 @@ type LogoProps = {
 }
 const Logo = ({text} : LogoProps) => {
     return (
-        <Link href="/" className="flex items-center  px-[16px] py-[18px] relative">
+        <Link href="/" className="flex items-center pr-[16px] pl:0 lg:px-[16px] py-[18px] relative">
             <figure className='w-[29px] h-[20px]'>
                 <Image
                     src="/image/icon.png"
@@ -17,7 +17,7 @@ const Logo = ({text} : LogoProps) => {
                     className='img-cover'
                 ></Image>
             </figure>
-            <p className='text-white font-semibold tracking-[-1px] text-xl leading-none'>{text}</p>
+            <p className='dark:text-white text-black font-semibold tracking-[-1px] text-xl leading-none'>{text}</p>
             <p className='text-[#AAA] absolute right-0 top-3 text-[10px]'>VN</p>
         </Link>
     );

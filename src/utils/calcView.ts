@@ -1,4 +1,4 @@
-export default function calcView(view: number) {
+export default function calcView(view: number ) {
     if (view >= 1000000000) {
         return `${(view / 1000000000).toFixed(1).replace(".0","")} B lượt xem`;
     }

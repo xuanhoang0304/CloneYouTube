@@ -7,8 +7,6 @@ html {
 }
 body {
     font-family: Roboto, sans-serif;
-    background-color: #0f0f0f;
-    color: #fff;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -95,6 +93,9 @@ button {
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
+        --bg-hover-white: #F1f1f1;
+        --bg-second-white: #e5e5e5;
+        --swiper-navigation-color: #e32a2a;
     }
     .dark {
         --background: 0 0% 3.9%;
@@ -133,7 +134,7 @@ button {
     }
 }
 .Category-swiper .swiper-button-next {
-    right: 222px;
+    right: 247px;
 }
 .Category-swiper .swiper-button-prev {
     left: 0px;
@@ -151,7 +152,7 @@ button {
 }
 .Category-swiper:hover .swiper-button-prev,
 .Category-swiper:hover .swiper-button-next {
-    background-color: #fff;
+    background-color: #333;
 }
 .Category-swiper .swiper-button-next::after,
 .Category-swiper .swiper-button-prev::after {
@@ -162,5 +163,12 @@ button {
 }
 .Category-swiper:hover .swiper-button-next::after,
 .Category-swiper:hover .swiper-button-prev::after {
-    color: red;
+    color: #fff;
 }
+
+
+@media (max-width: 991.98px) {
+    .Category-swiper .swiper-button-next {
+        right: 1px;
+    }
+ }

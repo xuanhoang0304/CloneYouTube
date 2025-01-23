@@ -16,14 +16,14 @@ const SideBarTabItem = ({ item }: SideBarTabItemProps) => {
             <Link
                 href={item.href}
                 className={cn(
-                    "flex items-center gap-x-3  w-[198px] transition-colors p-2 hover:bg-[#717171] rounded-lg cursor-pointer",
-                    isActive ? "bg-[#717171]" : ""
+                    "flex items-center gap-x-3   w-[198px] transition-colors p-2 hover:bg-[var(--bg-second-white)] dark:hover:bg-primary-bgcl rounded-lg cursor-pointer",
+                    isActive ? "bg-[var(--bg-second-white)] dark:bg-primary-bgcl" : ""
                 )}
             >
                 {item.icon}
                 <span
                     className={cn(
-                        "text-white font-medium transition-colors text-sm",
+                        "dark:text-white font-medium transition-colors text-sm",
                         isActive && "font-bold"
                     )}
                 >

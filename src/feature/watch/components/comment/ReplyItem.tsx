@@ -7,7 +7,7 @@ import ReplyInfo from './ReplyInfo';
 
 const ReplyItem = ({ reply }: { reply: CommentType }) => {
     return (
-        <li key={reply.id} className="mb-4 flex gap-x-3 w-full relative">
+        <li key={reply.id} className="mb-4 flex gap-x-3 w-full pr-5 relative">
             <div className="flex flex-1 gap-x-3 w-full">
                 <figure className={"rounded-full size-7"}>
                     <Image

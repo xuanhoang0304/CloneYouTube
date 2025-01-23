@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default async function handleAddCommentVideo(
-    videoId: string | null,
+    videoId: string | null | undefined,
     textOriginal: string,
     token: string | undefined
 ) {
@@ -10,6 +10,7 @@ export default async function handleAddCommentVideo(
         {
             snippet: {
                 videoId,
+                canReply: true,
                 topLevelComment: {
                     snippet: {
                         textOriginal,

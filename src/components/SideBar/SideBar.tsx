@@ -1,11 +1,12 @@
+"use client"
 import {
     ArrowDownToLine, ChevronRight, Clapperboard, Clock4, Flame, Gamepad2, History, House, ListVideo,
     Music, Newspaper, SquarePlay, ThumbsUp, TvMinimalPlay, Youtube
 } from 'lucide-react';
 import Link from 'next/link';
 
-import { getAccessToken } from '@/apis/getAccessToken';
 import SubscriptionsList from '@/components/SideBar/SubscriptionsList';
+import { useYouTubeStore } from '@/store/store';
 
 import SideBarLine from './SideBarLine';
 import SideBarTabList from './SideBarTabList';
@@ -97,33 +98,35 @@ const TabList = [
     },
 ];
 
-const SideBar = async () => {
-    const token = await getAccessToken();
+const SideBar = () => {
+    const {token} = useYouTubeStore();
     return (
-        <section className=" w-[240px] h-[calc(100vh-60px)]  py-3 mb-10 px-4 overflow-hidden hover:overflow-auto  fixed z-40 top-[56px] left-0 ">
-            <SideBarTabList list={TabList.slice(0, 4)}></SideBarTabList>
-            <SideBarLine></SideBarLine>
-            <Link
-                href={"/feed/you"}
-                className="flex items-center gap-x-3 w-[198px] transition-colors p-2 hover:bg-[#717171] rounded-lg cursor-pointer"
-            >
-                <p className="text-sm">Bạn</p>
-                <ChevronRight className="w-5" />
-            </Link>
-            <SideBarTabList list={TabList.slice(4, 10)}></SideBarTabList>
-            <SideBarLine></SideBarLine>
-            {token && (
-                <>
-                    <h2 className="font-medium my-3 leading-[22px]">
-                        Kênh đăng ký{" "}
-                    </h2>
-                    <SubscriptionsList token={token}></SubscriptionsList>
-                    <SideBarLine></SideBarLine>
-                </>
-            )}
+        <section className="hidden lg:block ">
+            <div className="w-[240px] h-[calc(100vh-60px)] bg-white dark:bg-black  py-3 mb-10 px-4 overflow-hidden hover:overflow-auto  fixed z-40 top-[56px] left-0 ">
+                <SideBarTabList list={TabList.slice(0, 4)}></SideBarTabList>
+                <SideBarLine></SideBarLine>
+                <Link
+                    href={"/feed/you"}
+                    className="flex items-center gap-x-3 w-[198px] transition-colors p-2 hover:bg-[var(--bg-second-white)] rounded-lg cursor-pointer"
+                >
+                    <p className="text-sm">Bạn</p>
+                    <ChevronRight className="w-5" />
+                </Link>
+                <SideBarTabList list={TabList.slice(4, 10)}></SideBarTabList>
+                <SideBarLine></SideBarLine>
+                {token && (
+                    <>
+                        <h2 className="font-medium my-3 leading-[22px]">
+                            Kênh đăng ký{" "}
+                        </h2>
+                        <SubscriptionsList token={token}></SubscriptionsList>
+                        <SideBarLine></SideBarLine>
+                    </>
+                )}
 
-            <h2 className="font-medium my-3 leading-[22px]">Khám phá </h2>
-            <SideBarTabList list={TabList.slice(10)}></SideBarTabList>
+                <h2 className="font-medium my-3 leading-[22px]">Khám phá </h2>
+                <SideBarTabList list={TabList.slice(10)}></SideBarTabList>
+            </div>
         </section>
     );
 };

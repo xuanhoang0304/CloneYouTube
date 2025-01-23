@@ -1,40 +1,25 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useId, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import { RelatedItemType, RelatedResponseType } from '@/common/types';
-import Loading from '@/components/Loading';
-import { useApi } from '@/hooks/useAPI';
-import { useYouTubeStore } from '@/store/store';
+import { RelatedItemType, RelatedResponseType } from "@/common/types";
+import Loading from "@/components/Loading";
+import { useApi } from "@/hooks/useAPI";
 
-import PlayListWrapper from './PlayListWrapper';
-import RelatedItem from './RelatedItem';
-import TagList from './TagList';
+import PlayListWrapper from "./PlayListWrapper";
+import RelatedItem from "./RelatedItem";
 
-const options = {
-    part: "snippet,contentDetails,statistics",
-    maxResults: 50,
-    chart: "mostPopular",
-    regionCode: "VN",
+type RelatedListProps = {
+    channelId: string | undefined;
 };
-
-const RelatedList = () => {
+const RelatedList = ({ channelId }: RelatedListProps) => {
     const searchParams = useSearchParams();
-
+    const [hasMore, setHasMore] = useState(false);
     // Convert searchParams to an object
     const params: { [key: string]: string } = {};
-    searchParams.forEach((value, key) => {
-        params[key] = value;
-    });
-    const playListSearchParams = { ...params };
-    const { categoryId } = useYouTubeStore();
-    const [url, setUrl] = useState(
-        `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&videoCategoryId=${categoryId}&type=video&maxResults=${options.maxResults}&order=date&regionCode=${options.regionCode}&location=14.0583,108.2772&locationRadius=1000km`
-    );
     const [nextPageToken, setNextPageToken] = useState("");
-    const prefixId = useId();
-    const [hasMore, setHasMore] = useState(false);
+    const [list, setList] = useState<RelatedItemType[]>([]);
     const fetchData = async () => {
         try {
             setHasMore(newData?.nextPageToken ? true : false);
@@ -46,17 +31,25 @@ const RelatedList = () => {
             console.log(error);
         }
     };
-    const { data, isLoading } = useApi<RelatedResponseType>({
-        url: url,
+    searchParams.forEach((value, key) => {
+        params[key] = value;
     });
-    const { data: newData, isLoading: loading } = useApi<RelatedResponseType>({
-        url: `${url}${nextPageToken ? `&pageToken=${nextPageToken}` : ""}`,
+    const { data } = useApi<RelatedResponseType>({
+        url: channelId
+            ? `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=100&order=date
+        `
+            : "",
     });
-    const handleSetUrl = (vl: string) => {
-        setUrl(vl);
-        setNextPageToken("");
-    };
-    const [list, setList] = useState<RelatedItemType[]>([]);
+    const { data: newData, isLoading } = useApi<RelatedResponseType>({
+        url: channelId
+            ? `https://www.googleapis.com/youtube/v3/search?key=${
+                  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
+              }&part=snippet&channelId=${channelId}&type=video&maxResults=100&order=date${
+                  nextPageToken ? `&pageToken=${nextPageToken}` : ""
+              }`
+            : "",
+    });
+
     useEffect(() => {
         if (data) {
             setList(data.items);
@@ -68,41 +61,27 @@ const RelatedList = () => {
                 setNextPageToken(data.nextPageToken);
             }
         }
-    }, [categoryId, data]);
+    }, [data, channelId]);
 
     return (
         <>
             {isLoading && <Loading></Loading>}
             {params.list && (
-                <PlayListWrapper
-                    playList={
-                        playListSearchParams as {
-                            list: string;
-                            listTitle: string;
-                            v: string;
-                            index: string;
-                        }
-                    }
-                ></PlayListWrapper>
+                <PlayListWrapper playList={params}></PlayListWrapper>
             )}
-            <TagList onSetUrl={handleSetUrl} categoryId={categoryId}></TagList>
+
             <InfiniteScroll
                 dataLength={list?.length} //This is important field to render the next data
                 next={fetchData}
                 hasMore={hasMore}
-                loader={loading && <p>Loading...</p>}
-                scrollThreshold={0.8}
+                loader={isLoading && <p>Loading...</p>}
+                scrollThreshold={0.5}
                 scrollableTarget="window"
                 className="no-scrollbar"
             >
-                <ul className="grid grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-x-5 py-4 gap-y-5 pr-6">
+                <ul className="grid grid-cols-[repeat(auto-fill,minmax(360px,1fr))] gap-x-5  gap-y-5">
                     {list?.map((item: RelatedItemType) => (
-                        <RelatedItem
-                            key={`${item.id}${prefixId}${
-                                Math.random() * 10000
-                            }`}
-                            item={item}
-                        />
+                        <RelatedItem key={item.id.videoId} item={item} />
                     ))}
                 </ul>
             </InfiniteScroll>

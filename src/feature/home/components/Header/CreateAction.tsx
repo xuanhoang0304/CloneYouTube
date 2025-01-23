@@ -1,10 +1,10 @@
 "use client";
 
-import { NotebookPen, Plus, Radio, Youtube } from "lucide-react";
-import { useState } from "react";
+import { NotebookPen, Plus, Radio, Youtube } from 'lucide-react';
+import { useState } from 'react';
 
-import useClickOutside from "@/hooks/useClickOutSide";
-import { cn } from "@/utils/cn";
+import useClickOutside from '@/hooks/useClickOutSide';
+import { cn } from '@/utils/cn';
 
 const ProfileAction = [
     {
@@ -27,10 +27,10 @@ export const CreateAction = () => {
     };
     const ref = useClickOutside<HTMLDivElement>(handleClose);
     return (
-        <div className="relative" ref={ref}>
+        <div className="relative hidden lg:block" ref={ref}>
             <button
                 onClick={() => setIsShow(!isShow)}
-                className="flex items-center  px-[16px] hover:bg-[#717171] bg-primary-bgcl rounded-full gap-x-[6px] transition-colors"
+                className="flex items-center  px-[16px] dark:hover:bg-[#717171] bg-[var(--bg-second-white)] hover:bg-[var(--bg-hover-white)] dark:bg-primary-bgcl rounded-full gap-x-[6px] transition-colors"
             >
                 <Plus></Plus>
                 <p className="text-xs leading-9 font-medium">Tạo</p>
@@ -38,7 +38,7 @@ export const CreateAction = () => {
             {isShow && (
                 <ul
                     className={cn(
-                        "absolute z-50 bottom-[-150px]  rounded-lg left-0 w-[180px] bg-primary-bgcl hidden py-2 ",
+                        "absolute z-50 bottom-[-150px]  rounded-lg left-0 w-[180px] bg-[var(--bg-second-white)] dark:bg-primary-bgcl hidden py-2 ",
                         isShow && "block"
                     )}
                 >

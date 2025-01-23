@@ -1,51 +1,72 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { Button } from '@/components/ui/button';
 import { useYouTubeStore } from '@/store/store';
 import { cn } from '@/utils/cn';
 
 import handleAddCommentVideo from '../../apis/handleAddCommentVideo';
+import handleReplyComment from '../../apis/handleReplyComment';
 
 const CommentInput = ({
+    parentId,
     videoId,
     onCommentAdded,
     userAvatar,
+    action,
+    onCancelReply,
 }: {
-    videoId: string | null;
+    videoId?: string | null;
     onCommentAdded?: (data: {
         content: string;
         createdAt: string;
         id: string;
     }) => void;
+    onCancelReply?: () => void;
     userAvatar: string | undefined;
+    action: "add" | "rep" | "edit";
+    parentId?: string;
 }) => {
     const [comment, setComment] = useState("");
     const { token } = useYouTubeStore();
     const [isShow, setIsShow] = useState(false);
+    if (!token)
+        return (
+            <p className="text-yellow-600">
+                Đăng nhập để có thể bình luận video !
+            </p>
+        );
     return (
-        <div className="mt-6 flex gap-x-4">
-            <Image
-                src={userAvatar || "/image/default.avif"}
-                alt="avatar"
-                width={40}
-                height={40}
-                className="rounded-full size-10 object-cover"
-            />
+        <div className="flex gap-x-4 sticky top-[120px] bg-white dark:bg-black z-50 lg:static py-2">
+            <figure
+                className={cn(
+                    "size-10 rounded-full",
+                    action == "rep" && "size-6"
+                )}
+            >
+                <Image
+                    src={userAvatar || "/image/default.avif"}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    className="img-cover rounded-full"
+                />
+            </figure>
             <div className="flex-1 relative mr-4">
                 <input
                     type="text"
-                    placeholder="Viết bình luận..."
-                    className="w-full cursor-pointer"
+                    placeholder={
+                        action == "rep" ? "Phản hồi..." : "Viết bình luận..."
+                    }
+                    className={"w-full cursor-pointer text-sm"}
                     value={comment}
                     onFocus={() => setIsShow(true)}
                     onChange={(e) => setComment(e.target.value)}
                 />
                 <div
                     className={cn(
-                        " relative mt-[2px] w-full bg-[#717171] h-[1px] overflow-hidden rounded-full",
+                        " relative mt-[2px] w-full bg-[#b4b3b3] h-[1px] overflow-hidden rounded-full",
                         "after:absolute after:bottom-0 after:left-[50%] after:w-full after:h-full",
-                        "after:bg-[#fff] after:translate-x-[-50%]",
+                        "after:bg-[#ff4a4a] after:translate-x-[-50%]",
                         "after:transition-transform after:duration-500 after:ease-in-out",
                         comment ? "after:scale-x-100 " : "after:scale-x-0 "
                     )}
@@ -53,34 +74,46 @@ const CommentInput = ({
                 <div className="mt-2 w-full flex justify-end">
                     {isShow && (
                         <div className="flex gap-x-2">
-                            <Button
+                            <button
                                 onClick={() => {
                                     setComment("");
                                     setIsShow(false);
+                                    onCancelReply?.();
                                 }}
-                                className="bg-transparent hover:bg-[#272727] rounded-full transition-colors "
+                                className="bg-transparent hover:text-black dark:text-white text-black px-3 dark:hover:bg-[#272727] hover:bg-[var(--bg-second-white)] rounded-full transition-colors "
                             >
                                 Hủy
-                            </Button>
+                            </button>
                             <button
                                 onClick={async () => {
-                                    if (token) {
-                                        const tempComment = {
-                                            content: comment,
-                                            createdAt: new Date().toISOString(),
-                                            id: Math.random()
-                                                .toString(36)
-                                                .substring(7),
-                                        };
-
-                                        const res = await handleAddCommentVideo(
-                                            videoId,
+                                    if (action == "rep") {
+                                        handleReplyComment(
+                                            parentId,
                                             comment,
                                             token
                                         );
-                                        if (res) {
-                                            setComment("");
-                                            onCommentAdded?.(tempComment);
+                                        onCancelReply?.();
+                                    } else {
+                                        if (token) {
+                                            const tempComment = {
+                                                content: comment,
+                                                createdAt:
+                                                    new Date().toISOString(),
+                                                id: Math.random()
+                                                    .toString(36)
+                                                    .substring(7),
+                                            };
+
+                                            const res =
+                                                await handleAddCommentVideo(
+                                                    videoId,
+                                                    comment,
+                                                    token
+                                                );
+                                            if (res) {
+                                                setComment("");
+                                                onCommentAdded?.(tempComment);
+                                            }
                                         }
                                     }
                                 }}
@@ -91,7 +124,7 @@ const CommentInput = ({
                                         : "bg-[#272727]/50"
                                 )}
                             >
-                                Bình luận
+                                {action == "add" ? "Bình luận" : "Phản hồi"}
                             </button>
                         </div>
                     )}

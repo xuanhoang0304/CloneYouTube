@@ -15,7 +15,7 @@ type NotifyItem = {
 const NotifyItem = ({ item }: NotifyItem) => {
     return (
         <li>
-            <Link href="#" className="py-4 pr-4 flex justify-between">
+            <Link href="#" className="py-4 pr-4 flex justify-between gap-x-3">
                 <div className="relative shrink-0 ml-1 h-12">
                     {!item.isCheck && (
                         <div className="size-1 abs-center-y  rounded-full  bg-[#3ea6ff]"></div>

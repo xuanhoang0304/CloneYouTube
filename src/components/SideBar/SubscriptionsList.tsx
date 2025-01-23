@@ -10,7 +10,7 @@ import SubscriptionsItem from './SubscriptionsItem';
 const SubscriptionsList = ({ token }: { token: string }) => {
     const [itemCount, setItemCount] = useState(5);
     const { data: subscriptions, error } = useApi<{ items: [] }>({
-        url: `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`,
+        url: token ?`https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50` : "",
     });
 
     if (error) {

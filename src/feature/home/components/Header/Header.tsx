@@ -1,10 +1,13 @@
 import { Menu } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
+import { getAccessToken } from '@/apis/getAccessToken';
 import { getVideoCategories } from '@/apis/getVideoCategories';
+import { cn } from '@/lib/utils';
 import { currentUser } from '@clerk/nextjs/server';
 
 import CategoryList from '../Main/CategoryList';
+import DarkMode from './DarkMode';
 import LoginContainer from './LoginContainer';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
@@ -38,8 +41,8 @@ const channelError = [
     "44",
 ];
 const Header = async () => {
-   
     const user = await currentUser();
+    const token = await getAccessToken();
     const category = await getVideoCategories();
     const data = category?.items
         ?.map((item: { id: string; snippet: { title: string } }) => {
@@ -58,23 +61,34 @@ const Header = async () => {
         title: "Tất cả",
         isActive: true,
     });
+
     return (
-        <header className="fixed top-0 left-0 right-0 z-20 bg-black/50 backdrop-blur-lg">
-            <div className="max-w-[calc(100%-48px)]  mx-auto flex items-center justify-between">
+        <header className="fixed top-0 left-0 right-0 z-20 bg-white  dark:bg-black/50  backdrop-blur-lg">
+            <div className="max-w-[calc(100%-24px)] md:max-w-[calc(100%-48px)]  mx-auto flex gap-x-4 items-center justify-between">
                 <div className="flex items-center">
-                    <button className="hover:bg-[#222222] transition-colors p-2 rounded-full">
-                        <Menu color="#fff" />
+                    <button className="dark:hover:bg-[#222222] hover:bg-[var(--bg-hover-white)] transition-colors hidden lg:block  p-2 rounded-full">
+                        <Menu className="dark:text-white text-black" />
                     </button>
                     <Logo
                         text={user && isPremium ? "Premium" : "YouTube"}
                     ></Logo>
                 </div>
-                <div className="flex items-center gap-x-4 w-full max-w-[600px]">
-                    <SearchInput />
+                <div
+                    className={cn(
+                        "flex items-center  order-3 md:order-2 gap-x-4 w-full max-w-10 md:max-w-[400px] lg:max-w-[700px]",
+                        !token ? "!order-2 !ml-auto md:!ml-0" : ""
+                    )}
+                >
+                    <SearchInput accessToken={token} />
                     <Voice></Voice>
+                    <div className='hidden md:block'>
+                        <DarkMode></DarkMode>
+                    </div>
                 </div>
                 {user ? (
-                    <DynamicLoginProfile />
+                    <div className="flex items-center justify-end gap-x-4 order-2 md:order-3 w-full md:w-auto">
+                        <DynamicLoginProfile />
+                    </div>
                 ) : (
                     <LoginContainer></LoginContainer>
                 )}

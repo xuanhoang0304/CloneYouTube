@@ -6,11 +6,9 @@ import HomePlayListItem from "./HomePlayListItem";
 
 const HomePlayList = ({ channelId }: { channelId: string }) => {
     const { data: playlists, isLoading } = useApi<HomePlayListResponse>({
-        url: `https://www.googleapis.com/youtube/v3/playlists?key=${
-            process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
-        }&part=snippet&channelId=${
-            channelId || "UCkna2OcuN1E6u5I8GVtdkOw"
-        }&maxResults=50`,
+        url: channelId
+            ? `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${channelId}&maxResults=50`
+            : "",
     });
     return (
         <>

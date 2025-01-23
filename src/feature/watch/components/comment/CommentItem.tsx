@@ -3,10 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { memo, useState } from 'react';
 
-import { TopCommentType } from '@/common/types';
+import { TopCommentType, YoutubeResponseType } from '@/common/types';
+import { useApi } from '@/hooks/useAPI';
+import { useYouTubeStore } from '@/store/store';
 
 import CommentAction from './CommentAction';
 import CommentInfo from './CommentInfo';
+import CommentInput from './CommentInput';
 
 type Props = {
     comment: TopCommentType;
@@ -25,10 +28,27 @@ const CommentItem = ({
     const handleEditComment = (id: string) => {
         setCommentEditId(id);
     };
+
+    const { token } = useYouTubeStore();
+    const { data } = useApi<YoutubeResponseType>({
+        url: token ? `https://www.googleapis.com/youtube/v3/channels?&access_token=${token}&part=snippet&mine=true` : "",
+    });
+    const userAvt = data?.items[0]?.snippet?.thumbnails?.high?.url;
+    const [isShowReply, setIsShowEditReply] = useState(false);
+
+    const handleReply = () => {
+        setIsShowEditReply((prev) => !prev);
+    };
+    const handleCancelReply = () => {
+        setIsShowEditReply(false);
+    };
+
     return (
-        <li className="mb-4 flex gap-x-3 w-full relative">
+        <li className="flex gap-x-3 w-full relative">
             <div className="flex flex-1 gap-x-3 w-full">
-                <Link href={`/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}`}>
+                <Link
+                    href={`/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}?title=${comment.snippet.topLevelComment.snippet.authorDisplayName}`}
+                >
                     <figure className={"rounded-full size-10 cursor-pointer"}>
                         <Image
                             src={
@@ -43,13 +63,25 @@ const CommentItem = ({
                     </figure>
                 </Link>
 
-                <CommentInfo
-                    comment={comment}
-                    commentEditId={commentEditId}
-                    onEditComment={handleEditComment}
-                    onMuateComment={onMuateComment}
-                ></CommentInfo>
+                <div className="w-full">
+                    <CommentInfo
+                        comment={comment}
+                        commentEditId={commentEditId}
+                        onEditComment={handleEditComment}
+                        onMuateComment={onMuateComment}
+                        onReplyComment={handleReply}
+                    ></CommentInfo>
+                    {isShowReply && (
+                        <CommentInput
+                            parentId={comment.id}
+                            userAvatar={userAvt}
+                            action={"rep"}
+                            onCancelReply={handleCancelReply}
+                        ></CommentInput>
+                    )}
+                </div>
             </div>
+
             {!commentEditId && (
                 <div className="relative cursor-pointer">
                     <CommentAction

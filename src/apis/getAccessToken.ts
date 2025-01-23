@@ -1,4 +1,4 @@
-import { clerkClient, currentUser } from '@clerk/nextjs/server';
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 
 export async function getAccessToken() {
     try {
@@ -20,6 +20,3 @@ export async function getAccessToken() {
         throw error;
     }
 }
-
-// this is the token I need to use to make requests to the gmail api
-// destructuring it here for clarity you can also just use OauthAccessToken.token below

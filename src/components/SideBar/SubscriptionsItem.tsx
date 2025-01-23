@@ -5,8 +5,8 @@ import { SubscriptionsItemType } from '@/common/types';
 
 const SubscriptionsItem = ({ item }: { item: SubscriptionsItemType }) => {
     return (
-        <li className="flex items-center w-[198px] gap-x-4 transition-colors relative p-2 hover:bg-[#717171] rounded-lg cursor-pointer">
-           <Link href={`/channel/${item.snippet.resourceId.channelId}`} className="flex items-center gap-x-4 w-full">
+        <li className="flex items-center w-[198px] gap-x-4 transition-colors relative p-2 hover:bg-[var(--bg-second-white)] dark:hover:bg-[#717171] rounded-lg cursor-pointer">
+           <Link href={`/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`} className="flex items-center gap-x-4 w-full">
                 <figure className="size-6 shrink-0 rounded-full">
                     <Image
                         src={item.snippet.thumbnails.medium.url || "/images/default-avatar.png"}

@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { Navigation } from 'swiper/modules';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useWindowSize } from 'usehooks-ts';
 
 import {
     HomePlayListItemType, SearchPlayListItemType, SearchPlayListResponse
@@ -26,26 +27,31 @@ const HomePlayListItem = ({
     item: HomePlayListItemType;
     title: string;
 }) => {
+    const { width = 0 } = useWindowSize();
     const { data: playListItems } = useApi<SearchPlayListResponse>({
-        url: `${url}?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,id,contentDetails&playlistId=${item.id}&maxResults=50`,
+        url: item.id
+            ? `${url}?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,id,contentDetails&playlistId=${item.id}&maxResults=50`
+            : "",
     });
     const fristVideoId = playListItems?.items[0]?.snippet?.resourceId?.videoId;
     const position = playListItems?.items[0]?.snippet?.position;
     return (
         <li className="border-b border-[#333] pb-4">
             <div className="flex items-center gap-x-3">
-                <p className="text-xl font-bold max-w-[80%]">{item?.snippet?.title}</p>
+                <p className="text-base md:text-xl font-bold flex-1 md:flex-none  max-w-[70%] md:max-w-[80%] line-clamp-1">
+                    {item?.snippet?.title}
+                </p>
                 <Link
                     href={`/watch?v=${fristVideoId}&list=${item.id}&listTitle=${title}&index=${position}`}
-                    className="flex gap-x-2 items-center px-4 py-2 rounded-full bg-transparent hover:bg-[#515255] transition-colors"
+                    className="flex gap-x-2  items-center px-4 py-2 rounded-full bg-transparent hover:bg-[var(--bg-hover-white)] dark:hover:bg-[#515255] transition-colors"
                 >
                     <Play fill="white" className="w-5" />
-                    <p>Phát tất cả</p>
+                    <p className="text-xs md:text-base">Phát tất cả</p>
                 </Link>
             </div>
             <Swiper
                 spaceBetween={20}
-                slidesPerView={5}
+                slidesPerView={width < 768 ? 2 : 4}
                 tag="ul"
                 navigation={true}
                 modules={[Navigation]}

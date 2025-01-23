@@ -19,9 +19,9 @@ const WatchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
     return (
         <li
             className={cn(
-                "flex gap-x-4 p-1 bg-black hover:bg-gray-600 transition-colors",
+                "flex gap-x-4 p-1  hover:bg-gray-300 transition-colors",
                 params.index == data.snippet.position &&
-                    "bg-[#ffffff3a] text-black"
+                    "dark:bg-[#ffffff3a] bg-[var(--bg-second-white)] "
             )}
         >
             <Link
@@ -45,7 +45,7 @@ const WatchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
                 />
 
                 <div>
-                    <p className="text-white line-clamp-2 text-sm font-medium">
+                    <p className="line-clamp-2 text-sm font-medium">
                         {data.snippet.title}
                     </p>
                     <p className="text-xs text-[#ccc] mt-1">

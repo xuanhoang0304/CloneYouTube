@@ -2,27 +2,24 @@
 import { EllipsisVertical } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { memo } from 'react';
 
-import { YoutubeItemType, YoutubeResponseType } from '@/common/types';
-import { useApi } from '@/hooks/useAPI';
+import { YoutubeItemType } from '@/common/types';
 import { calcDayCreate } from '@/utils/calcDayCreate';
 import calcView from '@/utils/calcView';
 import { parseDuration } from '@/utils/ParseDuration';
 
 const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
-    const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${item.snippet.channelId}`,
-    });
     return (
         <li className="rounded-t-xl pb-3 cursor-pointer">
             <Link href={`watch?v=${item.id}`}>
-                <figure className="w-full h-[202px] rounded-xl relative">
+                <figure className="w-full  rounded-xl relative">
                     <Image
                         src={item.snippet.thumbnails.high.url}
                         alt="thumbnail"
-                        width={500}
-                        height={202}
-                        className=" h-auto w-full object-cover max-w-[400px] max-h-[200px] rounded-xl aspect-[400/200] bg-gray-200"
+                        width={0}
+                        height={0}
+                        className=" h-auto w-full object-cover  max-h-[200px] rounded-xl aspect-[400/200] bg-gray-200"
                     ></Image>
                     <p className="text-xs leading-4 font-medium absolute bottom-2 right-2 bg-black/70 px-2 rounded">
                         {parseDuration(item.contentDetails.duration)}
@@ -32,15 +29,16 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
 
             <div className="mt-3 flex gap-x-3 relative pr-6">
                 <Link
-                    href={`/channel/${data?.items[0]?.id}`}
+                    href={`/channel/${item.snippet.channelId}?title=${item.snippet.channelTitle}`}
                     className="flex gap-x-4 size-9 shrink-0"
                 >
                     <figure className="size-full rounded-full ">
                         <Image
                             alt="channelAvt"
                             src={
-                                data?.items[0]?.snippet?.thumbnails?.high
-                                    ?.url || "/images/default.avif"
+                                // data?.items[0]?.snippet?.thumbnails?.high
+                                //     ?.url || "/image/default.avif"
+                                "image/default.avif"
                             }
                             width={36}
                             height={36}
@@ -70,4 +68,4 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
     );
 };
 
-export default YoutubeItem;
+export default memo(YoutubeItem);

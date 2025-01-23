@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Bell, Settings } from 'lucide-react';
 import { useState } from 'react';
 
@@ -126,9 +126,9 @@ const Notification = () => {
                 <Tooltip>
                     <TooltipTrigger
                         onClick={() => setIsShow(!isShow)}
-                        className="text-white size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center"
+                        className="text-white size-10 hover:bg-[var(--bg-hover-white)]  dark:hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center"
                     >
-                        <Bell className="fill-white w-5 "></Bell>
+                        <Bell className="dark:stroke-white stroke-black  w-5 "></Bell>
                     </TooltipTrigger>
                     <TooltipContent className="bg-[#717171] relative !top-2">
                         <p>Thông báo</p>
@@ -137,7 +137,7 @@ const Notification = () => {
             </TooltipProvider>
 
             {isShow && (
-                <div className="w-[480px] h-[400px] overflow-hidden z-40 bg-primary-bgcl absolute bottom-[-400px] right-0 rounded-lg ">
+                <div className="w-full md:w-[480px] h-[100vh] md:h-[400px] overflow-hidden z-40 bg-[var(--bg-second-white)] dark:bg-primary-bgcl fixed md:absolute   right-0 rounded-lg ">
                     <div className="flex items-center justify-between pl-4 pr-2 py-1 border-b border-[#666]">
                         <p>Thông báo</p>
                         <button className="size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">

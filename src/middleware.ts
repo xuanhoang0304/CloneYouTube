@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
     "/register(.*)",
@@ -8,11 +8,12 @@ const isPublicRoute = createRouteMatcher([
     "/search(.*)",
     "/login(.*)",
     "/watch(.*)",
-    "/channel(.*)"
+    "/channel(.*)",
 ]);
 
 export default clerkMiddleware((auth, request) => {
     const { userId } = auth(); // Lấy thông tin đăng nhập từ Clerk kiểm tra trạng thái đăng nhập
+
     if (!userId && !isPublicRoute(request)) {
         return NextResponse.redirect(new URL("/login", request.url));
     }

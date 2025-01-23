@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from '@/utils/cn';
 
 type CategoryItems = {
     item: {
@@ -15,8 +15,9 @@ const CategoryItems = (props: CategoryItems) => {
         <li
             onClick={() => onSetList(item.id)}
             className={cn(
-                "shrink-0 cursor-pointer px-3 py-1 bg-[#717171] rounded-md transition-colors",
-                item.isActive && "bg-white text-black"
+                "shrink-0 cursor-pointer px-3 bg-[var(--bg-second-white)] text-black py-1 dark:bg-[#717171]  dark:hover:bg-white hover:text-white dark:hover:text-black hover:bg-black rounded-md transition-colors",
+                item.isActive &&
+                    "text-white bg-black dark:bg-white dark:text-black"
             )}
         >
             <p className="text-sm">{item.title}</p>

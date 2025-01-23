@@ -8,7 +8,7 @@ const HomePlayListVideo = ({ data }: { data: SearchPlayListItemType  }) => {
     return (
         <li>
             <Link href={`/watch?v=${data?.snippet?.resourceId?.videoId}`}>
-                <figure className="w-[210px] h-[118px]">
+                <figure className="w-full h-[118px]">
                     <Image
                         src={
                             data?.snippet?.thumbnails?.medium?.url ||
@@ -20,7 +20,7 @@ const HomePlayListVideo = ({ data }: { data: SearchPlayListItemType  }) => {
                         className="h-full w-full object-cover max-h-[200px] rounded-t-xl aspect-[1000/200] bg-gray-200"
                     ></Image>
                 </figure>
-                <h2 className="text-white text-sm line-clamp-2 mt-3">
+                <h2 className="dark:text-white text-black text-sm line-clamp-2 mt-3">
                     {data?.snippet?.title === "Private video" ? "Video đã bị ẩn" : data?.snippet?.title}
                 </h2>
     

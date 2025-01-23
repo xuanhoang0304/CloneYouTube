@@ -22,7 +22,7 @@ export default function SignInPage() {
                                 <Card className="w-full sm:w-96">
                                     <CardHeader>
                                         <CardTitle>
-                                            Sign in to My Youtube
+                                            Sign in to YouTube
                                         </CardTitle>
                                         <CardDescription>
                                             Welcome back! Please sign in to
@@ -30,8 +30,8 @@ export default function SignInPage() {
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent className="grid gap-y-4">
-                                        <div className="grid grid-cols-2 gap-x-4">
-                                            <Clerk.Connection
+                                        <div className="grid grid-cols-1 gap-x-4">
+                                            {/* <Clerk.Connection
                                                 name="github"
                                                 asChild
                                             >
@@ -54,7 +54,7 @@ export default function SignInPage() {
                                                         }
                                                     </Clerk.Loading>
                                                 </Button>
-                                            </Clerk.Connection>
+                                            </Clerk.Connection> */}
                                             <Clerk.Connection
                                                 name="google"
                                                 asChild
@@ -80,9 +80,7 @@ export default function SignInPage() {
                                                 </Button>
                                             </Clerk.Connection>
                                         </div>
-                                        <p className="flex items-center gap-x-3 text-sm text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
-                                            or
-                                        </p>
+                                        <p className="flex items-center gap-x-3 text-sm text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border"></p>
                                         <Clerk.Field
                                             name="identifier"
                                             className="space-y-2"

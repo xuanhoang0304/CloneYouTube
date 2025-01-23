@@ -412,3 +412,26 @@ export type SubscriptionsItemType = {
     };
 };
 
+export type SubChannelListType = {
+    nextPageToken?: string;
+    items: SubChannelItemType[];
+};
+
+export type SubChannelItemType = {
+    id: string;
+    snippet: {
+        title: string;
+        description: string;
+        resourceId: {
+            channelId: string;
+          };
+        thumbnails: {
+            high: {
+                url: string;
+            };
+        };
+    };
+    contentDetails: {
+        totalItemCount: number;
+    };
+};

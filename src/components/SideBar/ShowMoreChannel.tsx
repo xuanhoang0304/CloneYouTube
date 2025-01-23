@@ -1,6 +1,6 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from 'lucide-react';
 
-import { cn } from "@/utils/cn";
+import { cn } from '@/utils/cn';
 
 type ShowMoreChannelProps = {
     itemCount: number;
@@ -15,7 +15,7 @@ const ShowMoreChannel = ({
     return (
         <button
             onClick={onShowMore}
-            className="flex items-center gap-x-4 p-2 w-[198px] hover:bg-[#717171] transition-colors rounded-lg cursor-pointer"
+            className="flex items-center gap-x-4 p-2 w-[198px] hover:bg-[var(--bg-second-white)] dark:hover:bg-[#717171] transition-colors rounded-lg cursor-pointer"
         >
             <ChevronDown
                 className={cn(

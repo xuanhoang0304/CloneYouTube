@@ -1,9 +1,9 @@
+"use client";
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
 import { TopCommentType } from '@/common/types';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useYouTubeStore } from '@/store/store';
 import { calcDayCreate } from '@/utils/calcDayCreate';
@@ -16,6 +16,7 @@ type Props = {
     comment: TopCommentType;
     commentEditId: string;
     onEditComment: (id: string) => void;
+    onReplyComment: () => void;
     onMuateComment: () => void;
 };
 
@@ -24,15 +25,18 @@ const CommentInfo = ({
     commentEditId,
     onEditComment,
     onMuateComment,
+    onReplyComment,
 }: Props) => {
     const [textEdit, setTextEdit] = useState(
         comment.snippet.topLevelComment.snippet.textOriginal
     );
-    const [isShow, setIsShow] = useState(false);
+    const { token } = useYouTubeStore();
+
+    const [isShowEdit, setIsShowEdit] = useState(false);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const publishedAt = comment.snippet.topLevelComment.snippet.publishedAt;
     const updatedAt = comment.snippet.topLevelComment.snippet.updatedAt;
-    const { token } = useYouTubeStore();
     useEffect(() => {
         if (commentEditId) {
             inputRef?.current?.focus();
@@ -44,9 +48,9 @@ const CommentInfo = ({
             {comment.id !== commentEditId ? (
                 <div className="flex items-center gap-x-2">
                     <Link
-                        href={`/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}`}
+                        href={`/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}?title=${comment.snippet.topLevelComment.snippet.authorDisplayName}`}
                     >
-                        <h3 className="text-[13px] font-semibold  leading-[18px] text-[#f1f1f1]">
+                        <h3 className="text-[13px] font-semibold  leading-[18px] ">
                             {
                                 comment.snippet.topLevelComment.snippet
                                     .authorDisplayName
@@ -68,7 +72,7 @@ const CommentInfo = ({
                         placeholder="Viết bình luận..."
                         className="w-full"
                         value={textEdit}
-                        onFocus={() => setIsShow(true)}
+                        onFocus={() => setIsShowEdit(true)}
                         onChange={(e) => setTextEdit(e.target.value)}
                     />
                     <div
@@ -81,17 +85,17 @@ const CommentInfo = ({
                         )}
                     ></div>
                     <div className="mt-2 w-full flex justify-end">
-                        {isShow && (
+                        {isShowEdit && (
                             <div className="flex gap-x-2">
-                                <Button
+                                <button
                                     onClick={() => {
-                                        setIsShow(false);
+                                        setIsShowEdit(false);
                                         onEditComment("");
                                     }}
-                                    className="bg-transparent hover:bg-[#272727] rounded-full transition-colors "
+                                    className="bg-transparent dark:hover:text-black  dark:hover:bg-[#272727] hover:!bg-[var(--bg-second-white)] rounded-full transition-colors "
                                 >
                                     Hủy
-                                </Button>
+                                </button>
                                 <button
                                     onClick={async () => {
                                         if (token) {
@@ -104,7 +108,7 @@ const CommentInfo = ({
                                             if (res) {
                                                 onMuateComment();
                                                 onEditComment("");
-                                                setIsShow(false);
+                                                setIsShowEdit(false);
                                             }
                                         }
                                     }}
@@ -127,14 +131,14 @@ const CommentInfo = ({
 
             {comment.id !== commentEditId && (
                 <>
-                    <p className="text-sm leading-[22px] max-w-[90%]  mt-1 text-[#f1f1f1]">
+                    <p className="text-sm leading-[22px] max-w-[90%]  mt-1 ">
                         {comment.snippet.topLevelComment.snippet.textOriginal}
                     </p>
                     <div className="flex items-center gap-x-1">
                         <div className="flex items-center gap-x-1">
                             <TooltipProvider>
                                 <Tooltip>
-                                    <TooltipTrigger className="text-white size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
+                                    <TooltipTrigger className=" size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
                                         <ThumbsUp className="size-5" />
                                     </TooltipTrigger>
                                     <TooltipContent className="bg-[#717171] relative !bottom-[-70px] rounded z-10">
@@ -157,7 +161,7 @@ const CommentInfo = ({
                         <div className="flex items-center gap-x-1">
                             <TooltipProvider>
                                 <Tooltip>
-                                    <TooltipTrigger className="text-white size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
+                                    <TooltipTrigger className=" size-10  hover:bg-[#717171] transition-colors rounded-full flex items-center justify-center">
                                         <ThumbsDown className="size-5" />
                                     </TooltipTrigger>
                                     <TooltipContent className="bg-[#717171] relative !bottom-[-70px] rounded z-10">
@@ -168,7 +172,13 @@ const CommentInfo = ({
                                 </Tooltip>
                             </TooltipProvider>
                         </div>
-                        <button className="px-4 py-2 rounded-full font-bold bg-transparent hover:bg-[#aaa] text-xs transition-colors">
+
+                        <button
+                            onClick={() => {
+                                onReplyComment();
+                            }}
+                            className="px-4 py-2 rounded-full font-bold bg-transparent hover:bg-[#aaa] text-xs transition-colors"
+                        >
                             Phản hồi
                         </button>
                     </div>

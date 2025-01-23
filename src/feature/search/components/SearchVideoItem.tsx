@@ -11,13 +11,13 @@ type SearchVideoItemProps = {
 const SearchVideoItem = ({ item }: SearchVideoItemProps) => {
     return (
         <li>
-            <Link href={`/watch?v=${item.id.videoId}`} className="flex gap-4">
+            <Link href={`/watch?v=${item.id.videoId}`} className="flex flex-col md:flex-row gap-4">
                 <Image
                     src={item.snippet.thumbnails.high.url}
                     alt="thumbnail video search"
                     width={500}
                     height={280}
-                    className="w-[500px] h-[280px] object-cover rounded-lg"
+                    className="w-full md:w-[400px] h-[280px] object-cover rounded-lg"
                 ></Image>
                 <div className="flex-1 relative">
                     <EllipsisVertical className="absolute top-3 right-3" />
