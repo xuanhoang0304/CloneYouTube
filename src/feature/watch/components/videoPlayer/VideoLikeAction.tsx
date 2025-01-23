@@ -20,7 +20,7 @@ const VideoLikeAction = ({
         items: { rating: string }[];
     }>({
         url: token
-            ? `https://www.googleapis.com/youtube/v3/videos/getRating?access_token=${token}&id=${videoId}`
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/videos/getRating?access_token=${token}&id=${videoId}`
             : "",
     });
     const statusLike = data?.items?.[0]?.rating;

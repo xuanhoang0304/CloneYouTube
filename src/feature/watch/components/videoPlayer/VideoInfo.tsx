@@ -14,11 +14,11 @@ import handleUnSubcriceChannel from '@/utils/handleUnSubcriceChannel';
 
 const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${channelId}`,
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${channelId}`,
     });
     const [list, setList] = useState<YoutubeItemType[]>([]);
     const { token, setMoveLogin } = useYouTubeStore();
-    const subscriptionsUrl = `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
+    const subscriptionsUrl = `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
     const { data: subscriptions, mutate: mutateSubscriptions } = useApi<{
         items: SubscriptionsItemType[];
     }>({

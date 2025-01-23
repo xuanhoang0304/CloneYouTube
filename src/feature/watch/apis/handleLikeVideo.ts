@@ -6,7 +6,7 @@ export default async function handleLikeVideo(
     token: string | undefined
 ) {
     const { data } = await axios.post(
-        `https://www.googleapis.com/youtube/v3/videos/rate?part=snippet&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&id=${videoId}&rating=${rating}`,
+        `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/videos/rate?part=snippet&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&id=${videoId}&rating=${rating}`,
         {},
         {
             headers: {

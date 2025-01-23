@@ -1,14 +1,14 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { RelatedItemType, RelatedResponseType } from "@/common/types";
-import Loading from "@/components/Loading";
-import { useApi } from "@/hooks/useAPI";
+import { RelatedItemType, RelatedResponseType } from '@/common/types';
+import Loading from '@/components/Loading';
+import { useApi } from '@/hooks/useAPI';
 
-import PlayListWrapper from "./PlayListWrapper";
-import RelatedItem from "./RelatedItem";
+import PlayListWrapper from './PlayListWrapper';
+import RelatedItem from './RelatedItem';
 
 type RelatedListProps = {
     channelId: string | undefined;
@@ -36,13 +36,13 @@ const RelatedList = ({ channelId }: RelatedListProps) => {
     });
     const { data } = useApi<RelatedResponseType>({
         url: channelId
-            ? `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=100&order=date
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=100&order=date
         `
             : "",
     });
     const { data: newData, isLoading } = useApi<RelatedResponseType>({
         url: channelId
-            ? `https://www.googleapis.com/youtube/v3/search?key=${
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/search?key=${
                   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
               }&part=snippet&channelId=${channelId}&type=video&maxResults=100&order=date${
                   nextPageToken ? `&pageToken=${nextPageToken}` : ""

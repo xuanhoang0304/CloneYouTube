@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { SubChannelItemType } from "@/common/types";
-import Loading from "@/components/Loading";
-import { useApi } from "@/hooks/useAPI";
-import { useYouTubeStore } from "@/store/store";
+import { SubChannelItemType } from '@/common/types';
+import Loading from '@/components/Loading';
+import { useApi } from '@/hooks/useAPI';
+import { useYouTubeStore } from '@/store/store';
 
-import SubItem from "./SubItem";
+import SubItem from './SubItem';
 
 const SubList = () => {
     const { token } = useYouTubeStore();
@@ -35,7 +35,7 @@ const SubList = () => {
         nextPageToken: string;
     }>({
         url: token
-            ? `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=10`
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=10`
             : "",
     });
     const { data: newData, isLoading } = useApi<{
@@ -43,7 +43,9 @@ const SubList = () => {
         nextPageToken: string;
     }>({
         url: token
-            ? `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=10${
+            ? `${
+                  process.env.NEXT_PUBLIC_YOUTUBE_API_URL
+              }/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=10${
                   nextPageToken ? `&pageToken=${nextPageToken}` : ""
               }`
             : "",

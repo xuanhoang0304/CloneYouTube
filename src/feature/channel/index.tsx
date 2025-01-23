@@ -27,10 +27,10 @@ const ChannelDetail = ({
     );
     const { data: channelDetail } = useApi<channelDetailResponse>({
         url: channelUrlId
-            ? `https://www.googleapis.com/youtube/v3/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&id=${channelUrlId}`
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&id=${channelUrlId}`
             : "",
     });
-    const subscriptionsUrl = `https://www.googleapis.com/youtube/v3/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
+    const subscriptionsUrl = `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
     const { data: subscriptions, mutate: mutateSubscriptions } = useApi<{
         items: SubscriptionsItemType[];
     }>({

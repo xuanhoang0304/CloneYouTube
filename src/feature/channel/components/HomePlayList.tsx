@@ -1,13 +1,13 @@
-import { HomePlayListItemType, HomePlayListResponse } from "@/common/types";
-import Loading from "@/components/Loading";
-import { useApi } from "@/hooks/useAPI";
+import { HomePlayListItemType, HomePlayListResponse } from '@/common/types';
+import Loading from '@/components/Loading';
+import { useApi } from '@/hooks/useAPI';
 
-import HomePlayListItem from "./HomePlayListItem";
+import HomePlayListItem from './HomePlayListItem';
 
 const HomePlayList = ({ channelId }: { channelId: string }) => {
     const { data: playlists, isLoading } = useApi<HomePlayListResponse>({
         url: channelId
-            ? `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${channelId}&maxResults=50`
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/playlists?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&channelId=${channelId}&maxResults=50`
             : "",
     });
     return (

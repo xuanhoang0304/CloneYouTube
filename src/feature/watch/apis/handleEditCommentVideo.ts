@@ -6,7 +6,7 @@ export default async function handleEditCommentVideo(
     token: string | undefined
 ) {
     const { data } = await axios.put(
-        `https://www.googleapis.com/youtube/v3/comments?part=snippet&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`,
+        `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/comments?part=snippet&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`,
         {
             id: commentId,
             snippet: {

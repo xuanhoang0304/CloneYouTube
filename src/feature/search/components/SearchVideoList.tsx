@@ -32,13 +32,13 @@ const SearchVideoList = () => {
         items: SearchVideoItemType[];
         nextPageToken: string;
     }>({
-        url: `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${query}&maxResults=50&type=video`,
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${query}&maxResults=50&type=video`,
     });
     const { data: newData, isLoading } = useApi<{
         items: SearchVideoItemType[];
         nextPageToken: string;
     }>({
-        url: `https://www.googleapis.com/youtube/v3/search?key=${
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/search?key=${
             process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
         }&part=snippet&q=${query}&maxResults=50&type=video${
             nextPageToken ? `&pageToken=${nextPageToken}` : ""

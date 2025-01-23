@@ -31,7 +31,9 @@ const CommentItem = ({
 
     const { token } = useYouTubeStore();
     const { data } = useApi<YoutubeResponseType>({
-        url: token ? `https://www.googleapis.com/youtube/v3/channels?&access_token=${token}&part=snippet&mine=true` : "",
+        url: token
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/channels?&access_token=${token}&part=snippet&mine=true`
+            : "",
     });
     const userAvt = data?.items[0]?.snippet?.thumbnails?.high?.url;
     const [isShowReply, setIsShowEditReply] = useState(false);

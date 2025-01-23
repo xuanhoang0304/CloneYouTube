@@ -1,16 +1,16 @@
 "use client";
-import dynamic from "next/dynamic";
-import { notFound, useSearchParams } from "next/navigation";
+import dynamic from 'next/dynamic';
+import { notFound, useSearchParams } from 'next/navigation';
 
-import { YoutubeResponseType } from "@/common/types";
-import { useApi } from "@/hooks/useAPI";
-import { useYouTubeStore } from "@/store/store";
+import { YoutubeResponseType } from '@/common/types';
+import { useApi } from '@/hooks/useAPI';
+import { useYouTubeStore } from '@/store/store';
 
-import CommentContainer from "../comment/Comment";
-import RelatedList from "../related&playlist/RelatedList";
-import VideoInfo from "./VideoInfo";
-import VideoLikeAction from "./VideoLikeAction";
-import VideoPlayer from "./VideoPlayer";
+import CommentContainer from '../comment/Comment';
+import RelatedList from '../related&playlist/RelatedList';
+import VideoInfo from './VideoInfo';
+import VideoLikeAction from './VideoLikeAction';
+import VideoPlayer from './VideoPlayer';
 
 const VideoDesc = dynamic(
     () => import("@/feature/watch/components/videoPlayer/VideoDesc"),
@@ -23,7 +23,7 @@ const VideoDetail = () => {
     const id = useSearchParams().get("v");
     let videoDetail;
     const { data } = useApi<YoutubeResponseType>({
-        url: `https://www.googleapis.com/youtube/v3/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${id}`,
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/videos?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${id}`,
     });
     if (data) videoDetail = data?.items[0];
 

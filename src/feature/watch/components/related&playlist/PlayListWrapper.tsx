@@ -15,9 +15,9 @@ const PlayListWrapper = ({
     playList: { [key: string]: string };
 }) => {
     const { data: playListItems, isLoading } = useApi<SearchPlayListResponse>({
-        url: `https://www.googleapis.com/youtube/v3/playlistItems?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,id,contentDetails&playlistId=${playList.list}&maxResults=50`,
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/playlistItems?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,id,contentDetails&playlistId=${playList.list}&maxResults=50`,
     });
-    const [showPlaylist,setShowPlaylist] = useState(true);
+    const [showPlaylist, setShowPlaylist] = useState(true);
     return (
         <>
             {isLoading && <Loading></Loading>}
@@ -27,8 +27,8 @@ const PlayListWrapper = ({
                         <h3 className=" text-xl line-clamp-1 font-bold max-w-[90%]">
                             {playList.listTitle}
                         </h3>
-                        <button onClick={()=> setShowPlaylist(!showPlaylist)}>
-                            <X className="w-6"/>
+                        <button onClick={() => setShowPlaylist(!showPlaylist)}>
+                            <X className="w-6" />
                         </button>
                     </div>
                     <h4 className=" text-xs mt-2">

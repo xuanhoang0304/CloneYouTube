@@ -38,7 +38,7 @@ const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
 
     const { data: searchKey } = useApi<{ items: [] }>({
         url: debouncedSearch
-            ? `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${debouncedSearch}&maxResults=50&type=video`
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet&q=${debouncedSearch}&maxResults=50&type=video`
             : "",
     });
     const router = useRouter();
