@@ -45,7 +45,7 @@ const CommentList = ({
         items: TopCommentType[];
         nextPageToken: string;
     }>({
-        url: `https:www.googleapis.com/youtube/v3/commentThreads?&access_token=${token}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,replies&videoId=${videoId}&maxResults=100`,
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/commentThreads?&access_token=${token}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,replies&videoId=${videoId}&maxResults=100`,
     });
     const {
         data: newData,
@@ -55,7 +55,7 @@ const CommentList = ({
         items: TopCommentType[];
         nextPageToken: string;
     }>({
-        url: `https:www.googleapis.com/youtube/v3/commentThreads?&access_token=${token}&key=${
+        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/commentThreads?&access_token=${token}&key=${
             process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
         }&part=snippet,replies&videoId=${videoId}&maxResults=100${
             nextPageToken ? `&pageToken=${nextPageToken}` : ""
@@ -64,7 +64,7 @@ const CommentList = ({
 
     const { data: channelDetail } = useApi<channelDetailResponse>({
         url: token
-            ? `https:www.googleapis.com/youtube/v3/channels?access_token=${token}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&mine=true`
+            ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/channels?access_token=${token}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&mine=true`
             : "",
     });
     const handleCommentAdded = (newComment?: {
