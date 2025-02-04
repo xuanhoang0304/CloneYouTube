@@ -1,19 +1,46 @@
 "use client";
 import { MoonStar, Sun } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { useThrottle } from '@/hooks/useThrottle';
 import { useYouTubeStore } from '@/store/store';
 
 const DarkMode = () => {
     const { token } = useYouTubeStore();
-
     const [value, setValue] = useLocalStorage("theme", "");
     const handleChangeMode = () => {
         value === "light" ? setValue("dark") : setValue("light");
     };
+
+    const [scrollY, setScrollY] = useState(0);
+
+    const throttledScrollY = useThrottle(scrollY, 200); // Giới hạn kiểm tra mỗi 200ms
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        const header = document.querySelector(".header");
+        const ScreenWidth = screen.width;
+        if (ScreenWidth < 1024 && header && throttledScrollY < scrollY) {
+            header.classList.remove("showHeader");
+            header.classList.add("hideHeader"); // Cuộn xuống -> Ẩn header
+        } else if (ScreenWidth < 1024 && header && throttledScrollY > scrollY) {
+            header.classList.remove("hideHeader");
+            header.classList.add("showHeader"); // Cuộn lên -> Hiện header
+        }
+    }, [throttledScrollY, scrollY]);
     useEffect(() => {
         const theme = window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "dark"
@@ -32,7 +59,9 @@ const DarkMode = () => {
     }, [value]);
     if (!token) return null;
     return (
-        <div className="flex md:flex-row flex-col items-center gap-x-2 gap-y-1">
+        <div
+            className={`flex md:flex-row flex-col items-center gap-x-2 gap-y-1`}
+        >
             <Switch
                 checked={value == "light" ? false : true}
                 onClick={handleChangeMode}

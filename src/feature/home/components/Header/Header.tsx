@@ -1,5 +1,6 @@
 import { Menu } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { cookies } from 'next/headers';
 
 import { getAccessToken } from '@/apis/getAccessToken';
 import { getVideoCategories } from '@/apis/getVideoCategories';
@@ -16,6 +17,7 @@ import Voice from './Voice';
 const DynamicLoginProfile = dynamic(() => import("./LoginProifle"), {
     ssr: false,
 });
+const LanguageSwitcher = dynamic(() => import('@/components/LanguageSwitcher'), { ssr: false });
 const isPremium = true;
 
 const channelError = [
@@ -41,9 +43,10 @@ const channelError = [
     "44",
 ];
 const Header = async () => {
+    const locale = cookies().get("NEXT_LOCALE")?.value || "vi"; // Default to "vi"
     const user = await currentUser();
     const token = await getAccessToken();
-    const category = await getVideoCategories();
+    const category = await getVideoCategories(locale);
     const data = category?.items
         ?.map((item: { id: string; snippet: { title: string } }) => {
             return {
@@ -58,12 +61,11 @@ const Header = async () => {
         );
     data?.unshift({
         id: "24",
-        title: "Tất cả",
+        title: locale == "vi" ? "Tất cả" : "All",
         isActive: true,
     });
-
     return (
-        <header className="fixed top-0 left-0 right-0 z-20 bg-white  dark:bg-black/50  backdrop-blur-lg">
+        <header className="header transition-all duration-300 fixed top-0 left-0 right-0 z-20 bg-white  dark:bg-black/50  backdrop-blur-lg">
             <div className="max-w-[calc(100%-24px)] md:max-w-[calc(100%-48px)]  mx-auto flex gap-x-4 items-center justify-between">
                 <div className="flex items-center">
                     <button className="dark:hover:bg-[#222222] hover:bg-[var(--bg-hover-white)] transition-colors hidden lg:block  p-2 rounded-full">
@@ -81,8 +83,11 @@ const Header = async () => {
                 >
                     <SearchInput accessToken={token} />
                     <Voice></Voice>
-                    <div className='hidden md:block'>
+                    <div className="hidden md:block">
                         <DarkMode></DarkMode>
+                    </div>
+                    <div className="hidden md:block">
+                        <LanguageSwitcher></LanguageSwitcher>
                     </div>
                 </div>
                 {user ? (

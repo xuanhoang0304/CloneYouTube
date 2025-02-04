@@ -3,6 +3,7 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 
+import { useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // import required modules
@@ -20,8 +21,9 @@ type CategoryListProps = {
 const CategoryList = ({ list }: CategoryListProps) => {
     const { setCategoryId } = useYouTubeStore();
     const [screenWidth, setScreenWidth] = useState(0);
-    const pathname = usePathname();
     const [categoryList, setCategoryList] = useState(list);
+    const pathname = usePathname();
+    const locale = useLocale();
     const handleSetList = (id: string) => {
         const newList = categoryList.map((item) => {
             if (item.id === id) {
@@ -44,14 +46,14 @@ const CategoryList = ({ list }: CategoryListProps) => {
             window.removeEventListener("", handleSetScreenWidth);
         };
     }, [screenWidth]);
-    if (pathname !== "/") return null;
-
+    useEffect(() => {
+        setCategoryList(list);
+    }, [list]);
+    if(pathname !== `/${locale}`) return null;
     return (
         <section className="w-[calc(100%-24px)] ml-3 md:ml-[24px] lg:ml-[270px] ">
             <Swiper
-                slidesPerView={
-                    screenWidth >= 1040 ? 10 : "auto"
-                }
+                slidesPerView={screenWidth >= 1040 ? 10 : "auto"}
                 spaceBetween={10}
                 navigation={true}
                 keyboard={{

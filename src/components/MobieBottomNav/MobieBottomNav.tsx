@@ -1,5 +1,6 @@
 "use client";
 import { Film, House, TvMinimalPlay } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -10,17 +11,18 @@ import { UserButton } from '@clerk/nextjs';
 
 const MobieBottomNav = () => {
     const { token } = useYouTubeStore();
-    const patchname = usePathname();
+    const pathname = usePathname();
+    const locale = useLocale();
     if (!token) return null;
     return (
         <div className="lg:hidden bg-white dark:bg-[#222]/30 backdrop-blur-lg w-full py-2 fixed z-[2] bottom-0 text-center">
             <div className="flex items-center justify-around ">
                 <Link
-                    href="/"
+                    href={`/${locale}`}
                     className="flex flex-col justify-center items-center gap-y-1"
                 >
                     <House
-                        className={cn("w-6", patchname == "/" && "dark:fill-white fill-black")}
+                        className={cn("w-6", pathname == `/${locale}` && "dark:fill-white fill-black")}
                     />
                     <p className="text-xs">Trang chủ</p>
                 </Link>
@@ -31,7 +33,7 @@ const MobieBottomNav = () => {
                     <Film
                         className={cn(
                             "w-6",
-                            patchname == "/sort" && "dark:fill-white fill-black"
+                            pathname == "/sort" && "dark:fill-white fill-black"
                         )}
                     />
                     <p className="text-xs">Short</p>
@@ -44,7 +46,7 @@ const MobieBottomNav = () => {
                     <TvMinimalPlay
                         className={cn(
                             "w-6",
-                            patchname == "/sub" && "dark:fill-white fill-black"
+                            pathname == "/sub" && "dark:fill-white fill-black"
                         )}
                     />
                     <p className="text-xs">Kênh đăng ký</p>

@@ -38,7 +38,7 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
                             src={
                                 // data?.items[0]?.snippet?.thumbnails?.high
                                 //     ?.url || "/image/default.avif"
-                                "image/default.avif"
+                                `/image/default.avif`
                             }
                             width={36}
                             height={36}

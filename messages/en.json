@@ -1,0 +1,21 @@
+{
+    "HomePage": {
+      "title": "Hello world!",
+      "about": "Go to the about page"
+    },
+    "SideBar": {
+      "home": "Home",
+      "you": "You",
+      "short": "Short",
+      "subscriptions": "Subscriptions",
+      "history": "History",
+      "playlists": "Playlists",
+      "yourvideos": "Your videos",
+      "watchlater": "Watch later",
+      "explore": "Explore",
+      "trending": "Trending",
+      "music": "Music",
+      "gaming": "Gaming",
+      "news": "News"
+    }
+  }

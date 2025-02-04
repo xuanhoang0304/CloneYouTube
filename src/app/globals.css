@@ -165,7 +165,12 @@ button {
 .Category-swiper:hover .swiper-button-prev::after {
     color: #fff;
 }
-
+.header.showHeader {
+    transform: translateY(0);
+}
+.header.hideHeader {
+    transform: translateY(-100%);
+}
 
 @media (max-width: 991.98px) {
     .Category-swiper .swiper-button-next {

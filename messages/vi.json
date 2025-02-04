@@ -1,0 +1,21 @@
+{
+    "HomePage": {
+        "title": "Xin chào thế giới!",
+        "about": "Đi đến trang giới thiệu"
+    },
+    "SideBar": {
+        "home": "Trang chủ",
+        "short": "Shorts",
+        "you": "Bạn",
+        "subscriptions": "Kênh đăng ký",
+        "history": "Lịch sử",
+        "playlists": "Danh sách phát",
+        "yourvideos": "Video của bạn",
+        "watchlater": "Xem sau",
+        "explore": "Khám phá",
+        "trending": "Thịnh hành",
+        "music": "Âm nhạc",
+        "gaming": "Trò chơi",
+        "news": "Tin tức"
+    }
+}
