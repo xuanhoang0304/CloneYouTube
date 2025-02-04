@@ -3,7 +3,7 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import { useLocale } from 'next-intl';
+import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 // import required modules
@@ -23,7 +23,7 @@ const CategoryList = ({ list }: CategoryListProps) => {
     const [screenWidth, setScreenWidth] = useState(0);
     const [categoryList, setCategoryList] = useState(list);
     const pathname = usePathname();
-    const locale = useLocale();
+    const locale = Cookies.get("NEXT_LOCALE");
     const handleSetList = (id: string) => {
         const newList = categoryList.map((item) => {
             if (item.id === id) {
@@ -48,8 +48,8 @@ const CategoryList = ({ list }: CategoryListProps) => {
     }, [screenWidth]);
     useEffect(() => {
         setCategoryList(list);
-    }, [list]);
-    if(pathname !== `/${locale}`) return null;
+    }, [list,locale]);
+    if (pathname !== `/${locale}`) return null;
     return (
         <section className="w-[calc(100%-24px)] ml-3 md:ml-[24px] lg:ml-[270px] ">
             <Swiper

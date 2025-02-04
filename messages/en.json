@@ -1,21 +1,26 @@
 {
     "HomePage": {
-      "title": "Hello world!",
-      "about": "Go to the about page"
+        "title": "Hello world!",
+        "about": "Go to the about page"
     },
     "SideBar": {
-      "home": "Home",
-      "you": "You",
-      "short": "Short",
-      "subscriptions": "Subscriptions",
-      "history": "History",
-      "playlists": "Playlists",
-      "yourvideos": "Your videos",
-      "watchlater": "Watch later",
-      "explore": "Explore",
-      "trending": "Trending",
-      "music": "Music",
-      "gaming": "Gaming",
-      "news": "News"
+        "home": "Home",
+        "you": "You",
+        "short": "Short",
+        "subscriptions": "Subscriptions",
+        "history": "History",
+        "playlists": "Playlists",
+        "yourvideos": "Your videos",
+        "watchlater": "Watch later",
+        "explore": "Explore",
+        "trending": "Trending",
+        "music": "Music",
+        "gaming": "Gaming",
+        "news": "News"
+    },
+    "NotFound": {
+        "backHome": "Go back home",
+        "title": "404 NOT FOUND",
+        "description": "The page you requested does not exist. Please return to the homepage."
     }
-  }
+}

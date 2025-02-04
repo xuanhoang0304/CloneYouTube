@@ -44,6 +44,7 @@ const channelError = [
 ];
 const Header = async () => {
     const locale = cookies().get("NEXT_LOCALE")?.value || "vi"; // Default to "vi"
+    console.log('locale', locale)
     const user = await currentUser();
     const token = await getAccessToken();
     const category = await getVideoCategories(locale);

@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import '../globals.css';
+import "./globals.css";
 
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { Roboto } from 'next/font/google';
-import { Suspense } from 'react';
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { Roboto } from "next/font/google";
+import { Suspense } from "react";
 
-import CtaLogin from '@/components/CtaLogin';
-import Loading from '@/components/Loading';
-import MobieBottomNav from '@/components/MobieBottomNav/MobieBottomNav';
-import { Toaster } from '@/components/ui/toaster';
-import Header from '@/feature/home/components/Header/Header';
-import { ClerkProvider } from '@clerk/nextjs';
+import CtaLogin from "@/components/CtaLogin";
+import Loading from "@/components/Loading";
+import MobieBottomNav from "@/components/MobieBottomNav/MobieBottomNav";
+import { Toaster } from "@/components/ui/toaster";
+import Header from "@/feature/home/components/Header/Header";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const roboto = Roboto({
     weight: ["400", "700", "500"],
@@ -33,6 +33,7 @@ export default async function MainLayout({
     params: { locale: string };
 }>) {
     const messages = await getMessages();
+
     return (
         <ClerkProvider>
             <html
@@ -43,7 +44,7 @@ export default async function MainLayout({
                 <body className="overflow-x-hidden !transition-colors !duration-500">
                     <NextIntlClientProvider messages={messages}>
                         <Toaster />
-                        <Suspense fallback={<Loading />}>
+                        <Suspense fallback={<Loading />} key={locale}>
                             <Header></Header>
                         </Suspense>
                         <main>{children}</main>

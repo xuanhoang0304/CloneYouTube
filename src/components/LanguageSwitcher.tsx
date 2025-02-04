@@ -2,7 +2,6 @@
 
 import Cookies from 'js-cookie';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -16,23 +15,24 @@ const LanguageSwitcher = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const locale = useLocale();
+    const locale = Cookies.get("NEXT_LOCALE");
     const fullUrl = `${pathname}${
         searchParams.toString() ? "?" + searchParams.toString() : ""
     }`;
     const handleClose = () => {
         setIsShowLanguagesList(false);
     };
-    console.log(Cookies.get("NEXT_LOCALE"));
     const handleSwitchLanguage = (e: React.MouseEvent<HTMLLIElement>) => {
         const value = e.currentTarget.getAttribute("data-value");
-        if (!value) {
+        if (!value || !locale) {
             return;
         }
         const newUrl = `${fullUrl.replace(locale, value)}`;
 
         Cookies.set("NEXT_LOCALE", value, { expires: 7 });
+        console.log(Cookies.get("NEXT_LOCALE"));
         router.push(newUrl);
+        router.refresh();
         setIsShowLanguagesList(false);
     };
     const ref = useClickOutside<HTMLDivElement>(handleClose);

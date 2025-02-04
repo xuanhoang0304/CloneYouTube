@@ -17,5 +17,10 @@
         "music": "Âm nhạc",
         "gaming": "Trò chơi",
         "news": "Tin tức"
+    },
+    "NotFound": {
+        "backHome": "Về trang chủ",
+        "title": "~~Opps! Không tìm thấy trang",
+        "description": "Trang bạn yêu cầu không tồn tại. Vui lòng quay lại trang chủ."
     }
 }
