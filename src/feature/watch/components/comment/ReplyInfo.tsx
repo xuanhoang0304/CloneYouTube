@@ -1,10 +1,12 @@
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
 import { CommentType } from '@/common/types';
 import { calcDayCreate } from '@/utils/calcDayCreate';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip';
 
 const ReplyInfo = ({ reply }: { reply: CommentType }) => {
+    const locale = useLocale();
     return (
         <div className="flex-1">
             <div className="flex flex-col md:flex-row gap-y-2 md:items-center gap-x-2">
@@ -51,7 +53,7 @@ const ReplyInfo = ({ reply }: { reply: CommentType }) => {
                     </TooltipProvider>
                 </div>
                 <button className="px-4 py-2 rounded-full font-bold bg-transparent hover:bg-[#aaa] text-xs transition-colors">
-                    Phản hồi
+                {locale == "vi" ? "Phản hồi" : "Reply"}
                 </button>
             </div>
         </div>

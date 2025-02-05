@@ -1,5 +1,6 @@
 "use client";
 import { EllipsisVertical } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { memo } from 'react';
@@ -10,8 +11,10 @@ import calcView from '@/utils/calcView';
 import { parseDuration } from '@/utils/ParseDuration';
 
 const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
+    const t = useTranslations("VideoDetails")
+    const locale = useLocale();
     return (
-        <li className="rounded-t-xl pb-3 cursor-pointer">
+        <li className="rounded-t-xl cursor-pointer">
             <Link href={`watch?v=${item.id}`}>
                 <figure className="w-full  rounded-xl relative">
                     <Image
@@ -58,8 +61,8 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
                         </h3>
                     </Link>
                     <span className="text-sm text-[#AAA] leading-5">
-                        {calcView(+item.statistics.viewCount)}{" "}
-                        <span>- {calcDayCreate(item.snippet.publishedAt)}</span>
+                        {`${calcView(+item.statistics.viewCount)} ${t("views")} `}
+                        <span>- {calcDayCreate(item.snippet.publishedAt,locale)}</span>
                     </span>
                 </div>
                 <EllipsisVertical className="shrink-0 absolute right-0 top-0" />

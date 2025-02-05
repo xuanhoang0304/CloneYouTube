@@ -28,7 +28,7 @@ const CommentList = ({
     const [list, setList] = useState<TopCommentType[]>([]);
     const handleHideCommentList = () => {
         setIsShowComment(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
     const fetchData = async () => {
         try {
@@ -55,7 +55,9 @@ const CommentList = ({
         items: TopCommentType[];
         nextPageToken: string;
     }>({
-        url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/commentThreads?&access_token=${token}&key=${
+        url: `${
+            process.env.NEXT_PUBLIC_YOUTUBE_API_URL
+        }/commentThreads?&access_token=${token}&key=${
             process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
         }&part=snippet,replies&videoId=${videoId}&maxResults=100${
             nextPageToken ? `&pageToken=${nextPageToken}` : ""

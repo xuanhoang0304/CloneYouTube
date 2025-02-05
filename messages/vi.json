@@ -3,6 +3,19 @@
         "title": "Xin chào thế giới!",
         "about": "Đi đến trang giới thiệu"
     },
+    "SubsPage":{
+        "heading" : "Tất cả kênh đã đăng ký"
+    },
+    "WatchPage": {
+        "comment": "Bình luận",
+        "filter": "Sắp xếp theo",
+        "cmt": "Viết bình luận",
+        "reply": "Phản hồi",
+        "cancel":"Huỷ",
+        "edit":"Chỉnh sửa",
+        "delete":"Xóa",
+        "report":"Báo cáo vi phạm"
+    },
     "SideBar": {
         "home": "Trang chủ",
         "short": "Shorts",
@@ -22,5 +35,18 @@
         "backHome": "Về trang chủ",
         "title": "~~Opps! Không tìm thấy trang",
         "description": "Trang bạn yêu cầu không tồn tại. Vui lòng quay lại trang chủ."
+    },
+    "Header": {
+        "search": "Tìm kiếm",
+        "notifications": "Thông báo",
+        "create": "Tạo",
+        "vn": "Tiếng Việt",
+        "eng": "Tiếng Anh"
+    },
+    "VideoDetails": {
+        "views" : "lượt xem"
+    },"SubBtn":{
+        "subscribe": "Đăng ký",
+        "subscribed": "Đã đăng ký"
     }
 }

@@ -1,4 +1,5 @@
 import { EllipsisVertical } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,28 +7,34 @@ import { SearchVideoItemType } from '@/common/types';
 import { calcDayCreate } from '@/utils/calcDayCreate';
 
 type SearchVideoItemProps = {
-    item : SearchVideoItemType
-}
+    item: SearchVideoItemType;
+};
 const SearchVideoItem = ({ item }: SearchVideoItemProps) => {
+    const locale = useLocale();
     return (
         <li>
-            <Link href={`/watch?v=${item.id.videoId}`} className="flex flex-col md:flex-row gap-4">
+            <Link
+                href={`/watch?v=${item.id.videoId}`}
+                className="flex flex-col md:flex-row gap-4"
+            >
                 <Image
                     src={item.snippet.thumbnails.high.url}
                     alt="thumbnail video search"
                     width={500}
                     height={280}
-                    className="w-full md:w-[400px] h-[280px] object-cover rounded-lg"
+                    className="w-full md:w-[400px] h-[200px] object-cover rounded-lg"
                 ></Image>
                 <div className="flex-1 relative">
                     <EllipsisVertical className="absolute top-3 right-3" />
                     <h2 className="text-[18px] max-w-[90%] leading-[26px] line-clamp-2  ">
                         {item.snippet.title}
                     </h2>
-                    <div className="flex items-center gap-x-2 text-xs text-[#aaa] leading-[18px]">
-                        <p className="">{item.snippet.channelTitle}</p>
+                    <div className="flex items-center gap-x-2 text-xs  leading-[18px]">
+                        <p>{item.snippet.channelTitle}</p>
                         <span className="size-1 bg-[#aaa] rounded-full "></span>
-                        <span>{calcDayCreate(item.snippet.publishedAt)}</span>
+                        <span className="text-[#aaa]">
+                            {calcDayCreate(item.snippet.publishedAt, locale)}
+                        </span>
                     </div>
                     <div className="my-3 flex items-center gap-x-2">
                         <figure className="size-6 rounded-full shrink-0">
@@ -41,7 +48,7 @@ const SearchVideoItem = ({ item }: SearchVideoItemProps) => {
                                 className="rounded-full img-cover"
                             ></Image>
                         </figure>
-                        <h3 className="text-xs leading-[18px] text-[#aaa]">
+                        <h3 className="text-sm leading-[18px] ">
                             {item.snippet.channelTitle}
                         </h3>
                     </div>

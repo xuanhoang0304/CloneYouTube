@@ -3,6 +3,19 @@
         "title": "Hello world!",
         "about": "Go to the about page"
     },
+    "SubsPage": {
+        "heading": "All Subscriptions"
+    },
+    "WatchPage": {
+        "comment": "Comments",
+        "filter": "Filter",
+        "cmt": "Enter comments here",
+        "reply": "Reply",
+        "cancel": "Cancel",
+        "edit":"Edit",
+        "delete":"Delete",
+        "report":"Report"
+    },
     "SideBar": {
         "home": "Home",
         "you": "You",
@@ -22,5 +35,19 @@
         "backHome": "Go back home",
         "title": "404 NOT FOUND",
         "description": "The page you requested does not exist. Please return to the homepage."
+    },
+    "Header": {
+        "search": "Search",
+        "notifications": "Notifications",
+        "create": "Create",
+        "vn": "Vietnamese",
+        "eng": "English"
+    },
+    "VideoDetails": {
+        "views": "views"
+    },
+    "SubBtn": {
+        "subscribe": "Subscribe",
+        "subscribed": "Subscribed"
     }
 }

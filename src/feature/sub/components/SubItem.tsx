@@ -54,7 +54,7 @@ const SubItem = ({
                 >
                     <h2 className="text-lg">{item.snippet.title}</h2>
                     <p className="text-[#aaa] text-xs">
-                        {item.contentDetails.totalItemCount} Video
+                        {item.contentDetails.totalItemCount} Videos
                     </p>
                     <p className="text-[#aaa] text-xs line-clamp-3 mt-1">
                         {item.snippet.description}

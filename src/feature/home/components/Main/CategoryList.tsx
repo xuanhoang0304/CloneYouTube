@@ -34,7 +34,6 @@ const CategoryList = ({ list }: CategoryListProps) => {
         });
         setCategoryList(newList);
         setCategoryId(id);
-        window.scrollTo({ top: 10, behavior: "smooth" });
     };
     const handleSetScreenWidth = () => {
         setScreenWidth(screen.width);
@@ -51,7 +50,7 @@ const CategoryList = ({ list }: CategoryListProps) => {
     }, [list,locale]);
     if (pathname !== `/${locale}`) return null;
     return (
-        <section className="w-[calc(100%-24px)] ml-3 md:ml-[24px] lg:ml-[270px] ">
+        <div className="w-[calc(100%-24px)] ml-3 md:ml-[24px] lg:ml-[270px] ">
             <Swiper
                 slidesPerView={screenWidth >= 1040 ? 10 : "auto"}
                 spaceBetween={10}
@@ -59,7 +58,7 @@ const CategoryList = ({ list }: CategoryListProps) => {
                 keyboard={{
                     enabled: true,
                 }}
-                rewind={true}
+                // rewind={true}
                 modules={[Navigation, Keyboard]}
                 className="Category-swiper !w-full !pt-0 !pb-4 md:!py-4"
             >
@@ -72,7 +71,7 @@ const CategoryList = ({ list }: CategoryListProps) => {
                     </SwiperSlide>
                 ))}
             </Swiper>
-        </section>
+        </div>
     );
 };
 

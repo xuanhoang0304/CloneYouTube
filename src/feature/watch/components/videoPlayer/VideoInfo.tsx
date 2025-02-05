@@ -1,6 +1,7 @@
 "use client";
 
 import { BellRing, ChevronDown } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -16,6 +17,8 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
     const { data } = useApi<YoutubeResponseType>({
         url: `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics&id=${channelId}`,
     });
+    const locale = useLocale();
+    const tBtn = useTranslations("SubBtn");
     const [list, setList] = useState<YoutubeItemType[]>([]);
     const { token, setMoveLogin } = useYouTubeStore();
     const subscriptionsUrl = `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/subscriptions?&access_token=${token}&part=snippet,contentDetails&mine=true&maxResults=50`;
@@ -92,7 +95,7 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
                             </h2>
                         </Link>
                         <p className="text-xs leading-[18px] text-[#aaa]">
-                            {calcSubscriber(item?.statistics?.subscriberCount)}
+                            {calcSubscriber(item?.statistics?.subscriberCount,locale)}
                         </p>
                     </div>
 
@@ -102,15 +105,15 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
                             className="w-full md:w-auto justify-center text-black bg-[var(--bg-second-white)] hover:bg-[var(--bg-hover-white)] dark:text-white dark:bg-[#272727] dark:hover:bg-[#373737] transition-colors  px-4 py-2 rounded-full  flex items-center gap-x-2"
                         >
                             <BellRing className="w-5" />
-                            <p>Đã đăng ký</p>
+                            <p>{tBtn("subscribed")}</p>
                             <ChevronDown className="w-5" />
                         </button>
                     ) : (
                         <button
                             onClick={handleSubscribed}
-                            className="w-full md:w-auto justify-center text-black bg-[var(--bg-second-white)] dark:bg-white px-4 py-2 rounded-full mt-3 hover:bg-[var(--bg-hover-white)] dark:hover:bg-slate-200 transition-colors"
+                            className="w-full md:w-auto justify-center text-black bg-[var(--bg-second-white)] dark:bg-white px-4 py-2 rounded-full  hover:bg-[var(--bg-hover-white)] dark:hover:bg-slate-200 transition-colors"
                         >
-                            Đăng ký
+                            {tBtn("subscribe")}
                         </button>
                     )}
                 </div>

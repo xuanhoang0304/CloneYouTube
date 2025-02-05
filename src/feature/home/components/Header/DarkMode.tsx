@@ -33,10 +33,10 @@ const DarkMode = () => {
     useEffect(() => {
         const header = document.querySelector(".header");
         const ScreenWidth = screen.width;
-        if (ScreenWidth < 1024 && header && throttledScrollY < scrollY) {
+        if (ScreenWidth < 1024 && header && throttledScrollY + 1 < scrollY) {
             header.classList.remove("showHeader");
             header.classList.add("hideHeader"); // Cuộn xuống -> Ẩn header
-        } else if (ScreenWidth < 1024 && header && throttledScrollY > scrollY) {
+        } else if (ScreenWidth < 1024 && header && throttledScrollY + 1 > scrollY) {
             header.classList.remove("hideHeader");
             header.classList.add("showHeader"); // Cuộn lên -> Hiện header
         }

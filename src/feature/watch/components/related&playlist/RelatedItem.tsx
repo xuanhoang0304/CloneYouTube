@@ -1,5 +1,6 @@
 "use client";
 import { EllipsisVertical } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -11,6 +12,7 @@ type Props = {
     item: RelatedItemType;
 };
 const RelatedItem = ({ item }: Props) => {
+    const locale = useLocale()
     const router = useRouter();
     return (
         <li
@@ -46,7 +48,7 @@ const RelatedItem = ({ item }: Props) => {
                         </span>
                     )}
                     <span className="text-xs leading-[18px] text-[#aaa]">
-                        - {calcDayCreate(item.snippet.publishedAt)}
+                        - {calcDayCreate(item.snippet.publishedAt,locale)}
                     </span>
                 </div>
             </div>

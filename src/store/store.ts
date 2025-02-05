@@ -13,7 +13,7 @@ export const useYouTubeStore = create<Store>((set) => ({
     categoryId: "24",
     setCategoryId: (id: string) => set(() => ({ categoryId: id })),
     token: "",
-    setToken: (token: string | undefined) => set(() => ({ token })),
+    setToken: (token: string  |undefined) => set(() => ({ token })),
     moveLogin: false,
     setMoveLogin: (isMove: boolean) => set(() => ({ moveLogin: isMove })),
 }));

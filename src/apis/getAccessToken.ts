@@ -1,4 +1,4 @@
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 
 export async function getAccessToken() {
     try {

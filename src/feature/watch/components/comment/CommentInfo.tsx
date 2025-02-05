@@ -1,5 +1,6 @@
 "use client";
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
@@ -31,7 +32,7 @@ const CommentInfo = ({
         comment.snippet.topLevelComment.snippet.textOriginal
     );
     const { token } = useYouTubeStore();
-
+    const locale = useLocale();
     const [isShowEdit, setIsShowEdit] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -58,10 +59,10 @@ const CommentInfo = ({
                         </h3>
                     </Link>
                     <p className="text-xs text-[#aaa]">
-                        {calcDayCreate(publishedAt)}
+                        {calcDayCreate(publishedAt,locale)}
                     </p>
                     {publishedAt !== updatedAt && (
-                        <p className="text-xs text-[#aaa]">đã chỉnh sửa</p>
+                        <p className="text-xs text-[#aaa]">{locale == "vi" ? "(đã chỉnh sửa)" :"(edited)"}</p>
                     )}
                 </div>
             ) : (
@@ -179,7 +180,7 @@ const CommentInfo = ({
                             }}
                             className="px-4 py-2 rounded-full font-bold bg-transparent hover:bg-[#aaa] text-xs transition-colors"
                         >
-                            Phản hồi
+                            {locale == "vi" ? "Phản hồi" : "Reply"}
                         </button>
                     </div>
                 </>

@@ -5,6 +5,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { Play } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Navigation } from 'swiper/modules';
 // Import Swiper React components
@@ -35,8 +36,9 @@ const HomePlayListItem = ({
     });
     const fristVideoId = playListItems?.items[0]?.snippet?.resourceId?.videoId;
     const position = playListItems?.items[0]?.snippet?.position;
+    const locale = useLocale();
     return (
-        <li className="border-b border-[#333] pb-4">
+        <li className="playListItem border-b border-[#333] pb-4">
             <div className="flex items-center gap-x-3">
                 <p className="text-base md:text-xl font-bold flex-1 md:flex-none  max-w-[70%] md:max-w-[80%] line-clamp-1">
                     {item?.snippet?.title}
@@ -46,7 +48,9 @@ const HomePlayListItem = ({
                     className="flex gap-x-2  items-center px-4 py-2 rounded-full bg-transparent hover:bg-[var(--bg-hover-white)] dark:hover:bg-[#515255] transition-colors"
                 >
                     <Play fill="white" className="w-5" />
-                    <p className="text-xs md:text-base">Phát tất cả</p>
+                    <p className="text-xs md:text-base">
+                        {locale == "vi" ? "Phát tất cả" : "Watch all"}
+                    </p>
                 </Link>
             </div>
             <Swiper

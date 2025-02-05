@@ -1,5 +1,6 @@
 "use client";
 import { ChevronDown } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 
 import { CommentType } from '@/common/types';
@@ -11,6 +12,7 @@ type Props = {
 };
 
 const ReplyComment = ({ comment }: Props) => {
+    const locale = useLocale();
     const [isShow, setIsShow] = useState(false);
     return (
         <>
@@ -23,8 +25,13 @@ const ReplyComment = ({ comment }: Props) => {
                 ) : (
                     <ChevronDown className="w-4 h-4 rotate-180" />
                 )}
-                <p className="text-sm font-semibold ">
-                    {comment?.length} phản hồi
+                <p className="text-sm font-semibold lowercase ">
+                    {comment?.length +
+                        ` ${
+                            locale == "vi"
+                                ? "phản hồi"
+                                : `${comment?.length > 1 ? "replies" : "reply"}`
+                        }`}
                 </p>
             </button>
             {isShow && <ReplyList comment={comment}></ReplyList>}

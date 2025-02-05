@@ -1,4 +1,5 @@
 import { EllipsisVertical, Flag, Pencil, Trash2 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { memo, Suspense, useState } from 'react';
 
 import Loading from '@/components/Loading';
@@ -29,7 +30,8 @@ const CommentAction = ({
     const handleClose = () => {
         setIsShow(false);
     };
-
+    const t = useTranslations("WatchPage");
+    const locale = useLocale();
     const { token } = useYouTubeStore();
     const ref = useClickOutside<HTMLDivElement>(handleClose);
     const { toast } = useToast();
@@ -41,7 +43,7 @@ const CommentAction = ({
             <Suspense fallback={<Loading />}>
                 <div
                     className={cn(
-                        "absolute top-[40px] z-10 left-0  size-10 py-2 h-auto w-[150px] bg-[#282828] rounded-lg",
+                        "absolute top-[40px] z-10 left-0  size-10 py-2 h-auto w-[150px] bg-[var(--bg-second-white)] dark:bg-[#282828] rounded-lg",
                         isShow ? "block" : "hidden"
                     )}
                 >
@@ -52,29 +54,35 @@ const CommentAction = ({
                                     onEditComment(commentId);
                                     setIsShow(false);
                                 }}
-                                className="flex items-center gap-x-2 p-2 bg-transparent hover:bg-[#383838] w-full transition-colors "
+                                className="flex items-center gap-x-2 p-2 hover:bg-[var(--bg-hover-white)] dark:hover:bg-[#383838] w-full transition-colors "
                             >
                                 <Pencil className="size-4" />
-                                <p className="text-sm text-white">Chỉnh sửa</p>
+                                <p className="text-sm">{t("edit")}</p>
                             </button>
-                            <div className="flex   bg-transparent hover:bg-[#383838] w-full transition-colors ">
+                            <div className="flex  w-full transition-colors ">
                                 <Dialog>
                                     <DialogTrigger asChild>
                                         <Button
                                             variant="outline"
-                                            className="text-sm p-2 flex-1 justify-start bg-transparent  h-auto hover:bg-transparent hover:text-white transition-colors"
+                                            className="text-sm p-2 flex-1 justify-start bg-transparent  dark:hover:bg-[#383838] h-auto hover:bg-[var(--bg-hover-white)]  transition-colors"
                                         >
                                             <Trash2 className="size-4" />
-                                            <p className="text-sm">Xóa</p>
+                                            <p className="text-sm">
+                                                {t("delete")}
+                                            </p>
                                         </Button>
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-md">
                                         <DialogHeader>
-                                            <DialogTitle className="text-black">
-                                                Xóa bình luận
+                                            <DialogTitle>
+                                                {locale == "vi"
+                                                    ? "Xóa bình luận"
+                                                    : "Delete comment"}
                                             </DialogTitle>
                                             <DialogDescription>
-                                                Xóa vĩnh viễn bình luận của bạn?
+                                                {locale == "vi"
+                                                    ? " Xóa vĩnh viễn bình luận của bạn?"
+                                                    : "Do you wanna delete your comment?"}
                                             </DialogDescription>
                                         </DialogHeader>
 
@@ -85,7 +93,7 @@ const CommentAction = ({
                                                     variant="secondary"
                                                     className="hover:bg-[#515151] transition-colors"
                                                 >
-                                                    Hủy
+                                                    {t("cancel")}
                                                 </Button>
                                             </DialogClose>
                                             <Button
@@ -110,9 +118,9 @@ const CommentAction = ({
                                                 }}
                                                 type="button"
                                                 variant="secondary"
-                                                className="bg-[#515151]  hover:text-[#515151] transition-colors"
+                                                className="bg-[#515151]/30  hover:bg-[#515151] transition-colors"
                                             >
-                                                Xóa
+                                                {t("delete")}
                                             </Button>
                                         </DialogFooter>
                                     </DialogContent>
@@ -128,9 +136,7 @@ const CommentAction = ({
                             className="flex items-center gap-x-2 p-2 bg-transparent hover:bg-[#383838] w-full transition-colors "
                         >
                             <Flag className="size-4" />
-                            <p className="text-sm text-white">
-                                Báo cáo vi phạm
-                            </p>
+                            <p className="text-sm text-white">{t("report")}</p>
                         </button>
                     )}
                 </div>

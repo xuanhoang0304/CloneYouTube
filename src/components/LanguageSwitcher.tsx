@@ -2,6 +2,7 @@
 
 import Cookies from 'js-cookie';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -12,6 +13,7 @@ import { useYouTubeStore } from '@/store/store';
 const LanguageSwitcher = () => {
     const [isShowLanguagesList, setIsShowLanguagesList] = useState(false);
     const { token } = useYouTubeStore();
+    const t = useTranslations("Header");
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -30,8 +32,7 @@ const LanguageSwitcher = () => {
         const newUrl = `${fullUrl.replace(locale, value)}`;
 
         Cookies.set("NEXT_LOCALE", value, { expires: 7 });
-        console.log(Cookies.get("NEXT_LOCALE"));
-        router.push(newUrl);
+        router.push(newUrl ,{ scroll: false });
         router.refresh();
         setIsShowLanguagesList(false);
     };
@@ -50,7 +51,7 @@ const LanguageSwitcher = () => {
                         src={`${
                             locale == "vi"
                                 ? "https://media.loveitopcdn.com/3807/la-co-viet-nam-dongphusongphu2.png"
-                                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5HbMP_1zV9BBbdga3zlgQnhmtst8Qp4UDw&s"
+                                : "https://cdn.pixabay.com/photo/2012/04/10/16/14/union-jack-26119_1280.png"
                         }`}
                         alt="Viet Nam flag"
                         width={50}
@@ -80,7 +81,7 @@ const LanguageSwitcher = () => {
                                 className="size-full object-cover rounded-full"
                             ></Image>
                         </figure>
-                        <p className="text-nowrap text-sm">Tiếng Việt</p>
+                        <p className="text-nowrap text-sm">{t("vn")}</p>
                     </li>
                     <li
                         onClick={(e) => handleSwitchLanguage(e)}
@@ -89,14 +90,14 @@ const LanguageSwitcher = () => {
                     >
                         <figure className="size-5 rounded-full shrink-0">
                             <Image
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5HbMP_1zV9BBbdga3zlgQnhmtst8Qp4UDw&s"
+                                src="https://cdn.pixabay.com/photo/2012/04/10/16/14/union-jack-26119_1280.png"
                                 alt="USA flag"
                                 width={50}
                                 height={50}
                                 className="size-full object-cover rounded-full object-center"
                             ></Image>
                         </figure>
-                        <p className="text-nowrap text-sm">Tiếng Anh</p>
+                        <p className="text-nowrap text-sm">{t("eng")}</p>
                     </li>
                 </ul>
             )}

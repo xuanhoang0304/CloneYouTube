@@ -7,17 +7,23 @@ import { getVideoCategories } from '@/apis/getVideoCategories';
 import { cn } from '@/lib/utils';
 import { currentUser } from '@clerk/nextjs/server';
 
-import CategoryList from '../Main/CategoryList';
 import DarkMode from './DarkMode';
 import LoginContainer from './LoginContainer';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
 import Voice from './Voice';
 
+// '../Main/CategoryList'
 const DynamicLoginProfile = dynamic(() => import("./LoginProifle"), {
     ssr: false,
 });
-const LanguageSwitcher = dynamic(() => import('@/components/LanguageSwitcher'), { ssr: false });
+const CategoryList = dynamic(() => import("../Main/CategoryList"), {
+    ssr: false,
+});
+const LanguageSwitcher = dynamic(
+    () => import("@/components/LanguageSwitcher"),
+    { ssr: false }
+);
 const isPremium = true;
 
 const channelError = [
@@ -44,7 +50,6 @@ const channelError = [
 ];
 const Header = async () => {
     const locale = cookies().get("NEXT_LOCALE")?.value || "vi"; // Default to "vi"
-    console.log('locale', locale)
     const user = await currentUser();
     const token = await getAccessToken();
     const category = await getVideoCategories(locale);
@@ -66,7 +71,7 @@ const Header = async () => {
         isActive: true,
     });
     return (
-        <header className="header transition-all duration-300 fixed top-0 left-0 right-0 z-20 bg-white  dark:bg-black/50  backdrop-blur-lg">
+        <header className="header transition-all duration-300 fixed top-0 left-0 right-0 z-[20] bg-white  dark:bg-black/50  backdrop-blur-lg">
             <div className="max-w-[calc(100%-24px)] md:max-w-[calc(100%-48px)]  mx-auto flex gap-x-4 items-center justify-between">
                 <div className="flex items-center">
                     <button className="dark:hover:bg-[#222222] hover:bg-[var(--bg-hover-white)] transition-colors hidden lg:block  p-2 rounded-full">
@@ -84,10 +89,10 @@ const Header = async () => {
                 >
                     <SearchInput accessToken={token} />
                     <Voice></Voice>
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                         <DarkMode></DarkMode>
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                         <LanguageSwitcher></LanguageSwitcher>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 "use client";
 import { Keyboard, Search, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
@@ -11,8 +12,9 @@ import { useYouTubeStore } from '@/store/store';
 import { cn } from '@/utils/cn';
 import { slugify } from '@/utils/slugify';
 
-const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
+const SearchInput = ({ accessToken }: { accessToken: string |null| undefined }) => {
     const { token, setToken } = useYouTubeStore();
+    const t = useTranslations("Header");
     const [searchOpen, setSearchOpen] = useState(false);
     const q = useSearchParams().get("q")?.replaceAll("-", " ");
     const SearchIputRef = useRef<HTMLInputElement>(null);
@@ -149,8 +151,8 @@ const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
                         )}
                     <input
                         ref={SearchIputRef}
-                        placeholder="Tìm kiếm"
-                        className="w-full pl-3 dark:text-[#fff] text-black dark:placeholder:text-[#888] placeholder:text-black"
+                        placeholder={`${t("search")}...`}
+                        className="w-full pl-3 dark:text-[#fff] text-black dark:placeholder:text-[#888] placeholder:text-black placeholder:text-sm"
                         value={searchText}
                         onChange={handleChangeSearchText}
                     ></input>

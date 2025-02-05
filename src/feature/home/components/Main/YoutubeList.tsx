@@ -93,7 +93,7 @@ const YoutubeList = () => {
                 }
                 className="!overflow-hidden"
             >
-                <ul className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-x-5 py-4 gap-y-5 px-3 md:px-6 lg:pr-6 lg:pl-0">
+                <ul className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-x-5 py-4 gap-y-3 px-3 md:px-6 lg:pr-6 lg:pl-0">
                     {list?.map((item: YoutubeItemType) => (
                         <MemoizedYoutubeItem key={`${item.id}`} item={item} />
                     ))}

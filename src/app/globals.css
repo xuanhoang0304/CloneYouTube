@@ -93,7 +93,7 @@ button {
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
-        --bg-hover-white: #F1f1f1;
+        --bg-hover-white: #f1f1f1;
         --bg-second-white: #e5e5e5;
         --swiper-navigation-color: #e32a2a;
     }
@@ -153,6 +153,7 @@ button {
 .Category-swiper:hover .swiper-button-prev,
 .Category-swiper:hover .swiper-button-next {
     background-color: #333;
+    /* display: none; */
 }
 .Category-swiper .swiper-button-next::after,
 .Category-swiper .swiper-button-prev::after {
@@ -171,9 +172,16 @@ button {
 .header.hideHeader {
     transform: translateY(-100%);
 }
+.playListItem:has(> .HomePlayListVideoSwiper .swiper-slide .hideVideo) {
+    display: none;
+}
 
 @media (max-width: 991.98px) {
     .Category-swiper .swiper-button-next {
         right: 1px;
     }
- }
+    .Category-swiper:hover .swiper-button-prev,
+    .Category-swiper:hover .swiper-button-next {
+        display: none;
+    }
+}

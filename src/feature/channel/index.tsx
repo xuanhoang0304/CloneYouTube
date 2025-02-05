@@ -1,6 +1,7 @@
 "use client";
 
 import { BellRing, ChevronDown } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
@@ -21,10 +22,14 @@ const ChannelDetail = ({
     token: string | undefined;
     channelUrlId: string;
 }) => {
+    const tBtn = useTranslations("SubBtn");
+    const locale = useLocale();
+    // const t = useTransitions("ChannelPage");
     const { setMoveLogin } = useYouTubeStore();
     const [checkSubscribed, setCheckSubscribed] = useState<boolean | undefined>(
         false
     );
+    const [showDesc, setShowdesc] = useState(false);
     const { data: channelDetail } = useApi<channelDetailResponse>({
         url: channelUrlId
             ? `${process.env.NEXT_PUBLIC_YOUTUBE_API_URL}/channels?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&part=snippet,statistics,brandingSettings&id=${channelUrlId}`
@@ -100,7 +105,7 @@ const ChannelDetail = ({
                 ></Image>
             </figure>
             <div className="flex flex-col gap-y-3 items-center md:flex-row gap-x-6 lg:gap-x-10 -mt-[80px] md:mt-6">
-                <figure className="size-[160px] rounded-full boder-[2px] border-solid dark:border-white border-black">
+                <figure className="size-[160px] shrink-0 rounded-full boder-[2px] border-solid dark:border-white border-black">
                     <Image
                         src={
                             channelDetail?.items[0]?.snippet?.thumbnails?.high
@@ -112,7 +117,7 @@ const ChannelDetail = ({
                         className="h-auto w-full object-cover max-h-[200px] rounded-full aspect-[160/160] bg-gray-200"
                     ></Image>
                 </figure>
-                <div className="text-[#aaa] text-center md:text-left">
+                <div className="text-[#aaa] text-center md:text-left max-w-[98%] mx-auto">
                     <h1 className="text-[36px] font-bold leading-[50px] text-black dark:text-white">
                         {channelDetail?.items[0]?.snippet?.title}
                     </h1>
@@ -123,23 +128,41 @@ const ChannelDetail = ({
                         <span>
                             {calcSubscriber(
                                 channelDetail?.items[0]?.statistics
-                                    ?.subscriberCount || "0"
+                                    ?.subscriberCount || "0",
+                                locale
                             )}
                         </span>
                         <span>
                             {channelDetail?.items[0]?.statistics?.videoCount +
-                                " video"}
+                                " videos"}
                         </span>
                     </p>
 
-                    <p className="text-sm leading-4 mt-2 ">
-                        {channelDetail?.items[0]?.snippet?.description?.slice(
-                            0,
-                            60
+                    <p className="text-sm leading-4 mt-2  ">
+                        {!showDesc
+                            ? channelDetail?.items[0]?.snippet?.description?.slice(
+                                  0,
+                                  60
+                              )
+                            : channelDetail?.items[0]?.snippet?.description}
+                        {channelDetail?.items[0]?.snippet?.description && (
+                            <button
+                                onClick={() => setShowdesc(!showDesc)}
+                                className="dark:text-white text-black bg-[var(--bg-second-white)] dark:bg-black/50 left-[-24px] pl-6 relative z-1"
+                            >
+                                {showDesc
+                                    ? `${
+                                          locale == "vi"
+                                              ? "...ẩn bớt"
+                                              : "...hide"
+                                      }`
+                                    : `${
+                                          locale == "vi"
+                                              ? "...xem thêm"
+                                              : "...show more"
+                                      }`}
+                            </button>
                         )}
-                        <button className="dark:text-white text-black bg-[var(--bg-second-white)] dark:bg-black/50 left-[-24px] pl-6 relative z-1">
-                            ...xem thêm
-                        </button>
                     </p>
                     {checkSubscribed ? (
                         <button
@@ -147,7 +170,7 @@ const ChannelDetail = ({
                             className="w-full md:w-auto justify-center text-black bg-[var(--bg-second-white)] hover:bg-[var(--bg-hover-white)] dark:text-white dark:bg-[#272727] dark:hover:bg-[#373737] transition-colors  px-4 py-2 rounded-full mt-3 flex items-center gap-x-2"
                         >
                             <BellRing className="w-5" />
-                            <p>Đã đăng ký</p>
+                            <p>{tBtn("subscribed")}</p>
                             <ChevronDown className="w-5" />
                         </button>
                     ) : (
@@ -155,7 +178,7 @@ const ChannelDetail = ({
                             onClick={handleSubscribed}
                             className="w-full md:w-auto justify-center text-black bg-[var(--bg-second-white)] dark:bg-white px-4 py-2 rounded-full mt-3 hover:bg-[var(--bg-hover-white)] dark:hover:bg-slate-200 transition-colors"
                         >
-                            Đăng ký
+                            {tBtn("subscribe")}
                         </button>
                     )}
                 </div>

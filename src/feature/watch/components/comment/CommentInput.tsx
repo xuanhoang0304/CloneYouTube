@@ -1,3 +1,4 @@
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -29,14 +30,11 @@ const CommentInput = ({
     const [comment, setComment] = useState("");
     const { token } = useYouTubeStore();
     const [isShow, setIsShow] = useState(false);
-    if (!token)
-        return (
-            <p className="text-yellow-600">
-                Đăng nhập để có thể bình luận video !
-            </p>
-        );
+    const local = useLocale();
+    const t = useTranslations("WatchPage");
+    if (!token) return <p className="text-yellow-600">{local == "vi" ? "Đăng nhập để có thể bình luận video !" : "Please login to write your comment !"} </p>;
     return (
-        <div className="flex gap-x-4 sticky top-[120px] bg-white dark:bg-black z-50 lg:static py-2">
+        <div className="flex gap-x-4 fixed bottom-[62px] left-0 right-0 px-2 lg:px-0 bg-white dark:bg-black z-10 lg:static py-2">
             <figure
                 className={cn(
                     "size-10 rounded-full",
@@ -55,7 +53,7 @@ const CommentInput = ({
                 <input
                     type="text"
                     placeholder={
-                        action == "rep" ? "Phản hồi..." : "Viết bình luận..."
+                        action == "rep" ? `${t("reply")}...` : `${t("cmt")}...`
                     }
                     className={"w-full cursor-pointer text-sm"}
                     value={comment}
@@ -82,7 +80,7 @@ const CommentInput = ({
                                 }}
                                 className="bg-transparent hover:text-black dark:text-white text-black px-3 dark:hover:bg-[#272727] hover:bg-[var(--bg-second-white)] rounded-full transition-colors "
                             >
-                                Hủy
+                                {t("cancel")}
                             </button>
                             <button
                                 onClick={async () => {
@@ -124,7 +122,9 @@ const CommentInput = ({
                                         : "bg-[#272727]/50"
                                 )}
                             >
-                                {action == "add" ? "Bình luận" : "Phản hồi"}
+                                {action == "add"
+                                    ? `${t("comment")}`
+                                    : `${t("reply")}`}
                             </button>
                         </div>
                     )}

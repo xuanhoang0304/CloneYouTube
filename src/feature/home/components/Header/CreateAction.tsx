@@ -1,6 +1,7 @@
 "use client";
 
 import { NotebookPen, Plus, Radio, Youtube } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import useClickOutside from '@/hooks/useClickOutSide';
@@ -22,6 +23,7 @@ const ProfileAction = [
 ];
 export const CreateAction = () => {
     const [isShow, setIsShow] = useState(false);
+    const t = useTranslations("Header")
     const handleClose = () => {
         setIsShow(false);
     };
@@ -30,10 +32,10 @@ export const CreateAction = () => {
         <div className="relative hidden lg:block" ref={ref}>
             <button
                 onClick={() => setIsShow(!isShow)}
-                className="flex items-center  px-[16px] dark:hover:bg-[#717171] bg-[var(--bg-second-white)] hover:bg-[var(--bg-hover-white)] dark:bg-primary-bgcl rounded-full gap-x-[6px] transition-colors"
+                className="flex items-center min-w-[90px]  px-[12px] dark:hover:bg-[#717171] bg-[var(--bg-second-white)] hover:bg-[var(--bg-hover-white)] dark:bg-primary-bgcl rounded-full gap-x-[6px] transition-colors"
             >
                 <Plus></Plus>
-                <p className="text-xs leading-9 font-medium">Tạo</p>
+                <p className="text-xs leading-9 font-medium">{t("create")}</p>
             </button>
             {isShow && (
                 <ul

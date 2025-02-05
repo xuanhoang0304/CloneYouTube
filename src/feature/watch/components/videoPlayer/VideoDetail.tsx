@@ -18,7 +18,7 @@ const VideoDesc = dynamic(
         ssr: false,
     }
 );
-const VideoDetail = () => {
+const   VideoDetail = () => {
     const { token } = useYouTubeStore();
     const id = useSearchParams().get("v");
     let videoDetail;

@@ -1,13 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
-import useClickOutside from "@/hooks/useClickOutSide";
-import { useYouTubeStore } from "@/store/store";
+import useClickOutside from '@/hooks/useClickOutSide';
+import { useYouTubeStore } from '@/store/store';
 
 const CtaLogin = () => {
     const { moveLogin, setMoveLogin } = useYouTubeStore();
     const router = useRouter();
+    const locale = useLocale();
     const handleClose = () => {
         setMoveLogin(false);
     };
@@ -41,11 +43,15 @@ const CtaLogin = () => {
                     </button>
 
                     <h2 className="text-lg font-semibold text-gray-800 mb-2">
-                        Bạn có muốn đăng nhập ?
+                        {locale == "vi"
+                            ? "Bạn có muốn đăng nhập?"
+                            : "Do you wanna login?"}
                     </h2>
 
                     <p className="text-sm text-gray-500 mb-6">
-                        Vui lòng đăng nhập tài khoản google để tiếp tục.
+                        {locale == "vi"
+                            ? "Vui lòng đăng nhập tài khoản google để tiếp tục."
+                            : "Please login by Google Account to continue."}
                     </p>
 
                     <div className="flex space-x-4">
@@ -53,7 +59,7 @@ const CtaLogin = () => {
                             onClick={handleClose}
                             className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300"
                         >
-                            Hủy
+                            {locale == "vi" ? "Huỷ" : "Cancel"}
                         </button>
                         <button
                             onClick={() => {
@@ -62,7 +68,7 @@ const CtaLogin = () => {
                             }}
                             className="flex-1 bg-blue-600  text-white  py-2 px-4 rounded-lg font-medium hover:bg-blue-700"
                         >
-                            Đăng nhập
+                            {locale == "vi" ? "Đăng nhập" : "Login"}
                         </button>
                     </div>
                 </div>
