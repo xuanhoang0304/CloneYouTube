@@ -12,7 +12,7 @@ import { useYouTubeStore } from '@/store/store';
 import { cn } from '@/utils/cn';
 import { slugify } from '@/utils/slugify';
 
-const SearchInput = ({ accessToken }: { accessToken: string |null| undefined }) => {
+const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
     const { token, setToken } = useYouTubeStore();
     const t = useTranslations("Header");
     const [searchOpen, setSearchOpen] = useState(false);
