@@ -117,7 +117,7 @@ const ChannelDetail = ({
                         className="h-auto w-full object-cover max-h-[200px] rounded-full aspect-[160/160] bg-gray-200"
                     ></Image>
                 </figure>
-                <div className="text-[#aaa] text-center md:text-left max-w-[98%] mx-auto">
+                <div className="text-[#aaa] text-center md:text-left max-w-[98%] mx-auto md:m-0">
                     <h1 className="text-[36px] font-bold leading-[50px] text-black dark:text-white">
                         {channelDetail?.items[0]?.snippet?.title}
                     </h1>
@@ -138,7 +138,7 @@ const ChannelDetail = ({
                         </span>
                     </p>
 
-                    <p className="text-sm leading-4 mt-2  ">
+                    <p className="text-sm leading-4 mt-2 break-words ">
                         {!showDesc
                             ? channelDetail?.items[0]?.snippet?.description?.slice(
                                   0,

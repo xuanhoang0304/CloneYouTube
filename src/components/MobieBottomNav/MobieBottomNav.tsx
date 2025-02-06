@@ -1,17 +1,19 @@
 "use client";
 import { Film, House, TvMinimalPlay } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import DarkMode from '@/feature/home/components/Header/DarkMode';
 import { cn } from '@/lib/utils';
 import { useYouTubeStore } from '@/store/store';
 import { UserButton } from '@clerk/nextjs';
 
+import SettingBtn from './SettingBtn';
+
 const MobieBottomNav = () => {
     const { token } = useYouTubeStore();
     const pathname = usePathname();
+    const t = useTranslations("SideBar");
     const locale = useLocale();
     if (!token) return null;
     return (
@@ -22,23 +24,27 @@ const MobieBottomNav = () => {
                     className="flex flex-col justify-center items-center gap-y-1"
                 >
                     <House
-                        className={cn("w-6", pathname == `/${locale}` && "dark:fill-white fill-black")}
+                        className={cn(
+                            "w-6",
+                            pathname == `/${locale}` &&
+                                "dark:fill-white fill-black"
+                        )}
                     />
-                    <p className="text-xs">Trang chủ</p>
+                    <p className="text-xs">{t("home")}</p>
                 </Link>
                 <Link
-                    href="/sort"
+                    href="/short"
                     className="flex flex-col justify-center items-center gap-y-1"
                 >
                     <Film
                         className={cn(
                             "w-6",
-                            pathname == "/sort" && "dark:fill-white fill-black"
+                            pathname == `/${locale}/short` && "dark:fill-white fill-black"
                         )}
                     />
-                    <p className="text-xs">Short</p>
+                    <p className="text-xs">{t("short")}</p>
                 </Link>
-                <DarkMode></DarkMode>
+                <SettingBtn></SettingBtn>
                 <Link
                     href="/sub"
                     className="flex flex-col justify-center items-center gap-y-1"
@@ -46,14 +52,14 @@ const MobieBottomNav = () => {
                     <TvMinimalPlay
                         className={cn(
                             "w-6",
-                            pathname == "/sub" && "dark:fill-white fill-black"
+                            pathname == `/${locale}/sub` && "dark:fill-white fill-black"
                         )}
                     />
-                    <p className="text-xs">Kênh đăng ký</p>
+                    <p className="text-xs">{t("subscriptions")}</p>
                 </Link>
                 <button className="flex flex-col justify-center items-center gap-y-1">
                     <UserButton></UserButton>
-                    <p className="text-xs">Bạn</p>
+                    <p className="text-xs">{t("you")}</p>
                 </button>
             </div>
         </div>

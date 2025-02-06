@@ -8,11 +8,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import useClickOutside from '@/hooks/useClickOutSide';
-import { useYouTubeStore } from '@/store/store';
 
 const LanguageSwitcher = () => {
     const [isShowLanguagesList, setIsShowLanguagesList] = useState(false);
-    const { token } = useYouTubeStore();
+
     const t = useTranslations("Header");
     const router = useRouter();
     const pathname = usePathname();
@@ -32,12 +31,11 @@ const LanguageSwitcher = () => {
         const newUrl = `${fullUrl.replace(locale, value)}`;
 
         Cookies.set("NEXT_LOCALE", value, { expires: 7 });
-        router.push(newUrl ,{ scroll: false });
+        router.push(newUrl, { scroll: false });
         router.refresh();
         setIsShowLanguagesList(false);
     };
     const ref = useClickOutside<HTMLDivElement>(handleClose);
-    if (!token) return null;
     return (
         <div className="relative" ref={ref}>
             <button

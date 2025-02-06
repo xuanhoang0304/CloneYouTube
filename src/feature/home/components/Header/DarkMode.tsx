@@ -6,10 +6,8 @@ import { useLocalStorage } from 'usehooks-ts';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useThrottle } from '@/hooks/useThrottle';
-import { useYouTubeStore } from '@/store/store';
 
 const DarkMode = () => {
-    const { token } = useYouTubeStore();
     const [value, setValue] = useLocalStorage("theme", "");
     const handleChangeMode = () => {
         value === "light" ? setValue("dark") : setValue("light");
@@ -36,7 +34,11 @@ const DarkMode = () => {
         if (ScreenWidth < 1024 && header && throttledScrollY + 1 < scrollY) {
             header.classList.remove("showHeader");
             header.classList.add("hideHeader"); // Cuộn xuống -> Ẩn header
-        } else if (ScreenWidth < 1024 && header && throttledScrollY + 1 > scrollY) {
+        } else if (
+            ScreenWidth < 1024 &&
+            header &&
+            throttledScrollY + 1 > scrollY
+        ) {
             header.classList.remove("hideHeader");
             header.classList.add("showHeader"); // Cuộn lên -> Hiện header
         }
@@ -57,10 +59,10 @@ const DarkMode = () => {
             document.documentElement.classList.add("light");
         }
     }, [value]);
-    if (!token) return null;
+    // if (!token) return null;
     return (
         <div
-            className={`flex md:flex-row flex-col items-center gap-x-2 gap-y-1`}
+            className={`flex items-center gap-x-2 `}
         >
             <Switch
                 checked={value == "light" ? false : true}
