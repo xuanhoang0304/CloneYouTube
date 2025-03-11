@@ -1,3 +1,4 @@
+"use client";
 import { EllipsisVertical, Flag, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { memo, Suspense, useState } from 'react';
@@ -85,7 +86,6 @@ const CommentAction = ({
                                                     : "Do you wanna delete your comment?"}
                                             </DialogDescription>
                                         </DialogHeader>
-
                                         <DialogFooter className="sm:justify-end">
                                             <DialogClose asChild>
                                                 <Button

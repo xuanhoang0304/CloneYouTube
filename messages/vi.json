@@ -3,18 +3,18 @@
         "title": "Xin chào thế giới!",
         "about": "Đi đến trang giới thiệu"
     },
-    "SubsPage":{
-        "heading" : "Tất cả kênh đã đăng ký"
+    "SubsPage": {
+        "heading": "Tất cả kênh đã đăng ký"
     },
     "WatchPage": {
         "comment": "Bình luận",
         "filter": "Sắp xếp theo",
         "cmt": "Viết bình luận",
         "reply": "Phản hồi",
-        "cancel":"Huỷ",
-        "edit":"Chỉnh sửa",
-        "delete":"Xóa",
-        "report":"Báo cáo vi phạm"
+        "cancel": "Huỷ",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "report": "Báo cáo vi phạm"
     },
     "SideBar": {
         "home": "Trang chủ",
@@ -44,9 +44,18 @@
         "eng": "Tiếng Anh"
     },
     "VideoDetails": {
-        "views" : "lượt xem"
-    },"SubBtn":{
+        "views": "lượt xem"
+    },
+    "SubBtn": {
         "subscribe": "Đăng ký",
         "subscribed": "Đã đăng ký"
+    },
+    "form": {
+        "required": "Trường này là bắt buộc",
+        "minLength": "Phải có ít nhất {min} ký tự",
+        "maxLength": "Phải có ít hơn {max} ký tự",
+        "fileRequired": "Bạn phải chọn một tệp video",
+        "invalidFileType": "Loại tệp không hợp lệ. Chỉ cho phép MP4, AVI",
+        "privacyRequired": "Vui lòng chọn chế độ hiển thị"
     }
 }

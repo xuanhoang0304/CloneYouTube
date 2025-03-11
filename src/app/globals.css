@@ -8,9 +8,11 @@ html {
 body {
     font-family: Roboto, sans-serif;
 }
+
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
+    height: 4px;
 }
 
 /* Track */
@@ -174,6 +176,14 @@ button {
 }
 .playListItem:has(> .HomePlayListVideoSwiper .swiper-slide .hideVideo) {
     display: none;
+}
+
+/* Khi input focus hoặc có giá trị -> label di chuyển lên */
+.input-group input:focus ~ label,
+.input-group textarea:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label,
+.input-group textarea:not(:placeholder-shown) ~ label {
+    transform: translateY(-150%);
 }
 
 @media (max-width: 991.98px) {

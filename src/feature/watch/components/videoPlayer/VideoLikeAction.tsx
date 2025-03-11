@@ -13,7 +13,7 @@ const VideoLikeAction = ({
     token,
 }: {
     videoId: string | undefined;
-    token: string | undefined;
+    token: string | null;
 }) => {
     const { setMoveLogin } = useYouTubeStore();
     const { data, mutate: mutateRating } = useApi<{

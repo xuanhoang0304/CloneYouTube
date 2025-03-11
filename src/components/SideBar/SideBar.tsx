@@ -38,8 +38,8 @@ const SideBar = () => {
         {
             id: 3,
             icon: <SquarePlay className="w-5" />,
-            name: "YouTube Music",
-            href: "/ytmusic",
+            name: "YouTube Studio",
+            href: `/${locale}/studio`
         },
         {
             id: 4,
@@ -103,13 +103,13 @@ const SideBar = () => {
         },
     ];
     return (
-        <section className="hidden lg:block ">
+        <div className="hidden lg:block ">
             <div className="w-[240px] h-[calc(100vh-60px)] bg-white dark:bg-black  py-3 mb-10 px-4 overflow-hidden hover:overflow-auto  fixed z-40 top-[56px] left-0 ">
                 <SideBarTabList list={TabList.slice(0, 4)}></SideBarTabList>
                 <SideBarLine></SideBarLine>
                 <Link
-                    href={"/feed/you"}
-                    className="flex items-center gap-x-3 w-[198px] transition-colors p-2 hover:bg-[var(--bg-second-white)] rounded-lg cursor-pointer"
+                    href={`/${locale}/feed/you`}
+                    className="flex items-center gap-x-3 w-[198px] transition-colors p-2 hover:bg-[var(--bg-second-white)] dark:hover:bg-primary-bgcl rounded-lg cursor-pointer"
                 >
                     <p className="text-sm font-bold">{t("you")}</p>
                     <ChevronRight className="w-5" />
@@ -129,7 +129,7 @@ const SideBar = () => {
                 <h2 className="font-medium my-3 leading-[22px]">{t("explore")} </h2>
                 <SideBarTabList list={TabList.slice(10)}></SideBarTabList>
             </div>
-        </section>
+        </div>
     );
 };
 export default SideBar;

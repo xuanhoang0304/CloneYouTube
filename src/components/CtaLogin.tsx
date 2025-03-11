@@ -63,7 +63,7 @@ const CtaLogin = () => {
                         </button>
                         <button
                             onClick={() => {
-                                router.push("/login");
+                                router.push(`/${locale}/login`);
                                 setMoveLogin(false);
                             }}
                             className="flex-1 bg-blue-600  text-white  py-2 px-4 rounded-lg font-medium hover:bg-blue-700"

@@ -17,7 +17,7 @@ const RelatedItem = ({ item }: Props) => {
     return (
         <li
             onClick={() => {
-                router.push(`/watch?v=${item.id.videoId}`);
+                router.push(`/${locale}/watch?v=${item.id.videoId}`);
             }}
             className="flex  gap-x-3 relative cursor-pointer"
         >

@@ -1,4 +1,5 @@
 "use client";
+
 import { MoonStar, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
@@ -8,80 +9,63 @@ import { Switch } from '@/components/ui/switch';
 import { useThrottle } from '@/hooks/useThrottle';
 
 const DarkMode = () => {
-    const [value, setValue] = useLocalStorage("theme", "");
-    const handleChangeMode = () => {
-        value === "light" ? setValue("dark") : setValue("light");
-    };
+  const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "light");
+  const [scrollY, setScrollY] = useState(0);
+  const throttledScrollY = useThrottle(scrollY, 200);
 
-    const [scrollY, setScrollY] = useState(0);
+  // Xử lý thay đổi chế độ sáng/tối
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
-    const throttledScrollY = useThrottle(scrollY, 200); // Giới hạn kiểm tra mỗi 200ms
+  // Lắng nghe sự kiện scroll để ẩn/hiện header
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollY(window.scrollY);
-        };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+  useEffect(() => {
+    const header = document.querySelector(".header") as HTMLElement | null;
+    const screenWidth = window.innerWidth;
 
-    useEffect(() => {
-        const header = document.querySelector(".header");
-        const ScreenWidth = screen.width;
-        if (ScreenWidth < 1024 && header && throttledScrollY + 1 < scrollY) {
-            header.classList.remove("showHeader");
-            header.classList.add("hideHeader"); // Cuộn xuống -> Ẩn header
-        } else if (
-            ScreenWidth < 1024 &&
-            header &&
-            throttledScrollY + 1 > scrollY
-        ) {
-            header.classList.remove("hideHeader");
-            header.classList.add("showHeader"); // Cuộn lên -> Hiện header
-        }
-    }, [throttledScrollY, scrollY]);
-    useEffect(() => {
-        const theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-        if (!value) {
-            setValue(theme);
-        }
-        if (value === "dark") {
-            document.documentElement.classList.remove("light");
-            document.documentElement.classList.add("dark");
-        }
-        if (value === "light") {
-            document.documentElement.classList.remove("dark");
-            document.documentElement.classList.add("light");
-        }
-    }, [value]);
-    // if (!token) return null;
-    return (
-        <div
-            className={`flex items-center gap-x-2 `}
-        >
-            <Switch
-                checked={value == "light" ? false : true}
-                onClick={handleChangeMode}
-                id="dark-mode"
-            />
-            <Label
-                onClick={handleChangeMode}
-                htmlFor="dark-mode"
-                className="dark:text-white text-black"
-            >
-                {value == "light" ? (
-                    <Sun className="text-yellow-400 size-5 lg:size-6" />
-                ) : (
-                    <MoonStar className="text-yellow-400 size-5 lg:size-6" />
-                )}
-            </Label>
-        </div>
-    );
+    if (screenWidth < 1024 && header) {
+      if (throttledScrollY < scrollY) {
+        header.classList.add("hideHeader");
+        header.classList.remove("showHeader"); // Ẩn header khi cuộn xuống
+      } else {
+        header.classList.add("showHeader");
+        header.classList.remove("hideHeader"); // Hiện header khi cuộn lên
+      }
+    }
+  }, [throttledScrollY, scrollY]);
+
+  return (
+    <div className="flex items-center gap-x-2">
+      <Switch
+        checked={theme === "dark"}
+        onCheckedChange={() => setTheme(theme === "light" ? "dark" : "light")}
+        id="dark-mode"
+      />
+      <Label
+        htmlFor="dark-mode"
+        className="dark:text-white text-black cursor-pointer"
+      >
+        {theme === "light" ? (
+          <Sun className="text-yellow-400 size-5 lg:size-6" />
+        ) : (
+          <MoonStar className="text-yellow-400 size-5 lg:size-6" />
+        )}
+      </Label>
+    </div>
+  );
 };
 
 export default DarkMode;

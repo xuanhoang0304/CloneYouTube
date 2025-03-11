@@ -19,7 +19,7 @@ const ChannelDetail = ({
     token,
     channelUrlId,
 }: {
-    token: string | undefined;
+    token: string | null;
     channelUrlId: string;
 }) => {
     const tBtn = useTranslations("SubBtn");

@@ -44,7 +44,7 @@ const HomePlayListItem = ({
                     {item?.snippet?.title}
                 </p>
                 <Link
-                    href={`/watch?v=${fristVideoId}&list=${item.id}&listTitle=${title}&index=${position}`}
+                    href={`/${locale}/watch?v=${fristVideoId}&list=${item.id}&listTitle=${title}&index=${position}`}
                     className="flex gap-x-2  items-center px-4 py-2 rounded-full bg-transparent hover:bg-[var(--bg-hover-white)] dark:hover:bg-[#515255] transition-colors"
                 >
                     <Play fill="white" className="w-5" />

@@ -1,12 +1,15 @@
+"use client"
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { SubscriptionsItemType } from '@/common/types';
 
 const SubscriptionsItem = ({ item }: { item: SubscriptionsItemType }) => {
+    const locale = useLocale();
     return (
         <li className="flex items-center w-[198px] gap-x-4 transition-colors relative p-2 hover:bg-[var(--bg-second-white)] dark:hover:bg-[#717171] rounded-lg cursor-pointer">
-           <Link href={`/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`} className="flex items-center gap-x-4 w-full">
+           <Link href={`/${locale}/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`} className="flex items-center gap-x-4 w-full">
                 <figure className="size-6 shrink-0 rounded-full">
                     <Image
                         src={item.snippet.thumbnails.medium.url || "/images/default-avatar.png"}

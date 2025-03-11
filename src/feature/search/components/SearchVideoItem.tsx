@@ -14,7 +14,7 @@ const SearchVideoItem = ({ item }: SearchVideoItemProps) => {
     return (
         <li>
             <Link
-                href={`/watch?v=${item.id.videoId}`}
+                href={`/${locale}/watch?v=${item.id.videoId}`}
                 className="flex flex-col md:flex-row gap-4"
             >
                 <Image

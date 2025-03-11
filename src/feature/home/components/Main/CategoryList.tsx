@@ -34,6 +34,7 @@ const CategoryList = ({ list }: CategoryListProps) => {
         });
         setCategoryList(newList);
         setCategoryId(id);
+        window.scrollTo(0, 0);
     };
     const handleSetScreenWidth = () => {
         setScreenWidth(screen.width);

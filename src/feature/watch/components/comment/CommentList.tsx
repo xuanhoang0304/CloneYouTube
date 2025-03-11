@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useWindowSize } from 'usehooks-ts';
 
 import { channelDetailResponse, TopCommentType } from '@/common/types';
 import Loading from '@/components/Loading';
@@ -26,6 +27,7 @@ const CommentList = ({
     const [hasMore, setHasMore] = useState(true);
     const [isShowComment, setIsShowComment] = useState(false);
     const [list, setList] = useState<TopCommentType[]>([]);
+    const { width = 0 } = useWindowSize();
     const handleHideCommentList = () => {
         setIsShowComment(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -112,10 +114,15 @@ const CommentList = ({
         mutate();
         mutateData();
     };
-
+    useEffect(() => {
+        isLoading
+            ? document.body.classList.add("overflow-hidden")
+            : document.body.classList.remove("overflow-hidden");
+    }, [isLoading]);
     useEffect(() => {
         if (data) {
             if (!data.nextPageToken) {
+                console.log("no more comments");
                 setHasMore(false);
                 setNextPageToken("");
             } else {
@@ -147,7 +154,7 @@ const CommentList = ({
                     next={fetchData}
                     hasMore={hasMore}
                     loader={isLoading && <p>Loading...</p>}
-                    scrollThreshold={0.5}
+                    scrollThreshold={width > 1024 ? 0.9 : 0.5}
                     scrollableTarget="window"
                     className="!overflow-unset"
                 >

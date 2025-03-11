@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function handleUnSubcriceChannel(
     subscriptionId: string | undefined,
-    token: string | undefined
+    token: string | null
 ) {
     const response = await axios.delete(
         `https://youtube.googleapis.com/youtube/v3/subscriptions?id=${subscriptionId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`,

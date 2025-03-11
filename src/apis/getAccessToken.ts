@@ -1,11 +1,10 @@
-import { clerkClient, currentUser } from '@clerk/nextjs/server';
+import { auth, clerkClient } from '@clerk/nextjs/server';
 
 export async function getAccessToken() {
     try {
-        const user = await currentUser();
-        const userId = user?.id;
+        const { userId } = await auth();
         if (!userId) {
-            return;
+            return null;
         }
         const clerk = clerkClient();
         const response = await clerk.users.getUserOauthAccessToken(

@@ -15,7 +15,7 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
     const locale = useLocale();
     return (
         <li className="rounded-t-xl cursor-pointer">
-            <Link href={`watch?v=${item.id}`}>
+            <Link href={`/${locale}/watch?v=${item.id}`}>
                 <figure className="w-full  rounded-xl relative">
                     <Image
                         src={item.snippet.thumbnails.high.url}
@@ -32,7 +32,7 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
 
             <div className="mt-3 flex gap-x-3 relative pr-6">
                 <Link
-                    href={`/channel/${item.snippet.channelId}?title=${item.snippet.channelTitle}`}
+                    href={`/${locale}/channel/${item.snippet.channelId}?title=${item.snippet.channelTitle}`}
                     className="flex gap-x-4 size-9 shrink-0"
                 >
                     <figure className="size-full rounded-full ">
@@ -50,12 +50,12 @@ const YoutubeItem = ({ item }: { item: YoutubeItemType }) => {
                     </figure>
                 </Link>
                 <div>
-                    <Link href={`/watch/?v=${item.id}`}>
+                    <Link href={`/${locale}/watch/?v=${item.id}`}>
                         <h2 className="leading-[22px] font-medium line-clamp-2">
                             {item.snippet.title}
                         </h2>
                     </Link>
-                    <Link href={`/channel/${item.snippet.channelTitle}`}>
+                    <Link href={`/${locale}/channel/${item.snippet.channelTitle}`}>
                         <h3 className="text-sm text-[#AAA] leading-5">
                             {item.snippet.channelTitle}
                         </h3>

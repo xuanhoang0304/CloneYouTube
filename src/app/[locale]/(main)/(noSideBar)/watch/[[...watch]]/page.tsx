@@ -13,12 +13,12 @@ export async function generateMetadata({
         videoDetail = data[0];
     }
     return {
-        title: videoDetail?.snippet?.title || "Simple Title",
+        title: videoDetail?.snippet?.title || "YouTube",
     };
 }
 const Video = () => {
     return (
-        <section className="pt-[66px] lg:pt-[86px] h-[100vh] w-[calc(100%-24px)] mx-auto py-6">
+        <section className="pt-[66px] pb-[84px] lg:pt-[86px]  w-[calc(100%-24px)] mx-auto">
             <VideoDetail></VideoDetail>
         </section>
     );

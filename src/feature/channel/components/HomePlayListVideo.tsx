@@ -13,7 +13,7 @@ const HomePlayListVideo = ({ data }: { data: SearchPlayListItemType }) => {
                 data?.snippet?.title === "Private video" ? "hideVideo" : ""
             }`}
         >
-            <Link href={`/watch?v=${data?.snippet?.resourceId?.videoId}`}>
+            <Link href={`/${locale}/watch?v=${data?.snippet?.resourceId?.videoId}`}>
                 <figure className="w-full h-[118px]">
                     <Image
                         src={data?.snippet?.thumbnails?.medium?.url || "/image/default.avif"}

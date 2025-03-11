@@ -1,4 +1,5 @@
 import { BellRing, ChevronDown } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -15,6 +16,8 @@ const SubItem = ({
     onFetchData: (id: string) => void;
 }) => {
     const { token } = useYouTubeStore();
+    const t = useTranslations("SubBtn");
+    const locale = useLocale()
     const router = useRouter();
     const handleSubscribed = useCallback(async () => {
         const response = await handleUnSubcriceChannel(item.id, token);
@@ -28,7 +31,7 @@ const SubItem = ({
                 <figure
                     onClick={() => {
                         router.push(
-                            `/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`
+                            `/${locale}/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`
                         );
                     }}
                     className="size-[100px] cursor-pointer rounded-full shrink-0 border-[2px] border-white"
@@ -47,7 +50,7 @@ const SubItem = ({
                 <div
                     onClick={() => {
                         router.push(
-                            `/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`
+                            `/${locale}/channel/${item.snippet.resourceId.channelId}?title=${item.snippet.title}`
                         );
                     }}
                     className="flex-1 cursor-pointer"
@@ -66,7 +69,7 @@ const SubItem = ({
                 className="w-[50%] md:w-[180px]   justify-center text-black bg-[var(--bg-second-white)] hover:bg-[var(--bg-hover-white)] dark:text-white dark:bg-[#272727] dark:hover:bg-[#373737] transition-colors  px-4 py-2 rounded-full mt-3 flex items-center gap-x-2"
             >
                 <BellRing className="w-5" />
-                <p>Đã đăng ký</p>
+                <p>{t("subscribed")}</p>
                 <ChevronDown className="w-5" />
             </button>
         </li>

@@ -1,4 +1,5 @@
 "use client";
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { memo, useState } from 'react';
@@ -44,12 +45,12 @@ const CommentItem = ({
     const handleCancelReply = () => {
         setIsShowEditReply(false);
     };
-
+    const locale = useLocale()
     return (
         <li className="flex gap-x-3 w-full relative">
             <div className="flex flex-1 gap-x-3 w-full">
                 <Link
-                    href={`/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}?title=${comment.snippet.topLevelComment.snippet.authorDisplayName}`}
+                    href={`/${locale}/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}?title=${comment.snippet.topLevelComment.snippet.authorDisplayName}`}
                 >
                     <figure className={"rounded-full size-10 cursor-pointer"}>
                         <Image

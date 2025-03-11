@@ -4,7 +4,7 @@ const url = "https://www.googleapis.com/youtube/v3/comments";
 
 export default async function handleDeleteCommentVideo(
     commentId: string,
-    token: string | undefined
+    token: string | null
 ) {
     const res = await axios.delete(
         `${url}?id=${commentId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`,

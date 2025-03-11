@@ -16,6 +16,7 @@ type RelatedListProps = {
 const RelatedList = ({ channelId }: RelatedListProps) => {
     const searchParams = useSearchParams();
     const [hasMore, setHasMore] = useState(false);
+  
     // Convert searchParams to an object
     const params: { [key: string]: string } = {};
     const [nextPageToken, setNextPageToken] = useState("");
@@ -54,9 +55,11 @@ const RelatedList = ({ channelId }: RelatedListProps) => {
         if (data) {
             setList(data.items);
             if (!data.nextPageToken) {
+                console.log("no more")
                 setHasMore(false);
                 setNextPageToken("");
             } else {
+                console.log("more")
                 setHasMore(true);
                 setNextPageToken(data.nextPageToken);
             }
@@ -75,7 +78,7 @@ const RelatedList = ({ channelId }: RelatedListProps) => {
                 next={fetchData}
                 hasMore={hasMore}
                 loader={isLoading && <p>Loading...</p>}
-                scrollThreshold={0.5}
+                scrollThreshold={0.9}
                 scrollableTarget="window"
                 className="no-scrollbar"
             >

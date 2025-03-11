@@ -72,7 +72,7 @@ const SubList = () => {
                 next={fetchData}
                 hasMore={hasMore}
                 loader={<Loading></Loading>}
-                scrollThreshold={"200px"}
+                scrollThreshold={0.9}
             >
                 <ul className="flex flex-col gap-y-6 mt-4 px-3 overflow-hidden">
                     {list?.map((item: SubChannelItemType) => (

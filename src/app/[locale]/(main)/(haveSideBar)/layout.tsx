@@ -13,9 +13,9 @@ export default function SideBarLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex h-[calc(100%-56px)]">
+        <>
             <SideBar></SideBar>
             {children}
-        </div>
+        </>
     );
 }

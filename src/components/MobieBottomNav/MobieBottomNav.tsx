@@ -33,7 +33,7 @@ const MobieBottomNav = () => {
                     <p className="text-xs">{t("home")}</p>
                 </Link>
                 <Link
-                    href="/short"
+                    href={`/${locale}/short`}
                     className="flex flex-col justify-center items-center gap-y-1"
                 >
                     <Film
@@ -46,7 +46,7 @@ const MobieBottomNav = () => {
                 </Link>
                 <SettingBtn></SettingBtn>
                 <Link
-                    href="/sub"
+                    href={`/${locale}/sub`}
                     className="flex flex-col justify-center items-center gap-y-1"
                 >
                     <TvMinimalPlay

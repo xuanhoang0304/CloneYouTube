@@ -17,7 +17,7 @@ const ReplyInfo = ({ reply }: { reply: CommentType }) => {
                     {calcDayCreate(reply.snippet.publishedAt)}
                 </p>
             </div>
-            <p className="text-sm leading-[22px] max-w-[90%]  mt-1 ">
+            <p className="text-sm leading-[22px] max-w-[90%] line-clamp-4  mt-1 ">
                 {reply.snippet.textOriginal}
             </p>
             <div className="flex items-center gap-x-1">

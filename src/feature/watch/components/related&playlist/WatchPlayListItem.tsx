@@ -1,5 +1,6 @@
 "use client";
 import { Play } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -15,7 +16,7 @@ const WatchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
     searchParams.forEach((value, key) => {
         params[key] = value;
     });
-
+    const locale = useLocale()
     return (
         <li
             className={cn(
@@ -25,7 +26,7 @@ const WatchPlayListItem = ({ data }: { data: SearchPlayListItemType }) => {
             )}
         >
             <Link
-                href={`watch?v=${data.snippet.resourceId.videoId}&list=${params.list}&listTitle=${params.listTitle}&index=${data.snippet.position}`}
+                href={`/${locale}/watch?v=${data.snippet.resourceId.videoId}&list=${params.list}&listTitle=${params.listTitle}&index=${data.snippet.position}`}
                 className="flex gap-x-4 items-center"
             >
                 {params.index == data.snippet.position ? (

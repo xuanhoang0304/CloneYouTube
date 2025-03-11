@@ -1,4 +1,4 @@
-
+"use server";
 import { Menu } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { cookies } from 'next/headers';
@@ -6,9 +6,7 @@ import { cookies } from 'next/headers';
 import { getAccessToken } from '@/apis/getAccessToken';
 import { getVideoCategories } from '@/apis/getVideoCategories';
 import { cn } from '@/lib/utils';
-import { currentUser } from '@clerk/nextjs/server';
 
-import DarkMode from './DarkMode';
 import LoginContainer from './LoginContainer';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
@@ -21,13 +19,16 @@ const DynamicLoginProfile = dynamic(() => import("./LoginProifle"), {
 const CategoryList = dynamic(() => import("../Main/CategoryList"), {
     ssr: false,
 });
+const DarkMode = dynamic(() => import("./DarkMode"), {
+    ssr: false,
+});
 const LanguageSwitcher = dynamic(
     () => import("@/components/LanguageSwitcher"),
     { ssr: false }
 );
 const isPremium = true;
 
-const channelError = [
+const EmptyCategories = [
     "18",
     "19",
     "21",
@@ -51,8 +52,8 @@ const channelError = [
 ];
 const Header = async () => {
     const locale = cookies().get("NEXT_LOCALE")?.value || "vi"; // Default to "vi"
-    const user = await currentUser();
     const token = await getAccessToken();
+
     const category = await getVideoCategories(locale);
     const data = category?.items
         ?.map((item: { id: string; snippet: { title: string } }) => {
@@ -64,7 +65,7 @@ const Header = async () => {
         })
         ?.filter(
             (item: { id: string; snippet: { title: string } }) =>
-                !channelError.includes(item.id)
+                !EmptyCategories.includes(item.id)
         );
     data?.unshift({
         id: "24",
@@ -79,7 +80,7 @@ const Header = async () => {
                         <Menu className="dark:text-white text-black" />
                     </button>
                     <Logo
-                        text={user && isPremium ? "Premium" : "YouTube"}
+                        text={token && isPremium ? "Premium" : "YouTube"}
                     ></Logo>
                 </div>
                 <div
@@ -97,7 +98,7 @@ const Header = async () => {
                         <LanguageSwitcher></LanguageSwitcher>
                     </div>
                 </div>
-                {user ? (
+                {token ? (
                     <div className="flex items-center justify-end gap-x-4 order-2 md:order-3 w-full md:w-auto">
                         <DynamicLoginProfile />
                     </div>
@@ -105,7 +106,7 @@ const Header = async () => {
                     <LoginContainer></LoginContainer>
                 )}
             </div>
-            {user && <CategoryList list={data}></CategoryList>}
+            {token && <CategoryList list={data}></CategoryList>}
         </header>
     );
 };

@@ -12,9 +12,9 @@
         "cmt": "Enter comments here",
         "reply": "Reply",
         "cancel": "Cancel",
-        "edit":"Edit",
-        "delete":"Delete",
-        "report":"Report"
+        "edit": "Edit",
+        "delete": "Delete",
+        "report": "Report"
     },
     "SideBar": {
         "home": "Home",
@@ -49,5 +49,13 @@
     "SubBtn": {
         "subscribe": "Subscribe",
         "subscribed": "Subscribed"
+    },
+    "form": {
+        "required": "This field is required",
+        "minLength": "Must be at least {min} characters",
+        "maxLength": "Must be at shorter {max} characters",
+        "fileRequired": "You must select a video",
+        "invalidFileType": "Invalid file type. Only MP4, AVI are allowed",
+        "privacyRequired": "Please select a privacy option"
     }
 }

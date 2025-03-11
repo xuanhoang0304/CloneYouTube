@@ -76,7 +76,7 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
             {list?.map((item: YoutubeItemType) => (
                 <div key={item.id} className="flex flex-wrap  gap-3 ">
                     <Link
-                        href={`channel/${item?.id}?title=${item?.snippet?.title}`}
+                        href={`/${locale}/channel/${item?.id}?title=${item?.snippet?.title}`}
                     >
                         <figure className="size-10 rounded-full shrink-0">
                             <Image
@@ -89,7 +89,7 @@ const VideoInfo = ({ channelId }: { channelId: string | undefined }) => {
                         </figure>
                     </Link>
                     <div className="max-w-[257px]">
-                        <Link href={`channel/${item?.snippet?.customUrl}`}>
+                        <Link href={`/${locale}/channel/${item?.snippet?.customUrl}`}>
                             <h2 className="line-clamp-1 font-medium leading-[22px] cursor-pointer">
                                 {item?.snippet?.title}
                             </h2>

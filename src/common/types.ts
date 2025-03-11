@@ -61,6 +61,9 @@ export type YoutubeItemType = {
         commentCount: string | undefined;
         subscriberCount: string;
     };
+    status: {
+        privacyStatus: "public" | "private"  ;
+    };
 };
 export type YoutubeResponseType = {
     kind: string;
@@ -424,7 +427,7 @@ export type SubChannelItemType = {
         description: string;
         resourceId: {
             channelId: string;
-          };
+        };
         thumbnails: {
             high: {
                 url: string;

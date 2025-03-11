@@ -69,7 +69,7 @@ const SearchVideoList = () => {
                 next={fetchData}
                 hasMore={hasMore}
                 loader={<Loading></Loading>}
-                scrollThreshold={"200px"}
+                scrollThreshold={0.9}
                 endMessage={
                     <p className="text-center pb-6">
                         <b>Yay! You have seen it all</b>

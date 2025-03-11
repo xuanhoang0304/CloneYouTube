@@ -1,6 +1,6 @@
 "use client";
 import { Keyboard, Search, X } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
@@ -12,9 +12,10 @@ import { useYouTubeStore } from '@/store/store';
 import { cn } from '@/utils/cn';
 import { slugify } from '@/utils/slugify';
 
-const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
+const SearchInput = ({ accessToken }: { accessToken: string | null }) => {
     const { token, setToken } = useYouTubeStore();
     const t = useTranslations("Header");
+    const locale = useLocale();
     const [searchOpen, setSearchOpen] = useState(false);
     const q = useSearchParams().get("q")?.replaceAll("-", " ");
     const SearchIputRef = useRef<HTMLInputElement>(null);
@@ -46,7 +47,7 @@ const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
     const router = useRouter();
     const handleSearch = (key: string) => {
         if (key === "") return;
-        router.push(`/search?q=${slugify(key)}`);
+        router.push(`/${locale}/search?q=${slugify(key)}`);
         setIsShow(false);
         setIsSearchFocus(false);
         setSearchOpen(false);
@@ -60,9 +61,10 @@ const SearchInput = ({ accessToken }: { accessToken: string | undefined }) => {
         e.preventDefault();
         if (searchText === "") return;
         if (e.key === "Enter" && searchText !== "") {
-            router.push(`/search?q=${slugify(searchText)}`);
+            router.push(`/${locale}/search?q=${slugify(searchText)}`);
             setIsShow(false);
             setIsSearchFocus(false);
+            setSearchOpen(false);
         }
     };
     useEffect(() => {

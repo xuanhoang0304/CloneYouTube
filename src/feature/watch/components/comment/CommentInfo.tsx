@@ -49,7 +49,7 @@ const CommentInfo = ({
             {comment.id !== commentEditId ? (
                 <div className="flex items-center gap-x-2">
                     <Link
-                        href={`/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}?title=${comment.snippet.topLevelComment.snippet.authorDisplayName}`}
+                        href={`/${locale}/channel/${comment.snippet.topLevelComment.snippet.authorChannelId?.value}?title=${comment.snippet.topLevelComment.snippet.authorDisplayName}`}
                     >
                         <h3 className="text-[13px] font-semibold  leading-[18px] ">
                             {
@@ -132,7 +132,7 @@ const CommentInfo = ({
 
             {comment.id !== commentEditId && (
                 <>
-                    <p className="text-sm leading-[22px] max-w-[90%]  mt-1 ">
+                    <p className="text-sm leading-[22px] max-w-[90%] line-clamp-4  mt-1 ">
                         {comment.snippet.topLevelComment.snippet.textOriginal}
                     </p>
                     <div className="flex items-center gap-x-1">

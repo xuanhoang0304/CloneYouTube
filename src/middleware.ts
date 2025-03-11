@@ -3,54 +3,26 @@ import { NextResponse } from 'next/server';
 
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-// Danh sách ngôn ngữ hỗ trợ
-const locales = ["en", "vi"];
-const defaultLocale = "vi";
+import { routing } from './i18n/routing';
 
-// Middleware của Next Intl
-const intlMiddleware = createMiddleware({
-    locales,
-    defaultLocale,
-    localePrefix: "always",
-});
+const handleI18nRouting = createMiddleware(routing);
+const isProtectedRoute = createRouteMatcher(['/:locale/short(.*)', '/:locale/sub(.*)','/:locale/studio(.*)','/:locale/upload(.*)']);
 
-// Kiểm tra route công khai
-const isPublicRoute = createRouteMatcher([
-    "/register(.*)",
-    "/",
-    "/search(.*)",
-    "/login(.*)",
-    "/watch(.*)",
-    "/channel(.*)",
-]);
+export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+  // Lấy locale từ pathname (mặc định 'vi')
+  const pathnameParts = req.nextUrl.pathname.split('/');
+  const locale = pathnameParts[1] || 'vi';
 
-export default clerkMiddleware((auth, request) => {
-    const { pathname } = request.nextUrl;
+  // Kiểm tra route cần bảo vệ & chuyển hướng nếu chưa đăng nhập
+  if (isProtectedRoute(req) && !userId) {
+    return NextResponse.redirect(`${req.nextUrl.origin}/${locale}/login`);
+  }
 
-    // Bỏ qua tất cả file tĩnh (ảnh, font, favicon, v.v.)
-    if (/\.(avif|png|jpg|jpeg|gif|svg|webp|ico|woff2?|ttf)$/i.test(pathname)) {
-        return NextResponse.next();
-    }
-    const { userId } = auth(); // Lấy userId từ Clerk
-
-    // Xử lý đa ngôn ngữ trước tiên
-    const intlResponse = intlMiddleware(request);
-    if (intlResponse) return intlResponse;
-
-    // Nếu chưa đăng nhập và không phải route công khai => Chuyển hướng đến trang login
-    if (!userId && !isPublicRoute(request)) {
-        return NextResponse.redirect(new URL("/login", request.url));
-    }
-
-    // Nếu đã đăng nhập mà truy cập trang login/register => Chuyển về trang chủ
-    if (userId && ["/login", "/register"].includes(request.nextUrl.pathname)) {
-        return NextResponse.redirect(new URL("/", request.url));
-    }
+  // Luôn chạy middleware next-intl để xử lý đa ngôn ngữ
+  return handleI18nRouting(req);
 });
 
 export const config = {
-    matcher: [
-        "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-        "/(api|trpc)(.*)", // Middleware luôn chạy với API route
-    ],
+  matcher: ['/', '/(vi|en)/:path*']
 };

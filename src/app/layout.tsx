@@ -35,24 +35,26 @@ export default async function MainLayout({
     const messages = await getMessages();
 
     return (
-        <ClerkProvider>
-            <html
-                lang={locale}
-                className={roboto.className}
-                suppressHydrationWarning={true}
+        <NextIntlClientProvider messages={messages}>
+            <ClerkProvider
+                publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
             >
-                <body className=" !transition-colors !duration-500">
-                    <NextIntlClientProvider messages={messages}>
-                        <Toaster />
-                        <Suspense fallback={<Loading />} key={locale}>
+                <html
+                    lang={locale}
+                    className={roboto.className}
+                    suppressHydrationWarning={true}
+                >
+                    <body className=" !transition-colors !duration-500">
+                        <Toaster  />
+                        <Suspense fallback={<Loading />}>
                             <Header></Header>
                         </Suspense>
                         <main>{children}</main>
                         <MobieBottomNav></MobieBottomNav>
                         <CtaLogin></CtaLogin>
-                    </NextIntlClientProvider>
-                </body>
-            </html>
-        </ClerkProvider>
+                    </body>
+                </html>
+            </ClerkProvider>
+        </NextIntlClientProvider>
     );
 }
